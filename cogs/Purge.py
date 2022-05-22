@@ -6,6 +6,7 @@ class Purge(commands.Cog):
         self.bot = bot
 
     # command to purge channel with int arg in entry
+    @commands.has_permissions(administrator=True)
     @commands.command()
     async def purge(self, ctx, purge_amount: int):
         await ctx.channel.purge(limit=purge_amount)
