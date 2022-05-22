@@ -1,13 +1,7 @@
-from private.config import token # get token
+from private.config import token  # get token
 
-# import libraries
-import random
-import re
-import subprocess
-import psutil
 # import discord bot libraries
 from discord.ext import commands
-import discord
 
 
 # set box prefix to "!"
@@ -31,6 +25,7 @@ bot.load_extension("cogs.CPU")
 bot.load_extension("cogs.RAM")
 bot.load_extension("cogs.Purge")
 bot.load_extension("cogs.QuoiFeur")
+bot.load_extension("cogs.PP")
 
 
 bot.run(token)
