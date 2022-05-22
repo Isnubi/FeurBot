@@ -26,6 +26,6 @@ bot.load_extension("cogs.RAM")
 bot.load_extension("cogs.Purge")
 bot.load_extension("cogs.QuoiFeur")
 bot.load_extension("cogs.PP")
-
+bot.load_extension("cogs.Say")
 
 bot.run(token)

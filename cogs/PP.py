@@ -7,8 +7,8 @@ class PP(commands.Cog):
         self.bot = bot
 
     @commands.command()
-    async def pp(self, ctx):
-        user = ctx.message.author
+    async def pp(self, ctx, person: discord.User):
+        user = person
         pfp = user.avatar_url
         embed = discord.Embed(title='Here\'s {0} avatar'.format(user.name), color=0xecce8b)
         embed.set_image(url=pfp)
