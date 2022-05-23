@@ -7,7 +7,7 @@ class QuoiFeur(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.Cog.listener()
+    @commands.Cog.listener(name='on_message')
     async def on_message(self, message):
         out = ((re.sub(r'[^\w\s]', '', message.content)).rstrip())
         end_quoi = out[len(out) - 4:len(out)]

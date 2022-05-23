@@ -2,7 +2,6 @@ from private.config import token  # get token
 
 # import discord bot libraries
 from discord.ext import commands
-import discord
 
 
 # set box prefix to "!"
@@ -25,5 +24,6 @@ bot.load_extension("cogs.PFP")
 bot.load_extension("cogs.Say")
 bot.load_extension("cogs.Help")
 bot.load_extension("cogs.Ping")
+bot.load_extension("cogs.CommandLog")
 
 bot.run(token)
