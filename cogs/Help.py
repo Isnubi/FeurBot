@@ -24,6 +24,7 @@ class Help(commands.Cog):
         embed.add_field(name="**!pfp** *<@user>*", value="Return the profile picture of mentioned user", inline=True)
         embed.add_field(name="**!roll** *<number>**d**<number>*", value="Roll number of dices with the number of sides you tell it\nYou can\'t roll more than 100 dices\nDices can't have more than 100 sides", inline=False)
         embed.add_field(name="**!userinfo** *<@user>* - [ui, user]", value="Get user informations", inline=False)
+        embed.add_field(name="**!serverinfo** - [si, server]", value="Get server informations", inline=False)
 
         # Admin command
         for role in ctx.message.author.roles:
