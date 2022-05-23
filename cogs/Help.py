@@ -15,13 +15,13 @@ class Help(commands.Cog):
         embed.add_field(name="__Hardware__", value="List of all the hardware commands available", inline=False)
         embed.add_field(name="**!cpu**", value="Check the CPU usage", inline=True)
         embed.add_field(name="**!ram**", value="Check the memory usage", inline=True)
-        embed.add_field(name="**!temp**", value="Check the temp usage", inline=True)
+        embed.add_field(name="**!temp**", value="Check the temp", inline=True)
         embed.add_field(name="**!ping**", value="Check the bot latency", inline=False)
 
         # User command
         embed.add_field(name="__User__", value="List of all the user commands available", inline=False)
         embed.add_field(name="**!say** *[something]*", value="Let the bot say something you tell it", inline=True)
-        embed.add_field(name="**!pp** *[@user]*", value="Return the profile picture of mentioned user", inline=True)
+        embed.add_field(name="**!pfp** *[@user]*", value="Return the profile picture of mentioned user", inline=True)
 
         # Admin command
         for role in ctx.message.author.roles:

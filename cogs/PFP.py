@@ -6,8 +6,8 @@ class PP(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(name='pp')
-    async def pp(self, ctx, person: discord.User):
+    @commands.command(name='pfp')
+    async def pfp(self, ctx, person: discord.User):
         user = person
         pfp = user.avatar_url
         embed = discord.Embed(title='Here\'s {0.name} avatar'.format(user), color=discord.Colour.blue())
@@ -20,4 +20,4 @@ class PP(commands.Cog):
 
 def setup(bot):
     bot.add_cog(PP(bot))
-    print('PP is loaded')
+    print('PFP is loaded')
