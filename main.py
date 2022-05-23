@@ -32,5 +32,6 @@ bot.load_extension("cogs.Ping")
 bot.load_extension("cogs.CommandLog")
 bot.load_extension("cogs.Roll")
 bot.load_extension("cogs.UserInfo")
+bot.load_extension("cogs.ServerInfo")
 
 bot.run(token)

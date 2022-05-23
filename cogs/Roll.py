@@ -45,6 +45,7 @@ class Roll(commands.Cog):
         embed.add_field(name='Detailed rolls', value=dice_rolls, inline=False)
         embed.add_field(name='Total', value=total, inline=False)
 
+        await ctx.message.delete()
         await ctx.send(embed=embed)
 
 
