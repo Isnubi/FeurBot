@@ -6,7 +6,7 @@ class Say(commands.Cog):
         self.bot = bot
 
     @commands.command()
-    async def say(self, ctx, message):
+    async def say(self, ctx, *, message):
         send_message = ctx.message
         await send_message.delete()
         await ctx.send(f"{message}")
