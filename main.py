@@ -25,5 +25,6 @@ bot.load_extension("cogs.Say")
 bot.load_extension("cogs.Help")
 bot.load_extension("cogs.Ping")
 bot.load_extension("cogs.CommandLog")
+bot.load_extension("cogs.Roll")
 
 bot.run(token)
