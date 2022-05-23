@@ -2,10 +2,15 @@ from private.config import token  # get token
 
 # import discord bot libraries
 from discord.ext import commands
+import discord
 
+# activate intents and set bot prefix to "!"
+intents = discord.Intents.default()
+intents.presences = True
+intents.members = True
+bot = commands.Bot(command_prefix='!', intents=intents)
 
-# set box prefix to "!"
-bot = commands.Bot(command_prefix='!')
+# remove help command to use the custom one
 bot.remove_command('help')
 
 
@@ -26,5 +31,6 @@ bot.load_extension("cogs.Help")
 bot.load_extension("cogs.Ping")
 bot.load_extension("cogs.CommandLog")
 bot.load_extension("cogs.Roll")
+bot.load_extension("cogs.UserInfo")
 
 bot.run(token)
