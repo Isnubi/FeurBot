@@ -20,6 +20,18 @@ class Roll(commands.Cog):
         except ValueError:
             await ctx.send('Format has to be in [number]d[number]!')
             return
+        if rolls > 100:
+            await ctx.send('You can\'t roll more than 100 dice at once!')
+            return
+        if limit > 100:
+            await ctx.send('You can\'t roll more than 100 sides on a dice!')
+            return
+        if rolls < 1:
+            await ctx.send('You can\'t roll less than 1 dice!')
+            return
+        if limit < 1:
+            await ctx.send('You can\'t roll less than 1 side on a dice!')
+            return
         total = 0
         dice_rolls = []
         for i in range(rolls):
