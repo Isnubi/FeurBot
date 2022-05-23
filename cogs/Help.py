@@ -20,16 +20,16 @@ class Help(commands.Cog):
 
         # User command
         embed.add_field(name="__User__", value="List of all the user commands available", inline=False)
-        embed.add_field(name="**!say** *[something]*", value="Let the bot say something you tell it", inline=True)
-        embed.add_field(name="**!pfp** *[@user]*", value="Return the profile picture of mentioned user", inline=True)
-        embed.add_field(name="**!roll** *[number]**d**[number]*", value="Roll number of dices with the number of sides you tell it\nYou can\'t roll more than 100 dices\nDices can't have more than 100 sides", inline=False)
-        embed.add_field(name="**!userinfo** *[@user]*", value="Get user informations", inline=False)
+        embed.add_field(name="**!say** *<something>*", value="Let the bot say something you tell it", inline=True)
+        embed.add_field(name="**!pfp** *<@user>*", value="Return the profile picture of mentioned user", inline=True)
+        embed.add_field(name="**!roll** *<number>**d**<number>*", value="Roll number of dices with the number of sides you tell it\nYou can\'t roll more than 100 dices\nDices can't have more than 100 sides", inline=False)
+        embed.add_field(name="**!userinfo** *<@user>* - [ui, user]", value="Get user informations", inline=False)
 
         # Admin command
         for role in ctx.message.author.roles:
             if role.name == 'Bot':  # replace with your admin privileges role name
                 embed.add_field(name="__Admin__", value="List of all the admin commands available", inline=False)
-                embed.add_field(name="**!purge** *[number]*", value="Delete messages in channel", inline=False)
+                embed.add_field(name="**!purge** *<number>*", value="Delete messages in channel", inline=False)
 
         embed.set_footer(text="Bot made by @isnubi#6221. If you want to contribute, contact him on discord. If you want to report a bug, contact the developer on discord.")
 
