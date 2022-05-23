@@ -7,7 +7,6 @@ class QuoiFeur(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    # event to answer a random word in a list when "quoi" end string (excepting ponctuation and space)
     @commands.Cog.listener()
     async def on_message(self, message):
         out = ((re.sub(r'[^\w\s]', '', message.content)).rstrip())
@@ -27,3 +26,4 @@ class QuoiFeur(commands.Cog):
 
 def setup(bot):
     bot.add_cog(QuoiFeur(bot))
+    print('QuoiFeur is loaded')
