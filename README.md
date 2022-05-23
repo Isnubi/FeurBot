@@ -6,8 +6,8 @@
 
 FeurBot have been tested in a *3.7.3 Python environment*.
 
-FeurBot use differents librairies, such as [discord.py](https://github.com/Rapptz/discord.py) and [psutil](https://github.com/giampaolo/psutil).
-These librairies can be installed using **pip3** command.
+FeurBot use different libraries, such as [discord.py](https://github.com/Rapptz/discord.py) and [psutil](https://github.com/giampaolo/psutil).
+These libraries can be installed using **pip3** command.
 
 ```bash
 pip3 install discord.py
