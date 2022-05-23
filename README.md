@@ -53,3 +53,7 @@ You can also contact me on Discord (**isnubi#6221**) for any contributing or bug
 ## Developer
 
 This bot is completely developed by [Louis GAMBART](https://github.com/Isnubi).
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
