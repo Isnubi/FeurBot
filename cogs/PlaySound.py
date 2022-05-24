@@ -66,6 +66,9 @@ class Music(commands.Cog):
         except discord.ClientException:
             embed = discord.Embed(title="FeurMusic", description='I\'m already used in another channel', color=discord.Colour.blue())
             embed.set_author(name=ctx.author.name, icon_url=ctx.author.avatar_url)
+        except AttributeError as e:
+            embed = discord.Embed(title="FeurMusic", description='You are not in a voice channel', color=discord.Colour.blue())
+            embed.set_author(name=ctx.author.name, icon_url=ctx.author.avatar_url)
 
         await ctx.message.delete()
         await ctx.send(embed=embed)
