@@ -6,7 +6,7 @@ class ServerInfo(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(name='serverinfo', aliases=['si, server'])
+    @commands.command(name='serverinfo', aliases=['si', 'server'])
     async def serverinfo(self, ctx):
         embed = discord.Embed(title=f"{ctx.guild.name} Info", description="Information of this server", color=discord.Colour.blue())
         embed.add_field(name='Owner', value=f"{ctx.guild.owner}", inline=True)
