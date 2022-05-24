@@ -12,6 +12,9 @@ These libraries can be installed using **pip3** command.
 ```bash
 pip3 install discord.py
 pip3 install psutil
+pip3 install asyncio
+pip3 install youtube_dl
+pip3 install discord.py[voice]
 ```
 
 ## Usage
@@ -32,15 +35,38 @@ Once the bot is loaded, anytime a command is called by a user, a line will be pr
 
 There is the list of all the commands available:
 
+General commands :
 * **!help**: display the list of commands
 * **!ping**: display the bot latency
+* **!serverinfo**: display the server information
+* **!userinfo**: display the user information
+
+User commands :
 * **!roll**: roll a dice
 * **!say**: make the bot say something
 * **!pfp**: display the user profile picture
+
+Music commands :
+* **!join**: let the bot join your voice channel
+* **!play** : play a song (from YouTube URL)
+* **!volume** : change the volume of the music
+* **!pause** : pause the music
+* **!resume** : resume the music
+* **!stop** : stop the music
+* **!leave** : let the bot leave your voice channel
+
+Admin commands :
+* **!purge**: delete a number of messages
+
+Hardware statistics commands :
 * **!cpu**: display the CPU usage
 * **!ram**: display the RAM usage
 * **!temp**: display the CPU temperature
-* **!purge**: delete a number of messages
+
+
+
+
+
 
 ## Contributing
 

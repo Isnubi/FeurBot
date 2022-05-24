@@ -23,8 +23,17 @@ class Help(commands.Cog):
         embed.add_field(name="**!say** *<something>*", value="Let the bot say something you tell it", inline=True)
         embed.add_field(name="**!pfp** *<@user>*", value="Return the profile picture of mentioned user", inline=True)
         embed.add_field(name="**!roll** *<number>**d**<number>*", value="Roll number of dices with the number of sides you tell it\nYou can\'t roll more than 100 dices\nDices can't have more than 100 sides", inline=False)
-        embed.add_field(name="**!userinfo** *<@user>* - [ui, user]", value="Get user informations", inline=False)
-        embed.add_field(name="**!serverinfo** - [si, server]", value="Get server informations", inline=False)
+        embed.add_field(name="**!userinfo** *<@user>* - [ui, user]", value="Get user information", inline=False)
+        embed.add_field(name="**!serverinfo** - [si, server]", value="Get server information", inline=False)
+
+        # Music command
+        embed.add_field(name="__Music__", value="List of all the music commands available", inline=False)
+        embed.add_field(name="**!join**", value="Join the channel you're in", inline=True)
+        embed.add_field(name="**!play** *<url>*", value="Play a song from youtube", inline=True)
+        embed.add_field(name="**!pause**", value="Pause the current song", inline=True)
+        embed.add_field(name="**!resume**", value="Resume the current song", inline=True)
+        embed.add_field(name="**!stop**", value="Stop the music", inline=True)
+        embed.add_field(name="**!volume** *<number>*", value="Change the volume of the music", inline=True)
 
         # Admin command
         for role in ctx.message.author.roles:
