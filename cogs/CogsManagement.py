@@ -15,7 +15,6 @@ class CogsManagement(commands.Cog):
             embed = discord.Embed(title='**An error has occured:**', description=f'{type(e).__name__} - {e}', color=0xff0000)
         else:
             embed = discord.Embed(title='**Successfully loaded:**', description=cog, color=0x008000)
-
         embed.set_author(name=self.bot.user.name, icon_url=self.bot.user.avatar_url)
         await ctx.message.delete()
         await ctx.send(embed=embed)
@@ -29,7 +28,6 @@ class CogsManagement(commands.Cog):
             embed = discord.Embed(title='**An error has occured:**', description=f'{type(e).__name__} - {e}', color=0xff0000)
         else:
             embed = discord.Embed(title='**Successfully unloaded:**', description=cog, color=0x008000)
-
         embed.set_author(name=self.bot.user.name, icon_url=self.bot.user.avatar_url)
         await ctx.message.delete()
         await ctx.send(embed=embed)
@@ -44,7 +42,14 @@ class CogsManagement(commands.Cog):
             embed = discord.Embed(title='**An error has occured:**', description=f'{type(e).__name__} - {e}', color=0xff0000)
         else:
             embed = discord.Embed(title='**Successfully reloaded:**', description=cog, color=0x008000)
+        embed.set_author(name=self.bot.user.name, icon_url=self.bot.user.avatar_url)
+        await ctx.message.delete()
+        await ctx.send(embed=embed)
 
+    @commands.command(name='coglist', hidden=True)
+    @commands.is_owner()
+    async def coglist(self, ctx):
+        embed = discord.Embed(title='**Cogs:**', description='\n'.join([f'{cog}' for cog in self.bot.cogs]), color=discord.Color.blue())
         embed.set_author(name=self.bot.user.name, icon_url=self.bot.user.avatar_url)
         await ctx.message.delete()
         await ctx.send(embed=embed)

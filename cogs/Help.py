@@ -16,15 +16,15 @@ class Help(commands.Cog):
         embed.add_field(name="**!cpu**", value="Check the CPU usage", inline=True)
         embed.add_field(name="**!ram**", value="Check the memory usage", inline=True)
         embed.add_field(name="**!temp**", value="Check the temp", inline=True)
-        embed.add_field(name="**!ping**", value="Check the bot latency", inline=False)
+        embed.add_field(name="**!ping**", value="Check the bot latency", inline=True)
 
         # User command
         embed.add_field(name="__User__", value="List of all the user commands available", inline=False)
         embed.add_field(name="**!say** *<something>*", value="Let the bot say something you tell it", inline=True)
         embed.add_field(name="**!pfp** *<@user>*", value="Return the profile picture of mentioned user", inline=True)
         embed.add_field(name="**!roll** *<number>**d**<number>*", value="Roll number of dices with the number of sides you tell it\nYou can\'t roll more than 100 dices\nDices can't have more than 100 sides", inline=False)
-        embed.add_field(name="**!userinfo** *<@user>* - [ui, user]", value="Get user information", inline=False)
-        embed.add_field(name="**!serverinfo** - [si, server]", value="Get server information", inline=False)
+        embed.add_field(name="**!userinfo** *<@user>* - [ui, user]", value="Get user information", inline=True)
+        embed.add_field(name="**!serverinfo** - [si, server]", value="Get server information", inline=True)
 
         # Music command
         embed.add_field(name="__Music__", value="List of all the music commands available", inline=False)
@@ -39,7 +39,7 @@ class Help(commands.Cog):
         for role in ctx.message.author.roles:
             if role.name == 'Bot':  # replace with your admin privileges role name
                 embed.add_field(name="__Admin__", value="List of all the admin commands available", inline=False)
-                embed.add_field(name="**!purge** *<number>*", value="Delete messages in channel", inline=False)
+                embed.add_field(name="**!purge** *<number>*", value="Delete messages in channel", inline=True)
 
         embed.set_footer(text="Bot made by @isnubi#6221. If you want to contribute, contact him on discord. If you want to report a bug, contact the developer on discord.")
 
