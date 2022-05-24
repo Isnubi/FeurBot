@@ -63,6 +63,11 @@ Hardware statistics commands :
 * **!ram**: display the RAM usage
 * **!temp**: display the CPU temperature
 
+Bot owner commands :
+* **!load**: load a cog
+* **!unload**: unload a cog
+* **!reload**: reload a cog
+
 
 
 

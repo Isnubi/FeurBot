@@ -34,5 +34,6 @@ bot.load_extension("cogs.Roll")
 bot.load_extension("cogs.UserInfo")
 bot.load_extension("cogs.ServerInfo")
 bot.load_extension("cogs.PlaySound")
+bot.load_extension("cogs.CogsManagement")
 
 bot.run(token)
