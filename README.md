@@ -33,6 +33,12 @@ Once the bot is loaded, anytime a command is called by a user, a line will be pr
 
 ![bot command output](docs/FeurBot_command-output.png)
 
+The default prefix for the bot is **!**.
+
+Mention the bot will answer you the current prefix used by the server.
+
+### Commands list
+
 There is the list of all the commands available:
 
 General commands :
@@ -57,6 +63,7 @@ Music commands :
 
 Admin commands :
 * **!purge**: delete a number of messages
+* **!setprefix**: change the bot prefix
 
 Hardware statistics commands :
 * **!cpu**: display the CPU usage
@@ -64,14 +71,11 @@ Hardware statistics commands :
 * **!temp**: display the CPU temperature
 
 Bot owner commands :
+* **!coglist**: display the list of cogs
 * **!load**: load a cog
 * **!unload**: unload a cog
 * **!reload**: reload a cog
-
-
-
-
-
+* **!reloadall**: reload all cogs
 
 ## Contributing
 
