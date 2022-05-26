@@ -46,6 +46,21 @@ class CogsManagement(commands.Cog):
         await ctx.message.delete()
         await ctx.send(embed=embed)
 
+    @commands.is_owner()
+    @commands.command(name='reloadall', hidden=True)
+    async def reloadall(self, ctx):
+        for cog in self.bot.cogs:
+            try:
+                self.bot.unload_extension(cog)
+                self.bot.load_extension(cog)
+            except Exception as e:
+                embed = discord.Embed(title='**An error has occured:**', description=f'{type(e).__name__} - {e}', color=0xff0000)
+            else:
+                embed = discord.Embed(title='**Successfully reloaded:**', description=cog, color=0x008000)
+            embed.set_author(name=self.bot.user.name, icon_url=self.bot.user.avatar_url)
+            await ctx.message.delete()
+            await ctx.send(embed=embed)
+
     @commands.command(name='coglist', hidden=True)
     @commands.is_owner()
     async def coglist(self, ctx):
