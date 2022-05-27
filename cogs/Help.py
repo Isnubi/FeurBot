@@ -52,6 +52,11 @@ class Help(commands.Cog):
             if role.name == 'Bot':  # replace with your admin privileges role name
                 embed.add_field(name="__Admin__", value="List of all the admin commands available", inline=False)
                 embed.add_field(name=f"**{prefix_check(ctx.guild)}purge** *<number>*", value="Delete messages in channel", inline=True)
+                embed.add_field(name=f"**{prefix_check(ctx.guild)}setprefix** *<prefix>*", value="Change the prefix of the bot", inline=True)
+                embed.add_field(name=f"**{prefix_check(ctx.guild)}kick** *<@user>*", value="Kick the mentioned user", inline=True)
+                embed.add_field(name=f"**{prefix_check(ctx.guild)}ban** *<@user>*", value="Ban the mentioned user", inline=True)
+                embed.add_field(name=f"**{prefix_check(ctx.guild)}banlist**", value="List of all the banned users", inline=True)
+                embed.add_field(name=f"**{prefix_check(ctx.guild)}unban** *<userid>*", value="Unban the mentioned user", inline=True)
 
         embed.set_footer(text="Bot made by @isnubi#6221. If you want to contribute, contact him on discord. If you want to report a bug, contact the developer on discord.")
 

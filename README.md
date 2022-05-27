@@ -64,6 +64,10 @@ Music commands :
 Admin commands :
 * **!purge**: delete a number of messages
 * **!setprefix**: change the bot prefix
+* **!kick**: kick a user
+* **!ban**: ban a user
+* **!unban**: unban a user
+* **!banlist**: display the list of banned users
 
 Hardware statistics commands :
 * **!cpu**: display the CPU usage

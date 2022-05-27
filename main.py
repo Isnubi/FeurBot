@@ -85,5 +85,6 @@ bot.load_extension("cogs.PlaySound")
 bot.load_extension("cogs.CogsManagement")
 bot.load_extension("cogs.MemberJoinLeave")
 bot.load_extension("cogs.PrefixManagement")
+bot.load_extension("cogs.UserManagement")
 
 bot.run(token)
