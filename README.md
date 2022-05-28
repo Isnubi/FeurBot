@@ -6,7 +6,9 @@
 
 FeurBot have been tested in a *3.7.3 Python environment*.
 
-FeurBot use different libraries, such as [discord.py](https://github.com/Rapptz/discord.py) and [psutil](https://github.com/giampaolo/psutil).
+FeurBot use different libraries, such as 
+[discord.py](https://github.com/Rapptz/discord.py) 
+and [psutil](https://github.com/giampaolo/psutil).
 These libraries can be installed using **pip3** command.
 
 ```bash
@@ -19,7 +21,8 @@ pip3 install discord.py[voice]
 
 ## Usage
 
-Once bot files have been forked and dependencies installed, you just have to run the **main.py** file.
+Once bot files have been forked and dependencies installed, 
+you just have to run the **main.py** file.
 
 ```bash
 python3 main.py
@@ -29,7 +32,8 @@ The bot will be launch and the cogs will be loaded.
 
 ![bot launching](docs/FeurBot_launch.png)
 
-Once the bot is loaded, anytime a command is called by a user, a line will be printed in the console.
+Once the bot is loaded, anytime a command is called by a user, 
+a line will be printed in the console.
 
 ![bot command output](docs/FeurBot_command-output.png)
 
@@ -46,6 +50,7 @@ General commands :
 * **!ping**: display the bot latency
 * **!serverinfo**: display the server information
 * **!userinfo**: display the user information
+* **!quiz**: display a random quiz
 
 User commands :
 * **!roll**: roll a dice
@@ -80,18 +85,24 @@ Bot owner commands :
 * **!unload**: unload a cog
 * **!reload**: reload a cog
 * **!reloadall**: reload all cogs
+* **!addquiz**: add a question to the quiz
+* **!removequiz**: remove a question from the quiz
+* **!quizlist**: display the list of questions
 
 ## Contributing
 
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+Pull requests are welcome. For major changes, please open an issue 
+first to discuss what you would like to change.
 
 Please make sure to update tests as appropriate.
 
-You can also contact me on Discord (**isnubi#6221**) for any contributing or bug submission.
+You can also contact me on Discord (**isnubi#6221**) for any contributing 
+or bug submission.
 
 ## Developer
 
-This bot is completely developed by [Louis GAMBART](https://github.com/Isnubi).
+This bot is completely developed by 
+[Louis GAMBART](https://github.com/Isnubi).
 
 ## License
 

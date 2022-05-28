@@ -37,6 +37,7 @@ class Help(commands.Cog):
         embed.add_field(name=f"**{prefix_check(ctx.guild)}roll** *<number>**d**<number>*", value="Roll number of dices with the number of sides you tell it\nYou can\'t roll more than 100 dices\nDices can't have more than 100 sides", inline=False)
         embed.add_field(name=f"**{prefix_check(ctx.guild)}userinfo** *<@user>* - [ui, user]", value="Get user information", inline=True)
         embed.add_field(name=f"**{prefix_check(ctx.guild)}serverinfo** - [si, server]", value="Get server information", inline=True)
+        embed.add_field(name=f"**{prefix_check(ctx.guild)}quiz** -[q]", value="Play a quiz", inline=True)
 
         # Music command
         embed.add_field(name="__Music__", value="List of all the music commands available", inline=False)

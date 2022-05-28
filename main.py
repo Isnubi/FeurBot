@@ -86,5 +86,6 @@ bot.load_extension("cogs.CogsManagement")
 bot.load_extension("cogs.MemberJoinLeave")
 bot.load_extension("cogs.PrefixManagement")
 bot.load_extension("cogs.UserManagement")
+bot.load_extension("cogs.QuizSystem")
 
 bot.run(token)
