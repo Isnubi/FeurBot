@@ -5,10 +5,19 @@ import random
 
 class Roll(commands.Cog):
     def __init__(self, bot):
+        """
+        Initializes the bot object
+        :param bot: The bot to initialize the cog with
+        """
         self.bot = bot
 
     @commands.command(name='roll')
     async def roll(self, ctx, *, args):
+        """
+        Rolls dices and returns the result
+        :param ctx: The context of the command
+        :param args: The arguments of the command (dice notation)
+        """
         try:
             rolls, limit = args.split('d')
         except ValueError:
@@ -50,5 +59,9 @@ class Roll(commands.Cog):
 
 
 def setup(bot):
+    """
+    Initializes the cog
+    :param bot: bot object
+    """
     bot.add_cog(Roll(bot))
     print('Roll is loaded')

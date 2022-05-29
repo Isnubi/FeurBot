@@ -7,17 +7,39 @@ import datetime
 
 class LevelingSystem(commands.Cog):
     def __init__(self, bot):
+        """
+        Initializes the bot object
+        :param bot: The bot to initialize the cog with
+        """
         self.bot = bot
 
     def exp_needed(self, level):
+        """
+        Calculates the experience needed to level up with function 50*(level^2.6)
+        :param level: The level of the user
+        """
         base_exp = 50
         exp_needed = base_exp * (pow(level, 2.6))
         return int(exp_needed)
 
     def add_experience(self, json_file, guild_id, user_id, experience):
+        """
+        Adds experience to the user
+        :param json_file: The json file to add the experience to
+        :param guild_id: The guild id of the guild
+        :param user_id: The user id of the user
+        :param experience: The amount of experience to add
+        """
         json_file[str(guild_id)][str(user_id)]["experience"] += experience
 
     def level_up(self, json_file, guild_id, user_id, message):
+        """
+        Checks if the user has leveled up
+        :param json_file: The json file to check the user's level in
+        :param guild_id: The guild id of the guild
+        :param user_id: The user id of the user
+        :param message: The message that was sent
+        """
         experience = json_file[str(guild_id)][str(user_id)]["experience"]
         level = json_file[str(guild_id)][str(user_id)]["level"]
         if experience >= self.exp_needed(level):
@@ -32,10 +54,23 @@ class LevelingSystem(commands.Cog):
             return
 
     def add_last_message(self, json_file, guild_id, user_id, message_timestamp):
+        """
+        Adds the last message timestamp to the user data in the json file
+        :param json_file: The json file to add the last message to
+        :param guild_id: The guild id of the guild
+        :param user_id: The user id of the user
+        :param message_timestamp: The timestamp of the message
+        """
         json_file[str(guild_id)][str(user_id)]["last_message"] = message_timestamp
         return
 
     def update_data(self, json_file, guild_id, user_id):
+        """
+        Updates the json file with the new data when the user or the guild is unknwon
+        :param json_file: The json file to update
+        :param guild_id: The guild id of the guild
+        :param user_id: The user id of the user
+        """
         if not str(guild_id) in json_file:
             json_file[str(guild_id)] = {}
         if not str(user_id) in json_file[str(guild_id)]:
@@ -47,6 +82,13 @@ class LevelingSystem(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message):
+        """
+        Check if the message was sent by a user
+        Check if the message is a command
+        Add experience to the user and check if the user has leveled up
+        Update the json file with the new data
+        :param message: The message that was sent
+        """
         if message.author.bot:
             return
         else:
@@ -82,6 +124,11 @@ class LevelingSystem(commands.Cog):
 
     @commands.command(name="level", aliases=["lvl", "rank"])
     async def level(self, ctx, user: discord.Member = None):
+        """
+        Command to check the level of a user
+        :param ctx: The context of the command
+        :param user: The user to check the level of
+        """
         if user is None:
             user = ctx.author
         with open("private/leveling.json", "r") as f:
@@ -99,6 +146,10 @@ class LevelingSystem(commands.Cog):
 
     @commands.command(name="leaderboard")
     async def leaderboard(self, ctx):
+        """
+        Command to check the leaderboard of the server
+        :param ctx: The context of the command
+        """
         with open("private/leveling.json", "r") as f:
             leveling = json.load(f)
 
@@ -121,5 +172,9 @@ class LevelingSystem(commands.Cog):
 
 
 def setup(bot):
+    """
+    Initializes the cog
+    :param bot: bot object
+    """
     bot.add_cog(LevelingSystem(bot))
     print("LevelingSystem is loaded")

@@ -4,10 +4,18 @@ import discord
 
 class ServerInfo(commands.Cog):
     def __init__(self, bot):
+        """
+        Initializes the bot object
+        :param bot: The bot to initialize the cog with
+        """
         self.bot = bot
 
     @commands.command(name='serverinfo', aliases=['si', 'server'])
     async def serverinfo(self, ctx):
+        """
+        Displays information about the server
+        :param ctx: The context of the command
+        """
         embed = discord.Embed(title=f"{ctx.guild.name} Info", description="Information of this server", color=discord.Colour.blue())
         embed.add_field(name='Owner', value=f"{ctx.guild.owner}", inline=True)
         embed.add_field(name='Verification level', value=f"{ctx.guild.verification_level}", inline=True)
@@ -40,5 +48,9 @@ class ServerInfo(commands.Cog):
 
 
 def setup(bot):
+    """
+    Initializes the cog
+    :param bot: bot object
+    """
     bot.add_cog(ServerInfo(bot))
     print('ServerInfo is loaded')

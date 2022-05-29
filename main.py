@@ -2,20 +2,25 @@ from private.config import token  # get token
 
 # import discord bot libraries
 from discord.ext import commands
-from discord.ext import tasks
+# import libraries
 import discord
 import asyncio
 import json
 
 
 def get_prefix(bot, message):
+    """
+    Get the prefix for the server the message was sent in
+    :param bot: bot object
+    :param message: message object
+    """
     with open('private/prefixes.json', 'r') as f:
         prefixes = json.load(f)
 
     return prefixes[str(message.guild.id)]
 
 
-# activate intents and set bot prefix to "!"
+# activate intents and set bot prefix with get_prefix function
 intents = discord.Intents.default()
 intents.presences = True
 intents.members = True
@@ -26,6 +31,9 @@ bot.remove_command('help')
 
 
 async def status_task():
+    """
+    Change bot status
+    """
     i = 0
     while True:
         activities = [
@@ -63,10 +71,15 @@ async def status_task():
 
 @bot.event
 async def on_ready():
+    """
+    Print in the console when the bot is ready
+    Change the bot status
+    """
     print(f'{bot.user} is online and connected to {len(bot.guilds)} servers, with {len(set(bot.get_all_members()))} users!')
     bot.loop.create_task(status_task())
 
 
+# load all the cogs
 bot.load_extension("cogs.Temp")
 bot.load_extension("cogs.CPU")
 bot.load_extension("cogs.RAM")
@@ -89,4 +102,6 @@ bot.load_extension("cogs.UserManagement")
 bot.load_extension("cogs.QuizSystem")
 bot.load_extension("cogs.LevelingSystem")
 
+
+# run bot
 bot.run(token)

@@ -4,10 +4,19 @@ import discord
 
 class UserInfo(commands.Cog):
     def __init__(self, bot):
+        """
+        Initializes the bot object
+        :param bot: The bot to initialize the cog with
+        """
         self.bot = bot
 
     @commands.command(name='userinfo', aliases=['user', 'ui'])
     async def userinfo(self, ctx, member: discord.Member = None):
+        """
+        Displays information about a user
+        :param ctx: The context of the command
+        :param member: The member to display information about
+        """
         if member is None:
             member = ctx.author
         date_format = '%Y-%m-%d %H:%M:%S'
@@ -40,5 +49,9 @@ class UserInfo(commands.Cog):
 
 
 def setup(bot):
+    """
+    Initializes the cog
+    :param bot: bot object
+    """
     bot.add_cog(UserInfo(bot))
     print('UserInfo is loaded')

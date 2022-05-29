@@ -4,6 +4,10 @@ import json
 
 
 def prefix_check(guild):
+    """
+    Checks if the guild has a custom prefix set.
+    :param guild: The guild to check.
+    """
     if guild is None:
         return '!'
     try:
@@ -16,10 +20,18 @@ def prefix_check(guild):
 
 class PrefixManagement(commands.Cog):
     def __init__(self, bot):
+        """
+        Initializes the bot object
+        :param bot: The bot to initialize the cog with
+        """
         self.bot = bot
 
     @commands.Cog.listener()
     async def on_guild_join(self, guild):
+        """
+        Adds the guild to the prefixes.json file
+        :param guild: The guild to add
+        """
         with open('private/prefixes.json', 'r') as f:
             prefixes = json.load(f)
 
@@ -30,6 +42,10 @@ class PrefixManagement(commands.Cog):
 
     @commands.Cog.listener()
     async def on_guild_remove(self, guild):
+        """
+        Removes the guild from the prefixes.json file
+        :param guild: The guild to remove
+        """
         with open('private/prefixes.json', 'r') as f:
             prefixes = json.load(f)
 
@@ -41,6 +57,11 @@ class PrefixManagement(commands.Cog):
     @commands.command(name='changeprefix', aliases=['prefix'])
     @commands.has_permissions(administrator=True)
     async def changeprefix(self, ctx, prefix):
+        """
+        Changes the prefix for the guild
+        :param ctx: The context of the command
+        :param prefix: The new prefix
+        """
         with open('private/prefixes.json', 'r') as f:
             prefixes = json.load(f)
 
@@ -58,6 +79,11 @@ class PrefixManagement(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message):
+        """
+        Check if the bot is mentioned in the message
+        Send the prefix if it is
+        :param message: The message to check
+        """
         if message.guild.me.mention in message.content:
             embed = discord.Embed(title='Prefix', description=f'My prefix is:   **{prefix_check(message.guild)}**', color=discord.Color.blue())
             embed.set_author(name=self.bot.user.name, icon_url=self.bot.user.avatar_url)
@@ -68,5 +94,9 @@ class PrefixManagement(commands.Cog):
 
 
 def setup(bot):
+    """
+    Initializes the cog
+    :param bot: bot object
+    """
     bot.add_cog(PrefixManagement(bot))
     print('PrefixManagement is loaded')

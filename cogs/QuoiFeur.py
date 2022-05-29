@@ -5,10 +5,20 @@ import random
 
 class QuoiFeur(commands.Cog):
     def __init__(self, bot):
+        """
+        Initializes the bot object
+        :param bot: The bot to initialize the cog with
+        """
         self.bot = bot
 
     @commands.Cog.listener(name='on_message')
     async def on_message(self, message):
+        """
+        Listens for messages and responds accordingly
+        If message end with 'quoi' or 'Quoi', it will respond with a random quote from the list
+        It except ponctuation and special characters at the end of the message
+        :param message: The message to listen to
+        """
         out = ((re.sub(r'[^\w\s]', '', message.content)).rstrip())
         end_quoi = out[len(out) - 4:len(out)]
         if end_quoi == "quoi" or end_quoi == "Quoi":
@@ -22,5 +32,9 @@ class QuoiFeur(commands.Cog):
 
 
 def setup(bot):
+    """
+    Initializes the cog
+    :param bot: bot object
+    """
     bot.add_cog(QuoiFeur(bot))
     print('QuoiFeur is loaded')

@@ -4,6 +4,10 @@ import json
 
 
 def prefix_check(guild):
+    """
+    Checks the guild's prefix
+    :param guild: The guild to check
+    """
     if guild is None:
         return '!'
     try:
@@ -16,10 +20,18 @@ def prefix_check(guild):
 
 class Help(commands.Cog):
     def __init__(self, bot):
+        """
+        Initializes the bot object
+        :param bot: The bot to initialize the cog with
+        """
         self.bot = bot
 
     @commands.command(name="help")
     async def help(self, ctx):
+        """
+        Sends the help menu in a embed message
+        :param ctx: The context of the command
+        """
         embed = discord.Embed(title="**Commands list**", description="List of all the commands available and possible to execute", color=discord.Colour.blue())
         embed.set_author(name=ctx.author.name, icon_url=ctx.author.avatar_url)
 
@@ -74,5 +86,9 @@ class Help(commands.Cog):
 
 
 def setup(bot):
+    """
+    Initializes the cog
+    :param bot: The bot to initialize the cog with
+    """
     bot.add_cog(Help(bot))
     print('Help is loaded')

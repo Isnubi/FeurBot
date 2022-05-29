@@ -7,10 +7,18 @@ import asyncio
 
 class QuizSystem(commands.Cog):
     def __init__(self, bot):
+        """
+        Initializes the bot object
+        :param bot: The bot to initialize the cog with
+        """
         self.bot = bot
 
     @commands.command(name='quiz', aliases=['q'])
     async def quiz(self, ctx):
+        """
+        Send a random quiz question
+        :param ctx: The context of the command
+        """
         with open('private/quiz.json', 'r') as f:
             quiz = json.load(f)
 
@@ -44,6 +52,11 @@ class QuizSystem(commands.Cog):
         await message.add_reaction(emoji4)
 
         def check(reaction, user):
+            """
+            Checks if the reaction is valid
+            :param reaction: The reaction to check
+            :param user: The user who reacted
+            """
             return user == ctx.author and str(reaction.emoji) in [emoji1, emoji2, emoji3, emoji4]
 
         try:
@@ -70,6 +83,15 @@ class QuizSystem(commands.Cog):
     @commands.command(name='addquiz', aliases=['aq'])
     @commands.is_owner()
     async def addquiz(self, ctx, question, realanswer, answer2, answer3, answer4):
+        """
+        Add a new quiz question
+        :param ctx: The context of the command
+        :param question: The question
+        :param realanswer: The real answer
+        :param answer2: One of the fake answers
+        :param answer3: One of the fake answers
+        :param answer4: One of the fake answers
+        """
         with open('private/quiz.json', 'r') as f:
             quiz = json.load(f)
 
@@ -100,6 +122,10 @@ class QuizSystem(commands.Cog):
     @commands.command(name='quizlist', aliases=['ql'])
     @commands.is_owner()
     async def quizlist(self, ctx):
+        """
+        Lists all the quiz questions
+        :param ctx: The context of the command
+        """
         with open('private/quiz.json', 'r') as f:
             quiz = json.load(f)
 
@@ -115,6 +141,11 @@ class QuizSystem(commands.Cog):
     @commands.command(name='removequiz', aliases=['rq'])
     @commands.is_owner()
     async def removequiz(self, ctx, question_number):
+        """
+        Removes a quiz question
+        :param ctx: The context of the command
+        :param question_number: The question number
+        """
         with open('private/quiz.json', 'r') as f:
             quiz = json.load(f)
 
@@ -133,5 +164,9 @@ class QuizSystem(commands.Cog):
 
 
 def setup(bot):
+    """
+    Initializes the cog
+    :param bot: bot object
+    """
     bot.add_cog(QuizSystem(bot))
     print('QuizSystem is loaded')
