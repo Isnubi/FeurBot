@@ -22,13 +22,18 @@ class LevelingSystem(commands.Cog):
         else:
             return
 
+    def add_last_message(self, json_file, guild_id, user_id, message_timestamp):
+        json_file[str(guild_id)][str(user_id)]["last_message"] = message_timestamp
+        return
+
     def update_data(self, json_file, guild_id, user_id):
         if not str(guild_id) in json_file:
             json_file[str(guild_id)] = {}
         if not str(user_id) in json_file[str(guild_id)]:
             json_file[str(guild_id)][str(user_id)] = {
                 "experience": 0,
-                "level": 1
+                "level": 1,
+                "last_message": "00-00-0000 00:00:00"
             }
 
     @commands.Cog.listener()
@@ -36,28 +41,28 @@ class LevelingSystem(commands.Cog):
         if message.author.bot:
             return
         else:
-            timestamp = message.created_at.strftime("%d-%m-%Y %H:%M:%S")
-            current_time = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
-            delta = datetime.datetime.strptime(current_time, "%d-%m-%Y %H:%M:%S") - datetime.datetime.strptime(timestamp, "%d-%m-%Y %H:%M:%S")
-            print(timestamp)
-            print(current_time)
-            print(delta)
-            print(delta.seconds)
-            if delta.seconds < 5:
+            if message.content.startswith("!"):
                 return
             else:
-                if message.content.startswith("!"):
+                with open("private/leveling.json", "r") as f:
+                    leveling = json.load(f)
+
+                self.update_data(leveling, message.guild.id, message.author.id)
+
+                last_message = leveling[str(message.guild.id)][str(message.author.id)]["last_message"]
+                current_time = datetime.datetime.utcnow().strftime("%d-%m-%Y %H:%M:%S")
+                delta = datetime.datetime.strptime(current_time, "%d-%m-%Y %H:%M:%S") - datetime.datetime.strptime(last_message, "%d-%m-%Y %H:%M:%S")
+                print(delta.seconds)
+                if delta.seconds < 5:
                     return
                 else:
-                    with open("private/leveling.json", "r") as f:
-                        leveling = json.load(f)
-
-                    self.update_data(leveling, message.guild.id, message.author.id)
+                    message_timestamp = message.created_at.strftime("%d-%m-%Y %H:%M:%S")
                     self.add_experience(leveling, message.guild.id, message.author.id, random.randint(1, 5))
                     self.level_up(leveling, message.guild.id, message.author.id)
+                    self.add_last_message(leveling, message.guild.id, message.author.id, message_timestamp)
 
-                    with open("private/leveling.json", "w") as f:
-                        json.dump(leveling, f, indent=4)
+                with open("private/leveling.json", "w") as f:
+                    json.dump(leveling, f, indent=4)
 
     @commands.command(name="level", aliases=["lvl", "rank"])
     async def level(self, ctx, user: discord.Member = None):
