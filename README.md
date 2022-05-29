@@ -50,6 +50,7 @@ General commands :
 * **!ping**: display the bot latency
 * **!serverinfo**: display the server information
 * **!userinfo**: display the user information
+* **!botinfo**: display the bot information
 
 Fun commands :
 * **!quiz**: display a random quiz
