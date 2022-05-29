@@ -37,7 +37,7 @@ class QuizSystem(commands.Cog):
             answers.append(quiz[random_key]['fake answer'][key])
         random.shuffle(answers)
 
-        embed = discord.Embed(title=question, description=question, color=discord.Color.blue())
+        embed = discord.Embed(title=f'{quiz[random_key]["category"]}', description=question, color=discord.Color.blue())
         embed.add_field(name='First answer', value=f'{answers[0]}', inline=False)
         embed.add_field(name='Second answer', value=f'{answers[1]}', inline=False)
         embed.add_field(name='Third answer', value=f'{answers[2]}', inline=False)
@@ -82,11 +82,12 @@ class QuizSystem(commands.Cog):
 
     @commands.command(name='addquiz', aliases=['aq'])
     @commands.is_owner()
-    async def addquiz(self, ctx, question, realanswer, answer2, answer3, answer4):
+    async def addquiz(self, ctx, question, category, realanswer, answer2, answer3, answer4):
         """
         Add a new quiz question
         :param ctx: The context of the command
         :param question: The question
+        :param category: The category of the question
         :param realanswer: The real answer
         :param answer2: One of the fake answers
         :param answer3: One of the fake answers
@@ -99,6 +100,7 @@ class QuizSystem(commands.Cog):
             'question': {
                 'question': question
             },
+            'category': category,
             'real answer': {
                 'answer1': realanswer
             },

@@ -1,0 +1,72 @@
+{
+    "1": {
+        "question": {
+            "question": "What is the capital of France?"
+        },
+        "category": "Geography",
+        "real answer": {
+            "answer1": "Paris"
+        },
+        "fake answer": {
+            "answer2": "London",
+            "answer3": "Berlin",
+            "answer4": "Madrid"
+        }
+    },
+    "2": {
+        "question": {
+            "question": "What is the capital of Germany?"
+        },
+        "category": "Geography",
+        "real answer": {
+            "answer1": "Berlin"
+        },
+        "fake answer": {
+            "answer2": "Paris",
+            "answer3": "London",
+            "answer4": "Madrid"
+        }
+    },
+    "3": {
+        "question": {
+            "question": "What is the capital of Italy?"
+        },
+        "category": "Geography",
+        "real answer": {
+            "answer1": "Rome"
+        },
+        "fake answer": {
+            "answer2": "Paris",
+            "answer3": "London",
+            "answer4": "Madrid"
+        }
+    },
+    "4": {
+        "question": {
+            "question": "What is the capital of Spain?"
+        },
+        "category": "Geography",
+        "real answer": {
+            "answer1": "Madrid"
+        },
+        "fake answer": {
+            "answer2": "Paris",
+            "answer3": "London",
+            "answer4": "Rome"
+        }
+    },
+    "5": {
+        "question": {
+            "question": "What is the capital of the United Kingdom?"
+        },
+        "category": "Geography",
+        "real answer": {
+            "answer1": "London"
+        },
+        "fake answer": {
+            "answer2": "Paris",
+            "answer3": "Berlin",
+            "answer4": "Madrid"
+        }
+    }
+}
