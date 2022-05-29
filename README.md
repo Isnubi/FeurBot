@@ -50,7 +50,13 @@ General commands :
 * **!ping**: display the bot latency
 * **!serverinfo**: display the server information
 * **!userinfo**: display the user information
+
+Fun commands :
 * **!quiz**: display a random quiz
+
+Level system commands :
+* **!level**: display the current level of the user
+* **leaderboard**: display the leaderboard
 
 User commands :
 * **!roll**: roll a dice
