@@ -9,16 +9,25 @@ class LevelingSystem(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+    def exp_needed(self, level):
+        base_exp = 50
+        exp_needed = base_exp * (pow(level, 2.6))
+        return int(exp_needed)
+
     def add_experience(self, json_file, guild_id, user_id, experience):
         json_file[str(guild_id)][str(user_id)]["experience"] += experience
 
-    def level_up(self, json_file, guild_id, user_id):
+    def level_up(self, json_file, guild_id, user_id, message):
         experience = json_file[str(guild_id)][str(user_id)]["experience"]
         level = json_file[str(guild_id)][str(user_id)]["level"]
-        if experience >= 100:
-            json_file[str(guild_id)][str(user_id)]["experience"] -= 100
+        if experience >= self.exp_needed(level):
+            json_file[str(guild_id)][str(user_id)]["experience"] -= self.exp_needed(level)
             json_file[str(guild_id)][str(user_id)]["level"] += 1
-            return
+
+            embed = discord.Embed(title="Level up!", description=f"{message.author.mention} has leveled up to level {level + 1}!", color=discord.Color.blue())
+            embed.set_author(name=self.bot.user.name, icon_url=self.bot.user.avatar_url)
+            embed.set_footer(text=f"{message.author.name}'s Level", icon_url=message.author.avatar_url)
+            return embed
         else:
             return
 
@@ -41,7 +50,13 @@ class LevelingSystem(commands.Cog):
         if message.author.bot:
             return
         else:
-            if message.content.startswith("!"):
+            with open("private/prefixes.json", "r") as f:
+                prefixes = json.load(f)
+            if str(message.guild.id) in prefixes:
+                prefix = prefixes[str(message.guild.id)]
+            else:
+                prefix = "!"
+            if message.content.startswith(prefix):
                 return
             else:
                 with open("private/leveling.json", "r") as f:
@@ -52,13 +67,14 @@ class LevelingSystem(commands.Cog):
                 last_message = leveling[str(message.guild.id)][str(message.author.id)]["last_message"]
                 current_time = datetime.datetime.utcnow().strftime("%d-%m-%Y %H:%M:%S")
                 delta = datetime.datetime.strptime(current_time, "%d-%m-%Y %H:%M:%S") - datetime.datetime.strptime(last_message, "%d-%m-%Y %H:%M:%S")
-                print(delta.seconds)
                 if delta.seconds < 5:
                     return
                 else:
                     message_timestamp = message.created_at.strftime("%d-%m-%Y %H:%M:%S")
                     self.add_experience(leveling, message.guild.id, message.author.id, random.randint(1, 5))
-                    self.level_up(leveling, message.guild.id, message.author.id)
+                    levelup = self.level_up(leveling, message.guild.id, message.author.id, message)
+                    if levelup:
+                        await message.channel.send(embed=levelup)
                     self.add_last_message(leveling, message.guild.id, message.author.id, message_timestamp)
 
                 with open("private/leveling.json", "w") as f:
@@ -75,6 +91,7 @@ class LevelingSystem(commands.Cog):
         exp = leveling[str(ctx.guild.id)][str(user.id)]["experience"]
 
         embed = discord.Embed(title=f"{user.name}'s Level", description=f"{user.mention} is level {lvl} with {exp} experience.", color=discord.Color.blue())
+        embed.add_field(name="Experience Needed to Level Up", value=self.exp_needed(lvl), inline=False)
         embed.set_author(name=user.name, icon_url=user.avatar_url)
 
         await ctx.message.delete()

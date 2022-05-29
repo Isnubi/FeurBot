@@ -13,6 +13,7 @@ class UserManagement(commands.Cog):
         embed.set_footer(text=f"{ctx.author}", icon_url=ctx.author.avatar_url)
         embed.set_author(name=f"{ctx.guild.name}", icon_url=ctx.guild.icon_url)
         await member.kick(reason=reason)
+        await member.send(f"You have been kicked from {ctx.guild.name} for {reason}")
         await ctx.send(embed=embed)
 
     @commands.command(name='ban')
@@ -22,6 +23,7 @@ class UserManagement(commands.Cog):
         embed.set_footer(text=f"{ctx.author}", icon_url=ctx.author.avatar_url)
         embed.set_author(name=f"{ctx.guild.name}", icon_url=ctx.guild.icon_url)
         await member.ban(reason=reason)
+        await member.send(f"You have been banned from {ctx.guild.name} for {reason}")
         await ctx.send(embed=embed)
 
     @commands.command(name='banlist')
@@ -48,6 +50,7 @@ class UserManagement(commands.Cog):
                 embed.set_author(name=f"{ctx.guild.name}", icon_url=ctx.guild.icon_url)
                 await ctx.message.delete()
                 await ctx.send(embed=embed)
+                await user.user.send(f"You have been unbanned from {ctx.guild.name}")
                 return
             else:
                 embed = discord.Embed(title="An error occurred", description="User not found.", color=0xff0000)
