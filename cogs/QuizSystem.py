@@ -44,7 +44,7 @@ class QuizSystem(commands.Cog):
         embed.add_field(name='Fourth answer', value=f'{answers[3]}', inline=False)
         embed.set_author(name=ctx.author.name, icon_url=ctx.author.avatar_url)
 
-        ctx.message.delete()
+        await ctx.message.delete()
         message = await ctx.send(embed=embed)
         await message.add_reaction(emoji1)
         await message.add_reaction(emoji2)
