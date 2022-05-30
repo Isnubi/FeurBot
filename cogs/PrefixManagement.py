@@ -81,16 +81,18 @@ class PrefixManagement(commands.Cog):
     async def on_message(self, message):
         """
         Check if the bot is mentioned in the message
+        If the message contains another characters than the bot mention, the bot will ignore the message
         Send the prefix if it is
         :param message: The message to check
         """
         if message.guild.me.mention in message.content:
-            embed = discord.Embed(title='Prefix', description=f'My prefix is:   **{prefix_check(message.guild)}**', color=discord.Color.blue())
-            embed.set_author(name=self.bot.user.name, icon_url=self.bot.user.avatar_url)
-            embed.set_footer(text=f'Requested by {message.author}', icon_url=message.author.avatar_url)
-
-            await message.delete()
-            await message.channel.send(embed=embed)
+            # check if the message contains only the bot mention
+            if message.content.replace(message.guild.me.mention, '').strip() == '':
+                embed = discord.Embed(title='Prefix', description=f'My prefix is:   **{prefix_check(message.guild)}**', color=discord.Color.blue())
+                embed.set_author(name=self.bot.user.name, icon_url=self.bot.user.avatar_url)
+                embed.set_footer(text=f'Requested by {message.author}', icon_url=message.author.avatar_url)
+                await message.delete()
+                await message.channel.send(embed=embed)
 
 
 def setup(bot):
