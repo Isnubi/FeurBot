@@ -68,5 +68,117 @@
             "answer3": "Berlin",
             "answer4": "Madrid"
         }
+    },
+    "6": {
+        "question": {
+            "question": "What is the capital of the United States?"
+        },
+        "category": "Geography",
+        "real answer": {
+            "answer1": "Washington"
+        },
+        "fake answer": {
+            "answer2": "Paris",
+            "answer3": "London",
+            "answer4": "Rome"
+        }
+    },
+    "7": {
+        "question": {
+            "question": "What is the capital of Brazil?"
+        },
+        "category": "Geography",
+        "real answer": {
+            "answer1": "Brasilia"
+        },
+        "fake answer": {
+            "answer2": "Paris",
+            "answer3": "London",
+            "answer4": "Rome"
+        }
+    },
+    "8": {
+        "question": {
+            "question": "What is the capital of Canada?"
+        },
+        "category": "Geography",
+        "real answer": {
+            "answer1": "Ottawa"
+        },
+        "fake answer": {
+            "answer2": "Paris",
+            "answer3": "London",
+            "answer4": "Rome"
+        }
+    },
+    "9": {
+        "question": {
+            "question": "What is the capital of Australia?"
+        },
+        "category": "Geography",
+        "real answer": {
+            "answer1": "Canberra"
+        },
+        "fake answer": {
+            "answer2": "Paris",
+            "answer3": "London",
+            "answer4": "Rome"
+        }
+    },
+    "10": {
+        "question": {
+            "question": "What is the capital of Japan?"
+        },
+        "category": "Geography",
+        "real answer": {
+            "answer1": "Tokyo"
+        },
+        "fake answer": {
+            "answer2": "Paris",
+            "answer3": "London",
+            "answer4": "Rome"
+        }
+    },
+    "11": {
+        "question": {
+            "question": "What is the star of our galaxy?"
+        },
+        "category": "Science",
+        "real answer": {
+            "answer1": "The Sun"
+        },
+        "fake answer": {
+            "answer2": "The Moon",
+            "answer3": "The Earth",
+            "answer4": "Saturn"
+        }
+    },
+    "12": {
+        "question": {
+            "question": "What is the satellite of the Earth?"
+        },
+        "category": "Science",
+        "real answer": {
+            "answer1": "The Moon"
+        },
+        "fake answer": {
+            "answer2": "The Sun",
+            "answer3": "The Earth",
+            "answer4": "Saturn"
+        }
+    },
+    "13": {
+        "question": {
+            "question": "What is the name of the planet that we live on?"
+        },
+        "category": "Science",
+        "real answer": {
+            "answer1": "Earth"
+        },
+        "fake answer": {
+            "answer2": "Mars",
+            "answer3": "Mercure",
+            "answer4": "Saturn"
+        }
     }
 }

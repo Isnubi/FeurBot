@@ -10,6 +10,44 @@ class UserManagement(commands.Cog):
         """
         self.bot = bot
 
+    @commands.command(name='mute')
+    @commands.has_guild_permissions(mute_members=True)
+    async def mute(self, ctx, member: discord.Member):
+        """
+        Command to mute a member
+        :param ctx: The context of the command
+        :param member: Member object
+        """
+        if member.voice is None:
+            await ctx.send("This user is not in a voice channel")
+            return
+        await member.edit(mute=True)
+
+        embed = discord.Embed(title="Muted", description=f"{member.mention} has been muted.", color=discord.Color.blue())
+        embed.set_footer(text=f"{ctx.author}", icon_url=ctx.author.avatar_url)
+        embed.set_author(name=f"{ctx.guild.name}", icon_url=ctx.guild.icon_url)
+        await ctx.message.delete()
+        await ctx.send(embed=embed)
+
+    @commands.command(name='unmute')
+    @commands.has_guild_permissions(mute_members=True)
+    async def unmute(self, ctx, member: discord.Member):
+        """
+        Command to unmute a member
+        :param ctx: The context of the command
+        :param member: Member object
+        """
+        if member.voice is None:
+            await ctx.send("This user is not in a voice channel")
+            return
+        await member.edit(mute=False)
+
+        embed = discord.Embed(title="Unmuted", description=f"{member.mention} has been unmuted.", color=discord.Color.blue())
+        embed.set_footer(text=f"{ctx.author}", icon_url=ctx.author.avatar_url)
+        embed.set_author(name=f"{ctx.guild.name}", icon_url=ctx.guild.icon_url)
+        await ctx.message.delete()
+        await ctx.send(embed=embed)
+
     @commands.command(name='kick')
     @commands.has_permissions(kick_members=True)
     async def kick(self, ctx, member: discord.Member, *, reason=None):
