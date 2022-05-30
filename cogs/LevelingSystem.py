@@ -164,11 +164,14 @@ class LevelingSystem(commands.Cog):
             exp = leveling[str(ctx.guild.id)][str(user)]["experience"]
             users.append((user, lvl, exp))
         users = sorted(sorted(users, key=lambda x: x[2], reverse=True), key=lambda x: x[1], reverse=True)
-        for user in users:
-            embed.add_field(name=f"{self.bot.get_user(int(user[0])).name}", value=f"Level: {user[1]}\nExperience: {user[2]}", inline=False)
+
+        for i in range(0, len(users), 20):
+            for user in users[i:i+20]:
+                embed.add_field(name=f"{self.bot.get_user(int(user[0])).name}", value=f"Level: {user[1]}\nExperience: {user[2]}", inline=False)
+            await ctx.send(embed=embed)
+            embed.clear_fields()
 
         await ctx.message.delete()
-        await ctx.send(embed=embed)
 
 
 def setup(bot):
