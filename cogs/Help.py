@@ -65,21 +65,47 @@ class Help(commands.Cog):
         music_commands.add_field(name=f"**{prefix_check(ctx.guild)}resume**", value="Resume the current song", inline=True)
         music_commands.add_field(name=f"**{prefix_check(ctx.guild)}stop**", value="Stop the music", inline=True)
         music_commands.add_field(name=f"**{prefix_check(ctx.guild)}volume** *<number>*", value="Change the volume of the music", inline=True)
+        music_commands.add_field(name=f"**{prefix_check(ctx.guild)}leave**", value="Leave the channel you're in", inline=True)
         music_commands.set_author(name=ctx.author.name, icon_url=ctx.author.avatar_url)
         music_commands.set_footer(text="Bot made by @isnubi#6221. If you want to contribute, contact him on discord. If you want to report a bug, contact the developer on discord.")
         
         moderation_commands = discord.Embed(title="**Commands list**", description="List of all the commands available and possible to execute", color=discord.Colour.blue())
-        moderation_commands.add_field(name="__Moderation__", value="List of all the moderation commands available", inline=False)
+        moderation_commands.add_field(name="__Moderation__", value="List of all the moderation commands available\nThese commands are limited for user with privileges in order of the command", inline=False)
         moderation_commands.add_field(name=f"**{prefix_check(ctx.guild)}purge** *<number>*", value="Delete messages in channel", inline=True)
         moderation_commands.add_field(name=f"**{prefix_check(ctx.guild)}setprefix** *<prefix>*", value="Change the prefix of the bot", inline=True)
         moderation_commands.add_field(name=f"**{prefix_check(ctx.guild)}kick** *<@user>*", value="Kick the mentioned user", inline=True)
         moderation_commands.add_field(name=f"**{prefix_check(ctx.guild)}ban** *<@user>*", value="Ban the mentioned user", inline=True)
         moderation_commands.add_field(name=f"**{prefix_check(ctx.guild)}banlist**", value="List of all the banned users", inline=True)
         moderation_commands.add_field(name=f"**{prefix_check(ctx.guild)}unban** *<userid>*", value="Unban the mentioned user", inline=True)
+        moderation_commands.add_field(name=f"**{prefix_check(ctx.guild)}mute** *<@user>*", value="Mute the mentioned user", inline=True)
+        moderation_commands.add_field(name=f"**{prefix_check(ctx.guild)}unmute** *<@user>*", value="Unmute the mentioned user", inline=True)
         moderation_commands.set_author(name=ctx.author.name, icon_url=ctx.author.avatar_url)
         moderation_commands.set_footer(text="Bot made by @isnubi#6221. If you want to contribute, contact him on discord. If you want to report a bug, contact the developer on discord.")
 
-        pages = [user_commands, fun_commands, leveling_commands, music_commands, moderation_commands]
+        systemchannel_commands = discord.Embed(title="**Commands list**", description="List of all the commands available and possible to execute", color=discord.Colour.blue())
+        systemchannel_commands.add_field(name="__System channel__", value="List of all the system channel commands available\nThese commands are limited for user with **manage channel** permission", inline=False)
+        systemchannel_commands.add_field(name=f"**{prefix_check(ctx.guild)}setchannel** *<channel>*", value="Set the channel where the bot will send the messages", inline=True)
+        systemchannel_commands.add_field(name=f"**{prefix_check(ctx.guild)}resetchannel**", value="Reset the channel where the bot will send the messages", inline=True)
+        systemchannel_commands.set_author(name=ctx.author.name, icon_url=ctx.author.avatar_url)
+        systemchannel_commands.set_footer(text="Bot made by @isnubi#6221. If you want to contribute, contact him on discord. If you want to report a bug, contact the developer on discord.")
+
+        prefix_commands = discord.Embed(title="**Commands list**", description="List of all the commands available and possible to execute", color=discord.Colour.blue())
+        prefix_commands.add_field(name="__Prefix__", value="List of all the prefix commands available\nThese commands are limited for user with **administrator** privileges", inline=False)
+        prefix_commands.add_field(name=f"**Mention the bot**", value="Mention the bot to get the prefix", inline=True)
+        prefix_commands.add_field(name=f"**{prefix_check(ctx.guild)}setprefix** *<prefix>*", value="Change the prefix of the bot", inline=True)
+        prefix_commands.set_author(name=ctx.author.name, icon_url=ctx.author.avatar_url)
+        prefix_commands.set_footer(text="Bot made by @isnubi#6221. If you want to contribute, contact him on discord. If you want to report a bug, contact the developer on discord.")
+
+        hardware_commands = discord.Embed(title="**Commands list**", description="List of all the commands available and possible to execute", color=discord.Colour.blue())
+        hardware_commands.add_field(name="__Hardware__", value="List of all the hardware commands available", inline=False)
+        hardware_commands.add_field(name=f"**{prefix_check(ctx.guild)}ping**", value="Get the latency of the bot", inline=True)
+        hardware_commands.add_field(name=f"**{prefix_check(ctx.guild)}cpu**", value="Get the CPU usage of the bot", inline=True)
+        hardware_commands.add_field(name=f"**{prefix_check(ctx.guild)}ram**", value="Get the RAM usage of the bot", inline=True)
+        hardware_commands.add_field(name=f"**{prefix_check(ctx.guild)}temp**", value="Get the temperature of the bot", inline=True)
+        hardware_commands.set_author(name=ctx.author.name, icon_url=ctx.author.avatar_url)
+        hardware_commands.set_footer(text="Bot made by @isnubi#6221. If you want to contribute, contact him on discord. If you want to report a bug, contact the developer on discord.")
+
+        pages = [user_commands, fun_commands, leveling_commands, music_commands, moderation_commands, systemchannel_commands, prefix_commands, hardware_commands]
 
         message = await ctx.send(embed=pages[0])
         await message.add_reaction('◀')
@@ -96,12 +122,17 @@ class Help(commands.Cog):
                     i -= 1
                     await message.edit(embed=pages[i])
             elif str(reaction) == '▶':
-                if i < 4:
+                if i < len(pages) - 1:
                     i += 1
                     await message.edit(embed=pages[i])
 
-            reaction, user = await self.bot.wait_for('reaction_add', timeout=30, check=check)
-            await message.remove_reaction(reaction, user)
+            try:
+                reaction, user = await self.bot.wait_for('reaction_add', timeout=60.0, check=check)
+            except asyncio.TimeoutError:
+                await message.delete()
+                return
+            else:
+                await message.remove_reaction(reaction, user)
 
         await message.clear_reactions()
 

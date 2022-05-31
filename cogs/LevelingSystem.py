@@ -106,10 +106,15 @@ class LevelingSystem(commands.Cog):
 
                 self.update_data(leveling, message.guild.id, message.author.id)
 
-                last_message = leveling[str(message.guild.id)][str(message.author.id)]["last_message"]
-                current_time = datetime.datetime.utcnow().strftime("%d-%m-%Y %H:%M:%S")
-                delta = datetime.datetime.strptime(current_time, "%d-%m-%Y %H:%M:%S") - datetime.datetime.strptime(last_message, "%d-%m-%Y %H:%M:%S")
-                if delta.seconds < 5:
+                if not message.author.id in leveling[str(message.guild.id)]:
+                    delta = 6
+                else:
+                    last_message = leveling[str(message.guild.id)][str(message.author.id)]["last_message"]
+                    current_time = datetime.datetime.utcnow().strftime("%d-%m-%Y %H:%M:%S")
+                    delta = datetime.datetime.strptime(current_time, "%d-%m-%Y %H:%M:%S") - datetime.datetime.strptime(last_message, "%d-%m-%Y %H:%M:%S")
+                    delta = delta.seconds
+
+                if delta < 5:
                     return
                 else:
                     message_timestamp = message.created_at.strftime("%d-%m-%Y %H:%M:%S")

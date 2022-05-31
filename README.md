@@ -47,7 +47,6 @@ There is the list of all the commands available:
 
 General commands :
 * **!help**: display the list of commands
-* **!ping**: display the bot latency
 * **!serverinfo**: display the server information
 * **!userinfo**: display the user information
 * **!botinfo**: display the bot information
@@ -73,18 +72,23 @@ Music commands :
 * **!stop** : stop the music
 * **!leave** : let the bot leave your voice channel
 
-Admin commands :
+Moderation commands :
 * **!purge**: delete a number of messages
 * **!setprefix**: change the bot prefix
 * **!kick**: kick a user
 * **!ban**: ban a user
 * **!unban**: unban a user
 * **!banlist**: display the list of banned users
+* **!mute**: mute a user
+* **!unmute**: unmute a user
 
-Hardware statistics commands :
-* **!cpu**: display the CPU usage
-* **!ram**: display the RAM usage
-* **!temp**: display the CPU temperature
+Prefix commands :
+* Mention the bot will answer you the current prefix used by the server.
+* **!setprefix**: change the bot prefix
+
+Bot system channel commands :
+* **!setchannel**: set the bot system channel
+* **!resetchannel**: reset the bot system channel to the default system channel
 
 Bot owner commands :
 * **!coglist**: display the list of cogs
@@ -95,6 +99,12 @@ Bot owner commands :
 * **!addquiz**: add a question to the quiz
 * **!removequiz**: remove a question from the quiz
 * **!quizlist**: display the list of questions
+
+Hardware statistics commands :
+* **!ping**: display the bot latency
+* **!cpu**: display the CPU usage
+* **!ram**: display the RAM usage
+* **!temp**: display the CPU temperature
 
 ## Contributing
 

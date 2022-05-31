@@ -101,6 +101,7 @@ bot.load_extension("cogs.PrefixManagement")
 bot.load_extension("cogs.UserManagement")
 bot.load_extension("cogs.QuizSystem")
 bot.load_extension("cogs.LevelingSystem")
+bot.load_extension("cogs.BotChannelManagement")
 
 
 # run bot

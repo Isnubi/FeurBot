@@ -1,5 +1,6 @@
 from discord.ext import commands
 import discord
+import json
 
 
 class MemberJoinLeave(commands.Cog):
@@ -16,7 +17,9 @@ class MemberJoinLeave(commands.Cog):
         Sends a message in the system channel when a member joins a server
         :param member: The member that joined the server
         """
-        channel = self.bot.get_channel(member.guild.system_channel.id)
+        with open('private/custom_channel.json', 'r') as f:
+            custom_channel = json.load(f)
+        channel = self.bot.get_channel(int(custom_channel[str(member.guild.id)]["channel"]))
         embed = discord.Embed(
             title=f"Welcome {member.name} to the server!",
             description=f"{member.mention} has joined the server!",
@@ -32,7 +35,9 @@ class MemberJoinLeave(commands.Cog):
         Sends a message in the system channel when a member leaves a server
         :param member: The member that left the server
         """
-        channel = self.bot.get_channel(member.guild.system_channel.id)
+        with open('private/custom_channel.json', 'r') as f:
+            custom_channel = json.load(f)
+        channel = self.bot.get_channel(int(custom_channel[str(member.guild.id)]["channel"]))
         embed = discord.Embed(
             title=f"{member.name} has left the server!",
             description=f"{member.mention} has left the server!",
