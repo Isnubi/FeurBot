@@ -107,6 +107,7 @@ class Help(commands.Cog):
 
         pages = [user_commands, fun_commands, leveling_commands, music_commands, moderation_commands, systemchannel_commands, prefix_commands, hardware_commands]
 
+        await ctx.message.delete()
         message = await ctx.send(embed=pages[0])
         await message.add_reaction('◀')
         await message.add_reaction('▶')
