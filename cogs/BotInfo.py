@@ -1,5 +1,21 @@
 import discord
 from discord.ext import commands
+import json
+
+
+def prefix_check(guild):
+    """
+    Checks the guild's prefix
+    :param guild: The guild to check
+    """
+    if guild is None:
+        return '!'
+    try:
+        with open('private/prefixes.json', 'r') as f:
+            prefixes = json.load(f)
+            return prefixes[str(guild.id)]
+    except:
+        return '!'
 
 
 class BotInfo(commands.Cog):
@@ -21,7 +37,7 @@ class BotInfo(commands.Cog):
         embed.set_footer(text=f'This bot is running on {len(self.bot.guilds)} servers!')
         embed.add_field(name='Bot Name', value=self.bot.user.name, inline=True)
         embed.add_field(name='Bot Version', value='1.3.7', inline=True)
-        embed.add_field(name='Bot Prefix', value='!', inline=True)
+        embed.add_field(name='Bot Prefix', value=f"{prefix_check(ctx.guild)}", inline=True)
         embed.add_field(name='Bot Language', value='Python 3.7', inline=True)
         embed.add_field(name='Bot Library', value='discord.py', inline=True)
         embed.add_field(name='Bot Developer: isnubi#6221', value='https://github.com/Isnubi/', inline=False)
