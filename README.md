@@ -56,7 +56,7 @@ Fun commands :
 
 Level system commands :
 * **!level**: display the current level of the user
-* **leaderboard**: display the leaderboard
+* **!leaderboard**: display the leaderboard
 
 User commands :
 * **!roll**: roll a dice
@@ -74,7 +74,6 @@ Music commands :
 
 Moderation commands :
 * **!purge**: delete a number of messages
-* **!setprefix**: change the bot prefix
 * **!kick**: kick a user
 * **!ban**: ban a user
 * **!unban**: unban a user

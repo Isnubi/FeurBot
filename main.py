@@ -62,11 +62,14 @@ async def status_task():
                 name='Get bot prefix by mention @FeurBot'
             )
         ]  # list of bot activities
-        await bot.change_presence(activity=activities[i])
-        i += 1
-        if i > (len(activities) - 1):
-            i = 0
-        await asyncio.sleep(5)
+        try:
+            await bot.change_presence(activity=activities[i])
+            i += 1
+            if i > (len(activities) - 1):
+                i = 0
+            await asyncio.sleep(5)
+        except:
+            pass
 
 
 @bot.event
