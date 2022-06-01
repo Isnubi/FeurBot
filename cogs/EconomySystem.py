@@ -94,10 +94,17 @@ class EconomySystem(commands.Cog):
         with open("private/economy.json", "r") as f:
             data = json.load(f)
 
+        embed = discord.Embed(title="Balance", description='How many coins do you have?', color=discord.Color.blue())
+        embed.set_author(name=f"{user.name}'s balance", icon_url=user.avatar_url)
+        embed.set_footer(text=f"Requested by {ctx.author.name}", icon_url=ctx.author.avatar_url)
+
         if str(user.id) in data[str(ctx.guild.id)]:
-            await ctx.send(f"{user.mention} has {data[str(ctx.guild.id)][str(user.id)]['balance']} {ctx.guild.name} coins.")
+            embed.add_field(name="Balance", value=f"{data[str(ctx.guild.id)][str(user.id)]['balance']} coins")
         else:
-            await ctx.send(f"{user.mention} has no registered {ctx.guild.name} coins.\nUse `{prefix_check(ctx.guild)}register to register.")
+            embed.add_field(name="Error", value=f"You are not registered.\nUse `{ctx.prefix}register` to register.")
+
+        await ctx.message.delete()
+        await ctx.send(embed=embed)
 
     @commands.command(name="bank")
     async def bank(self, ctx):
@@ -109,7 +116,7 @@ class EconomySystem(commands.Cog):
         with open("private/economy.json", "r") as f:
             economy = json.load(f)
 
-        embed = discord.Embed(title="Bank", color=discord.Color.blue())
+        embed = discord.Embed(title="Bank", description='Leaderboard of the bank', color=discord.Color.blue())
         embed.set_author(name=ctx.guild.name, icon_url=ctx.guild.icon_url)
         embed.set_footer(text=f"{ctx.author}", icon_url=ctx.author.avatar_url)
         embed.set_thumbnail(url=ctx.guild.icon_url)
@@ -137,8 +144,12 @@ class EconomySystem(commands.Cog):
         with open("private/economy.json", "r") as f:
             data = json.load(f)
 
+        embed = discord.Embed(title="Register", description='You\'re not registered yet?', color=discord.Color.blue())
+        embed.set_author(name=ctx.guild.name, icon_url=ctx.guild.icon_url)
+        embed.set_footer(text=f"{ctx.author}", icon_url=ctx.author.avatar_url)
+
         if str(ctx.author.id) in data[str(ctx.guild.id)]:
-            await ctx.send(f"{ctx.author.mention} already has registered {ctx.guild.name} coins.")
+            embed.add_field(name="Error", value="You are already registered.")
         else:
             current_time = datetime.datetime.utcnow().strftime("%d-%m-%Y %H:%M:%S")
             data[str(ctx.guild.id)][str(ctx.author.id)] = {
@@ -147,7 +158,10 @@ class EconomySystem(commands.Cog):
             }
             with open("private/economy.json", "w") as f:
                 json.dump(data, f, indent=4)
-            await ctx.send(f"{ctx.author.mention} has registered {ctx.guild.name} coins.")
+            embed.add_field(name="Success", value="You have been registered.")
+
+        await ctx.message.delete()
+        await ctx.send(embed=embed)
 
     @commands.command(name="pay", aliases=["give", "transfer"])
     async def pay(self, ctx, user: discord.Member, amount: int):
@@ -160,6 +174,10 @@ class EconomySystem(commands.Cog):
         with open("private/economy.json", "r") as f:
             data = json.load(f)
 
+        embed = discord.Embed(title="Pay", description='Pay someone!', color=discord.Color.blue())
+        embed.set_author(name=ctx.guild.name, icon_url=ctx.guild.icon_url)
+        embed.set_footer(text=f"{ctx.author}", icon_url=ctx.author.avatar_url)
+
         if str(ctx.author.id) in data[str(ctx.guild.id)]:
             if str(user.id) in data[str(ctx.guild.id)]:
                 if amount <= data[str(ctx.guild.id)][str(ctx.author.id)]['balance']:
@@ -167,13 +185,16 @@ class EconomySystem(commands.Cog):
                     data[str(ctx.guild.id)][str(user.id)]['balance'] += amount
                     with open("private/economy.json", "w") as f:
                         json.dump(data, f, indent=4)
-                    await ctx.send(f"{ctx.author.mention} has paid {user.mention} {amount} {ctx.guild.name} coins.")
+                    embed.add_field(name="Success", value=f"You have successfully transferred {amount} to {user.name}.")
                 else:
-                    await ctx.send(f"{ctx.author.mention} does not have enough {ctx.guild.name} coins to pay {user.mention}.")
+                    embed.add_field(name="Error", value=f"You don't have enough money to transfer {amount}.")
             else:
-                await ctx.send(f"{user.mention} has no registered {ctx.guild.name} coins.\nUse `{prefix_check(ctx.guild)}register to register.")
+                embed.add_field(name="Error", value=f"{user.name} is not registered.")
         else:
-            await ctx.send(f"{ctx.author.mention} has no registered {ctx.guild.name} coins.\nUse `{prefix_check(ctx.guild)}register to register.")
+            embed.add_field(name="Error", value=f"You are not registered.\nUse `{ctx.prefix}register` to register.")
+
+        await ctx.message.delete()
+        await ctx.send(embed=embed)
 
     @commands.command(name="daily", aliases=["dailycoins"])
     async def daily(self, ctx):
@@ -183,6 +204,11 @@ class EconomySystem(commands.Cog):
         """
         with open("private/economy.json", "r") as f:
             data = json.load(f)
+
+        embed = discord.Embed(title="Daily", description='Get your daily coins!', color=discord.Color.blue())
+        embed.set_author(name=ctx.guild.name, icon_url=ctx.guild.icon_url)
+        embed.set_footer(text=f"{ctx.author}", icon_url=ctx.author.avatar_url)
+
         if str(ctx.author.id) in data[str(ctx.guild.id)]:
             current_time = datetime.datetime.utcnow().strftime("%d-%m-%Y %H:%M:%S")
             last_daily = data[str(ctx.guild.id)][str(ctx.author.id)]['daily_time']
@@ -192,11 +218,14 @@ class EconomySystem(commands.Cog):
                 data[str(ctx.guild.id)][str(ctx.author.id)]['balance'] += 100
                 with open("private/economy.json", "w") as f:
                     json.dump(data, f, indent=4)
-                await ctx.send(f"{ctx.author.mention} has received 100 {ctx.guild.name} coins for being a daily user.")
+                embed.add_field(name="Success", value=f"You have received 100 coins for being a daily user.")
             else:
-                await ctx.send(f"{ctx.author.mention} has already received their daily {ctx.guild.name} coins.")
+                embed.add_field(name="Error", value=f"You have already received your daily coins today.")
         else:
-            await ctx.send(f"{ctx.author.mention} has no registered {ctx.guild.name} coins.\nUse {prefix_check(ctx.guild)}register to register.")
+            embed.add_field(name="Error", value=f"You are not registered.\nUse `{ctx.prefix}register` to register.")
+
+        await ctx.message.delete()
+        await ctx.send(embed=embed)
 
 
 def setup(bot):
