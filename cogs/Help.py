@@ -50,6 +50,13 @@ class Help(commands.Cog):
         fun_commands.set_author(name=ctx.author.name, icon_url=ctx.author.avatar_url)
         fun_commands.set_footer(text="Bot made by @isnubi#6221. If you want to contribute, contact him on discord. If you want to report a bug, contact the developer on discord.")
 
+        economy_commands = discord.Embed(title="**Commands list**", description="List of all the commands available and possible to execute", color=discord.Colour.blue())
+        economy_commands.add_field(name="__Economy__", value="List of all the economy commands available", inline=False)
+        economy_commands.add_field(name=f"**{prefix_check(ctx.guild)}register** - [r]", value="Register your account if you don't have any one", inline=True)
+        economy_commands.add_field(name=f"**{prefix_check(ctx.guild)}balance** - [b]", value="Get your balance", inline=True)
+        economy_commands.add_field(name=f"**{prefix_check(ctx.guild)}daily** - [d]", value="Get your daily reward every 24 hours", inline=True)
+        economy_commands.add_field(name=f"**{prefix_check(ctx.guild)}pay** *<@user>* *<amount>*", value="Pay someone money", inline=True)
+
         leveling_commands = discord.Embed(title="**Commands list**", description="List of all the commands available and possible to execute", color=discord.Colour.blue())
         leveling_commands.add_field(name="__Leveling__", value="List of all the leveling commands available", inline=False)
         leveling_commands.add_field(name=f"**{prefix_check(ctx.guild)}level** *<@user>*", value="Get the level of the mentioned user", inline=True)
@@ -105,7 +112,7 @@ class Help(commands.Cog):
         hardware_commands.set_author(name=ctx.author.name, icon_url=ctx.author.avatar_url)
         hardware_commands.set_footer(text="Bot made by @isnubi#6221. If you want to contribute, contact him on discord. If you want to report a bug, contact the developer on discord.")
 
-        pages = [user_commands, fun_commands, leveling_commands, music_commands, moderation_commands, systemchannel_commands, prefix_commands, hardware_commands]
+        pages = [user_commands, fun_commands, economy_commands, leveling_commands, music_commands, moderation_commands, systemchannel_commands, prefix_commands, hardware_commands]
 
         await ctx.message.delete()
         message = await ctx.send(embed=pages[0])

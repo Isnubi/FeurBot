@@ -54,6 +54,12 @@ General commands :
 Fun commands :
 * **!quiz**: display a random quiz
 
+Economy commands :
+* **!balance**: display the balance of the user
+* **!daily**: get a daily reward every 24 hours
+* **!pay**: pay a user
+* **!register**: register a user if he's not registered (user is in the server before the bot join it)
+
 Level system commands :
 * **!level**: display the current level of the user
 * **!leaderboard**: display the leaderboard

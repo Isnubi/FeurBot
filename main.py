@@ -105,6 +105,7 @@ bot.load_extension("cogs.UserManagement")
 bot.load_extension("cogs.QuizSystem")
 bot.load_extension("cogs.LevelingSystem")
 bot.load_extension("cogs.BotChannelManagement")
+bot.load_extension("cogs.EconomySystem")
 
 
 # run bot
