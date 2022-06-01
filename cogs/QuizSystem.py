@@ -131,14 +131,22 @@ class QuizSystem(commands.Cog):
         with open('private/quiz.json', 'r') as f:
             quiz = json.load(f)
 
+        questions = []
+        for question in quiz:
+            q_number = question
+            q_question = quiz[question]['question']['question']
+            questions.append((q_number, q_question))
+
         embed = discord.Embed(title='Quiz list', description=f'{ctx.author.mention}', color=discord.Color.blue())
         embed.set_author(name=f'{self.bot.user.name}', icon_url=f'{self.bot.user.avatar_url}')
-        for i in range(len(quiz)):
-            i += 1
-            embed.add_field(name=f'Question {i}:', value=f'{quiz[str(i)]["question"]["question"]}', inline=False)
+        for i in range(0, len(quiz), 25):
+            for quiz in questions[i:i + 25]:
+                embed.add_field(name=f'Question {quiz[0]}', value=f'{quiz[1]}', inline=False)
+            await ctx.send(embed=embed)
+            embed.clear_fields()
 
         await ctx.message.delete()
-        await ctx.send(embed=embed)
+
 
     @commands.command(name='removequiz', aliases=['rq'])
     @commands.is_owner()
