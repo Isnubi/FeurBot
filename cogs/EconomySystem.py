@@ -213,16 +213,20 @@ class EconomySystem(commands.Cog):
         if str(ctx.author.id) in data[str(ctx.guild.id)]:
             current_time = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
             last_daily = data[str(ctx.guild.id)][str(ctx.author.id)]['daily_time']
-            delta = datetime.datetime.strptime(current_time, "%d-%m-%Y %H:%M:%S") - datetime.datetime.strptime(last_daily, "%d-%m-%Y %H:%M:%S")
-            next_daily = datetime.datetime.strptime(current_time, "%d-%m-%Y %H:%M:%S") + datetime.timedelta(days=1)
+
+            o_current_time = datetime.datetime.strptime(current_time, "%d-%m-%Y %H:%M:%S")
+            refactor_current_time = o_current_time.replace(hour=0, minute=0, second=0, microsecond=0)
+            last_daily = datetime.datetime.strptime(last_daily, "%d-%m-%Y %H:%M:%S")
+            refactor_last_daily = last_daily.replace(hour=0, minute=0, second=0, microsecond=0)
+            delta = refactor_current_time - refactor_last_daily
             if delta.days > 0:
                 data[str(ctx.guild.id)][str(ctx.author.id)]['daily_time'] = current_time
                 data[str(ctx.guild.id)][str(ctx.author.id)]['balance'] += 100
                 with open("private/economy.json", "w") as f:
                     json.dump(data, f, indent=4)
-                embed.add_field(name="Success", value=f"You have received 100 coins for being a daily user.\nYou can claim your daily reward every 24 hours.\nCome back **{next_daily}** to claim your daily reward.")
+                embed.add_field(name="Success", value=f"You have received 100 coins for being a daily user.\nYou can claim your daily reward every 24 hours.\nCome back tommorow to claim your daily reward.")
             else:
-                embed.add_field(name="Error", value=f"You have already received your daily coins today.\nYou can claim your daily reward every 24 hours.\nCome back **{next_daily}** to claim your daily reward.")
+                embed.add_field(name="Error", value=f"You have already received your daily coins today.\nYou can claim your daily reward every 24 hours.\nCome back tommorow to claim your daily reward.")
         else:
             embed.add_field(name="Error", value=f"You are not registered.\nUse `{ctx.prefix}register` to register.")
 
