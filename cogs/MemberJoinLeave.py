@@ -22,7 +22,7 @@ class MemberJoinLeave(commands.Cog):
         channel = self.bot.get_channel(int(custom_channel[str(member.guild.id)]["channel"]))
         embed = discord.Embed(
             title=f"Welcome {member.name} to the server!",
-            description=f"{member.mention} has joined the server!",
+            description="Your daily reward of 100 coins have been add yo your balance!",
             color=discord.Color.green()
         )
         embed.set_thumbnail(url=member.avatar_url)

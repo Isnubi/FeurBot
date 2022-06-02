@@ -58,7 +58,7 @@ class EconomySystem(commands.Cog):
         if str(member.guild.id) not in data:
             data[str(member.guild.id)] = []
         if str(member.id) not in data[str(member.guild.id)]:
-            current_time = datetime.datetime.utcnow().strftime('%d-%m-%Y %H:%M:%S')
+            current_time = datetime.datetime.now().strftime('%d-%m-%Y %H:%M:%S')
             data[str(member.guild.id)][str(member.id)] = {
                 "balance": 100,
                 "daily_time": current_time,
@@ -151,14 +151,15 @@ class EconomySystem(commands.Cog):
         if str(ctx.author.id) in data[str(ctx.guild.id)]:
             embed.add_field(name="Error", value="You are already registered.")
         else:
-            current_time = datetime.datetime.utcnow().strftime("%d-%m-%Y %H:%M:%S")
+            current_time = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
+            next_daily = datetime.datetime.strptime(current_time, "%d-%m-%Y %H:%M:%S") + datetime.timedelta(days=1)
             data[str(ctx.guild.id)][str(ctx.author.id)] = {
                 "balance": 100,
                 "daily_time": current_time
             }
             with open("private/economy.json", "w") as f:
                 json.dump(data, f, indent=4)
-            embed.add_field(name="Success", value="You have been registered.")
+            embed.add_field(name="Success", value=f"You have been registered.\nYour daily reward of 100 coins has been added to your balance.\nYou can claim your daily reward every 24 hours.\nCome back **{next_daily}** to claim your daily reward.")
 
         await ctx.message.delete()
         await ctx.send(embed=embed)
@@ -210,17 +211,18 @@ class EconomySystem(commands.Cog):
         embed.set_footer(text=f"{ctx.author}", icon_url=ctx.author.avatar_url)
 
         if str(ctx.author.id) in data[str(ctx.guild.id)]:
-            current_time = datetime.datetime.utcnow().strftime("%d-%m-%Y %H:%M:%S")
+            current_time = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
             last_daily = data[str(ctx.guild.id)][str(ctx.author.id)]['daily_time']
             delta = datetime.datetime.strptime(current_time, "%d-%m-%Y %H:%M:%S") - datetime.datetime.strptime(last_daily, "%d-%m-%Y %H:%M:%S")
+            next_daily = datetime.datetime.strptime(current_time, "%d-%m-%Y %H:%M:%S") + datetime.timedelta(days=1)
             if delta.days > 0:
                 data[str(ctx.guild.id)][str(ctx.author.id)]['daily_time'] = current_time
                 data[str(ctx.guild.id)][str(ctx.author.id)]['balance'] += 100
                 with open("private/economy.json", "w") as f:
                     json.dump(data, f, indent=4)
-                embed.add_field(name="Success", value=f"You have received 100 coins for being a daily user.")
+                embed.add_field(name="Success", value=f"You have received 100 coins for being a daily user.\nYou can claim your daily reward every 24 hours.\nCome back **{next_daily}** to claim your daily reward.")
             else:
-                embed.add_field(name="Error", value=f"You have already received your daily coins today.")
+                embed.add_field(name="Error", value=f"You have already received your daily coins today.\nYou can claim your daily reward every 24 hours.\nCome back **{next_daily}** to claim your daily reward.")
         else:
             embed.add_field(name="Error", value=f"You are not registered.\nUse `{ctx.prefix}register` to register.")
 
