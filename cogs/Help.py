@@ -50,6 +50,15 @@ class Help(commands.Cog):
         fun_commands.set_author(name=ctx.author.name, icon_url=ctx.author.avatar_url)
         fun_commands.set_footer(text="Bot made by @isnubi#6221. If you want to contribute, contact him on discord. If you want to report a bug, contact the developer on discord.")
 
+        talk_as_commands = discord.Embed(title="**Commands list**", description="List of all the commands available and possible to execute", color=discord.Colour.blue())
+        talk_as_commands.add_field(name="__Talk as__", value="List of all the commands available", inline=False)
+        talk_as_commands.add_field(name=f"**{prefix_check(ctx.guild)}talkas** *\"<pnj name>\"* *<something>* - [ta]", value="Talk as PNJ", inline=True)
+        talk_as_commands.add_field(name=f"**{prefix_check(ctx.guild)}addpnj** *\"<pnj name>\"* - [ap]", value="Add a PNJ for the channel", inline=True)
+        talk_as_commands.add_field(name=f"**{prefix_check(ctx.guild)}delpnj** *\"<pnj name>\"* - [dp]", value="Delete a PNJ for the channel", inline=True)
+        talk_as_commands.add_field(name=f"**{prefix_check(ctx.guild)}listpnj** - [lp]", value="List all the PNJs for the channel\nMessage send in private message", inline=True)
+        talk_as_commands.set_author(name=ctx.author.name, icon_url=ctx.author.avatar_url)
+        talk_as_commands.set_footer(text="Bot made by @isnubi#6221. If you want to contribute, contact him on discord. If you want to report a bug, contact the developer on discord.")
+
         economy_commands = discord.Embed(title="**Commands list**", description="List of all the commands available and possible to execute", color=discord.Colour.blue())
         economy_commands.add_field(name="__Economy__", value="List of all the economy commands available", inline=False)
         economy_commands.add_field(name=f"**{prefix_check(ctx.guild)}register** - [r]", value="Register your account if you don't have any one", inline=True)
@@ -112,7 +121,7 @@ class Help(commands.Cog):
         hardware_commands.set_author(name=ctx.author.name, icon_url=ctx.author.avatar_url)
         hardware_commands.set_footer(text="Bot made by @isnubi#6221. If you want to contribute, contact him on discord. If you want to report a bug, contact the developer on discord.")
 
-        pages = [user_commands, fun_commands, economy_commands, leveling_commands, music_commands, moderation_commands, systemchannel_commands, prefix_commands, hardware_commands]
+        pages = [user_commands, fun_commands, talk_as_commands, economy_commands, leveling_commands, music_commands, moderation_commands, systemchannel_commands, prefix_commands, hardware_commands]
 
         await ctx.message.delete()
         message = await ctx.send(embed=pages[0])

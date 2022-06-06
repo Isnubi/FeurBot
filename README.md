@@ -54,6 +54,12 @@ General commands :
 Fun commands :
 * **!quiz**: display a random quiz
 
+Talk as commands :
+* **!talkas**: Talk as a PNJ register in the channel
+* **!addpnj**: Add a PNJ in the channel
+* **!delpnj**: Delete a PNJ in the channel
+* **!listpnj**: List all the PNJ in the channel
+
 Economy commands :
 * **!balance**: display the balance of the user
 * **!daily**: get a daily reward every 24 hours
