@@ -52,7 +52,7 @@ class Help(commands.Cog):
 
         talk_as_commands = discord.Embed(title="**Commands list**", description="List of all the commands available and possible to execute", color=discord.Colour.blue())
         talk_as_commands.add_field(name="__Talk as__", value="List of all the commands available", inline=False)
-        talk_as_commands.add_field(name=f"**{prefix_check(ctx.guild)}talkas** *\"<pnj name>\"* *<something>* - [ta]", value="Talk as PNJ", inline=True)
+        talk_as_commands.add_field(name=f"**{prefix_check(ctx.guild)}talkas** *\"<pnj name>\"* *<message>* - [ta]", value="Talk as PNJ", inline=True)
         talk_as_commands.add_field(name=f"**{prefix_check(ctx.guild)}addpnj** *\"<pnj name>\"* - [ap]", value="Add a PNJ for the channel", inline=True)
         talk_as_commands.add_field(name=f"**{prefix_check(ctx.guild)}delpnj** *\"<pnj name>\"* - [dp]", value="Delete a PNJ for the channel", inline=True)
         talk_as_commands.add_field(name=f"**{prefix_check(ctx.guild)}listpnj** - [lp]", value="List all the PNJs for the channel\nMessage send in private message", inline=True)
