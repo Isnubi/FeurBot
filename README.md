@@ -2,6 +2,8 @@
 
 **FeurBot** is a Discord bot developed in *Python* which provides multiples command for users of discord server.
 
+It contains some features like leveling, quiz, roleplay, etc.
+
 ## Dependencies
 
 FeurBot have been tested in a *3.7.3 Python environment*.
