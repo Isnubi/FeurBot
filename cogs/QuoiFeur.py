@@ -17,6 +17,7 @@ class QuoiFeur(commands.Cog):
         Listens for messages and responds accordingly
         If message end with 'quoi' or 'Quoi', it will respond with a random quote from the list
         It except ponctuation and special characters at the end of the message
+        It is a french joke
         :param message: The message to listen to
         """
         out = ((re.sub(r'[^\w\s]', '', message.content)).rstrip())
