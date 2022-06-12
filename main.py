@@ -107,6 +107,7 @@ bot.load_extension("cogs.LevelingSystem")
 bot.load_extension("cogs.BotChannelManagement")
 bot.load_extension("cogs.EconomySystem")
 bot.load_extension("cogs.TalkAs")
+bot.load_extension("cogs.DeletedMessage")
 
 
 # run bot
