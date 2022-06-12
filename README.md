@@ -102,6 +102,7 @@ Prefix commands :
 Bot system channel commands :
 * **!setchannel**: set the bot system channel
 * **!resetchannel**: reset the bot system channel to the default system channel
+* **!set_log_channel**: set the bot log channel
 
 Bot owner commands :
 * **!coglist**: display the list of cogs

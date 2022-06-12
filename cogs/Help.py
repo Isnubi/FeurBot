@@ -102,6 +102,7 @@ class Help(commands.Cog):
         systemchannel_commands.add_field(name="__System channel__", value="List of all the system channel commands available\nThese commands are limited for user with **manage channel** permission", inline=False)
         systemchannel_commands.add_field(name=f"**{prefix_check(ctx.guild)}setchannel** *<channel>*", value="Set the channel where the bot will send the messages", inline=True)
         systemchannel_commands.add_field(name=f"**{prefix_check(ctx.guild)}resetchannel**", value="Reset the channel where the bot will send the messages", inline=True)
+        systemchannel_commands.add_field(name=f"**{prefix_check(ctx.guild)}set_logs_channel** *<channel>*", value="Set the channel where the bot will send the logs of deleted messages", inline=True)
         systemchannel_commands.set_author(name=ctx.author.name, icon_url=ctx.author.avatar_url)
         systemchannel_commands.set_footer(text="Bot made by @isnubi#6221. If you want to contribute, contact him on discord. If you want to report a bug, contact the developer on discord.")
 
