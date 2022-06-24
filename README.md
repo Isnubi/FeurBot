@@ -19,6 +19,7 @@ pip3 install psutil
 pip3 install asyncio
 pip3 install youtube_dl
 pip3 install discord.py[voice]
+pip3 install aiohttp
 ```
 
 ## Usage
