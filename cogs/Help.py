@@ -47,6 +47,7 @@ class Help(commands.Cog):
         fun_commands = discord.Embed(title="**Commands list**", description="List of all the commands available and possible to execute", color=discord.Colour.blue())
         fun_commands.add_field(name="__Fun__", value="List of all the fun commands available", inline=False)
         fun_commands.add_field(name=f"**{prefix_check(ctx.guild)}quiz** -[q]", value="Play a quiz", inline=True)
+        fun_commands.add_field(name=f"**{prefix_check(ctx.guild)}giphy**", value="Get a random gif from giphy", inline=True)
         fun_commands.set_author(name=ctx.author.name, icon_url=ctx.author.avatar_url)
         fun_commands.set_footer(text="Bot made by @isnubi#6221. If you want to contribute, contact him on discord. If you want to report a bug, contact the developer on discord.")
 

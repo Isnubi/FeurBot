@@ -108,6 +108,7 @@ bot.load_extension("cogs.BotChannelManagement")
 bot.load_extension("cogs.EconomySystem")
 bot.load_extension("cogs.TalkAs")
 bot.load_extension("cogs.DeletedMessage")
+bot.load_extension("cogs.GifSystem")
 
 
 # run bot

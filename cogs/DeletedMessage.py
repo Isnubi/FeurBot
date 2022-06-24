@@ -23,7 +23,7 @@ class DeletedMessage(commands.Cog):
     async def on_message_delete(self, message):
         """
         Logs deleted messages
-        :message: message object
+        :param message: message object
         """
         if message.author.bot:
             return
@@ -37,7 +37,7 @@ class DeletedMessage(commands.Cog):
 
         if not custom_channel[str(message.guild.id)]:
             return
-        if not custom_channel[str(message.guild.id)]['logs_channel']:
+        if not "logs_channel" in custom_channel[str(message.guild.id)]:
             return
         else:
             logs_channel = message.guild.get_channel(custom_channel[str(message.guild.id)]['logs_channel'])

@@ -55,6 +55,7 @@ General commands :
 
 Fun commands :
 * **!quiz**: display a random quiz
+* **!giphy**: display a random gif
 
 Talk as commands :
 * **!talkas**: Talk as a PNJ register in the channel
