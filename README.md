@@ -24,8 +24,9 @@ pip3 install aiohttp
 
 ## Usage
 
-Once bot files have been forked and dependencies installed, 
-you just have to run the **main.py** file.
+Once bot files have been forked and dependencies installed,
+you have to put your bot token and your Giphy token in the `config.py` file.
+Then, you just have to launch the `main.py` file to start the bot.
 
 ```bash
 python3 main.py
