@@ -1,6 +1,6 @@
-discord.py >= 0.16.12
+discord.py
 discord.py[voice]
-psutil >= 5.9.1
-asyncio >= 3.4.3
-youtube_dl >= 2021.12.17
-aiohttp >= 1.0.5
+psutil
+asyncio
+youtube_dl
+aiohttp
