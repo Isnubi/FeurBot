@@ -4,15 +4,23 @@
 
 It contains some features like leveling, quiz, roleplay, etc.
 
-## Dependencies
+## Packages used
 
 FeurBot have been tested in a *3.7.3 Python environment*.
 
 You have, if you don't already have it, to install the following packages:
 
 ```
-sudo apt install python
-sudo apt install pip3
+sudo apt install python pip -y
+```
+
+## Installation
+
+You can install FeurBot by cloning the repository and running the following command:
+
+```
+git clone https://github.com/Isnubi/FeurBot.git
+cd FeurBot
 ```
 
 FeurBot use different libraries, such as 
@@ -34,9 +42,10 @@ You can also install these libraries using the requirements.txt file:
 pip3 install -r requirements.txt
 ```
 
-After you have installed all the dependencies, you have to put your Discord Bot and Giphy tokens in the **private/config.py** file.
+After you have installed all the dependencies, you have to put your Discord Bot 
+and Giphy tokens in the `private/config.py` file.
 
-## Usage
+## Launching the bot
 
 Once bot files have been forked and dependencies installed,
 you have to put your bot token and your Giphy token in the `config.py` file.
@@ -44,6 +53,22 @@ Then, you just have to launch the `main.py` file to start the bot.
 
 ```bash
 python3 main.py
+```
+
+If you still want to use your host machine, you can launch the `main.py` file in a screen with the following command:
+
+```bash
+sudo apt install screen -y
+screen -S discord_bot
+python3 main.py
+```
+
+Now, if you want to leave the screen, you have to hit `CTRL+A` and `D` to leave the screen.
+
+If you want to got back to the screen, you have to run the following command:
+
+```bash
+screen -r discord_bot
 ```
 
 The bot will be launch and the cogs will be loaded.
@@ -58,6 +83,10 @@ a line will be printed in the console.
 The default prefix for the bot is **!**.
 
 Mention the bot will answer you the current prefix used by the server.
+
+### Stop the bot
+
+You can stop the bot by hit `CTRL+C` in the console of the bot until the bot is stopped.
 
 ### Commands list
 
