@@ -8,6 +8,13 @@ It contains some features like leveling, quiz, roleplay, etc.
 
 FeurBot have been tested in a *3.7.3 Python environment*.
 
+You have, if you don't already have it, to install the following packages:
+
+```
+sudo apt install python
+sudo apt install pip3
+```
+
 FeurBot use different libraries, such as 
 [discord.py](https://github.com/Rapptz/discord.py) 
 and [psutil](https://github.com/giampaolo/psutil).
@@ -21,6 +28,13 @@ pip3 install youtube_dl
 pip3 install discord.py[voice]
 pip3 install aiohttp
 ```
+
+You can also install these libraries using the requirements.txt file:
+```
+pip3 install -r requirements.txt
+```
+
+After you have installed all the dependencies, you have to put your Discord Bot and Giphy tokens in the **private/config.py** file.
 
 ## Usage
 
@@ -120,7 +134,6 @@ Hardware statistics commands :
 * **!ping**: display the bot latency
 * **!cpu**: display the CPU usage
 * **!ram**: display the RAM usage
-* **!temp**: display the CPU temperature
 
 ## Contributing
 

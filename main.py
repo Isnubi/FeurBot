@@ -83,7 +83,6 @@ async def on_ready():
 
 
 # load all the cogs
-bot.load_extension("cogs.Temp")
 bot.load_extension("cogs.CPU")
 bot.load_extension("cogs.RAM")
 bot.load_extension("cogs.Purge")
