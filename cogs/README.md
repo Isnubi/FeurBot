@@ -6,3 +6,5 @@
 
 This directory contains all the cogs for FeurBot.
 Each cog is a module which contains commands or message listeners.
+
+They can be reloaded by tiping `!reload <cog>`.
