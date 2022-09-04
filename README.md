@@ -1,185 +1,226 @@
-# FeurBot
+<a name="readme-top"></a>
 
-**FeurBot** is a Discord bot developed in *Python* which provides multiples command for users of discord server.
+<!-- Projet Shields -->
+[![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+[![MIT License][license-shield]][license-url]
+[![LinkedIn][linkedin-shield]][linkedin-url]
 
-It contains some features like leveling, quiz, roleplay, etc.
 
-## Packages used
 
-FeurBot have been tested in a *3.7.3 Python environment*.
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  <a href="https://github.com/Isnubi/FeurBot/">
+    <img src="docs/FEURBOT.png" alt="Logo">
+  </a>
 
-You have, if you don't already have it, to install the following packages:
 
-```
-sudo apt install python pip -y
-```
+<h3 align="center">FeurBot</h3>
+  <p align="center">
+    <a href="https://github.com/Isnubi/FeurBot/"><strong>Explore the docs »</strong></a>
+    <br />--------------------
+    <br />
+    <a href="https://github.com/Isnubi/FeurBot/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/Isnubi/FeurBot/issues">Request Feature</a>
+  </p>
+</div>
 
-## Installation
 
-You can install FeurBot by cloning the repository and running the following command:
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ol>
+</details>
 
-```
-git clone https://github.com/Isnubi/FeurBot.git
-cd FeurBot
-```
 
-FeurBot use different libraries, such as 
-[discord.py](https://github.com/Rapptz/discord.py) 
-and [psutil](https://github.com/giampaolo/psutil).
-These libraries can be installed using **pip3** command.
 
-```bash
-pip3 install discord.py
-pip3 install psutil
-pip3 install asyncio
-pip3 install youtube_dl
-pip3 install discord.py[voice]
-pip3 install aiohttp
-```
+<!-- ABOUT THE PROJECT -->
+## About The Project
 
-You can also install these libraries using the requirements.txt file:
-```
-pip3 install -r requirements.txt
-```
+<div align="center">
+    <img src="docs/FeurBot_Discord.png" alt="Logo">
+</div>
 
-After you have installed all the dependencies, you have to put your Discord Bot 
-and Giphy tokens in the `private/config.py` file.
+FeurBot is a Discord bot, developed in Python, that can be used to play music, to do quizzes, to moderate a server, to display hardware statistics, and more.
 
-## Launching the bot
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-Once bot files have been forked and dependencies installed,
-you have to put your bot token and your Giphy token in the `config.py` file.
-Then, you just have to launch the `main.py` file to start the bot.
 
-```bash
-python3 main.py
-```
 
-If you still want to use your host machine, you can launch the `main.py` file in a screen with the following command:
+### Built With
 
-```bash
-sudo apt install screen -y
-screen -S discord_bot
-python3 main.py
-```
+* [![Python][Python]][Python-url]
+* [![JSON][JSON]][JSON-url]
 
-Now, if you want to leave the screen, you have to hit `CTRL+A` and `D` to leave the screen.
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-If you want to got back to the screen, you have to run the following command:
 
-```bash
-screen -r discord_bot
-```
 
-The bot will be launch and the cogs will be loaded.
+<!-- GETTING STARTED -->
+## Getting Started
+<a name="getting-started"></a>
 
-![bot launching](docs/FeurBot_launch.png)
+You can install FeurBot on your own server by following these steps.
 
-Once the bot is loaded, anytime a command is called by a user, 
-a line will be printed in the console.
+### Prerequisites
 
-![bot command output](docs/FeurBot_command-output.png)
+1. Clone the repository on your computer.
 
-The default prefix for the bot is **!**.
+    ```sh
+    git clone https://github.com/Isnubi/FeurBot.git
+    cd FeurBot
+    ```
 
-Mention the bot will answer you the current prefix used by the server.
+2. Install Python 3.8.5 or higher and pip. You can download it [here](https://www.python.org/downloads/) or by using the following command on Linux:
 
-### Stop the bot
+   * Debian/Ubuntu:
+     ```sh
+     sudo apt install python3 python3-pip -y
+     ```
+  
+   * Fedora/CentOS/RHEL:
+     ```sh
+     sudo dnf install python3 python3-pip -y
+     ```
 
-You can stop the bot by hit `CTRL+C` in the console of the bot until the bot is stopped.
+3. Install the required python packages using pip:
 
-### Commands list
+    ```sh
+    python3 -m pip install --upgrade pip
+    python3 -m pip install requirements.txt
+    ```
+   If the requirements.txt file didn't work, you can install the required packages manually using the following command:
+    ```sh
+    python3 -m pip install discord.py psutil asyncio youtube_dl discord.py[voice] aiohttp
+    ```
 
-There is the list of all the commands available:
 
-General commands :
-* **!help**: display the list of commands
-* **!serverinfo**: display the server information
-* **!userinfo**: display the user information
-* **!botinfo**: display the bot information
+### Installation
 
-Fun commands :
-* **!quiz**: display a random quiz
-* **!giphy**: display a random gif
+1. Get a free Giphy API Key at [https://developers.giphy.com/](https://developers.giphy.com/)
+2. Create a Discord bot and get its token at [https://discord.com/developers/applications](https://discord.com/developers/applications)
+3. Enter your bot token and your Giphy API Key in `private/config.py`
+    ```python
+    giphy_api_key = "YOUR_GIPHY_TOKEN"
+    token = "YOUR_DISCORD_TOKEN"
+    ```
+4. Run the bot
+    ```sh
+   python3 main.py
+   ```
 
-Talk as commands :
-* **!talkas**: Talk as a PNJ register in the channel
-* **!addpnj**: Add a PNJ in the channel
-* **!delpnj**: Delete a PNJ in the channel
-* **!listpnj**: List all the PNJ in the channel
 
-Economy commands :
-* **!balance**: display the balance of the user
-* **!daily**: get a daily reward every 24 hours
-* **!pay**: pay a user
-* **!register**: register a user if he's not registered (user is in the server before the bot join it)
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-Level system commands :
-* **!level**: display the current level of the user
-* **!leaderboard**: display the leaderboard
 
-User commands :
-* **!roll**: roll a dice
-* **!say**: make the bot say something
-* **!pfp**: display the user profile picture
 
-Music commands :
-* **!join**: let the bot join your voice channel
-* **!play** : play a song (from YouTube URL)
-* **!volume** : change the volume of the music
-* **!pause** : pause the music
-* **!resume** : resume the music
-* **!stop** : stop the music
-* **!leave** : let the bot leave your voice channel
+<!-- USAGE EXAMPLES -->
+## Usage
 
-Moderation commands :
-* **!purge**: delete a number of messages
-* **!kick**: kick a user
-* **!ban**: ban a user
-* **!unban**: unban a user
-* **!banlist**: display the list of banned users
-* **!mute**: mute a user
-* **!unmute**: unmute a user
+... work in progress ...
 
-Prefix commands :
-* Mention the bot will answer you the current prefix used by the server.
-* **!setprefix**: change the bot prefix
+_For more examples, please refer to the help menu of the bot._
 
-Bot system channel commands :
-* **!setchannel**: set the bot system channel
-* **!resetchannel**: reset the bot system channel to the default system channel
-* **!set_log_channel**: set the bot log channel
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-Bot owner commands :
-* **!coglist**: display the list of cogs
-* **!load**: load a cog
-* **!unload**: unload a cog
-* **!reload**: reload a cog
-* **!reloadall**: reload all cogs
-* **!addquiz**: add a question to the quiz
-* **!removequiz**: remove a question from the quiz
-* **!quizlist**: display the list of questions
 
-Hardware statistics commands :
-* **!ping**: display the bot latency
-* **!cpu**: display the CPU usage
-* **!ram**: display the RAM usage
 
+<!-- ROADMAP -->
+## Roadmap
+
+- [x] Gif system
+- [ ] Music system
+    - [x] Music player
+    - [x] Music commands
+    - [ ] Music queue
+
+See the [open issues](https://github.com/Isnubi/FeurBot/issues) for a full list of proposed features (and known issues).
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+<!-- CONTRIBUTING -->
 ## Contributing
 
-Pull requests are welcome. For major changes, please open an issue 
-first to discuss what you would like to change.
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
-Please make sure to update tests as appropriate.
+If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
+Don't forget to give the project a star! Thanks again!
 
-You can also contact me on Discord (**isnubi#6221**) for any contributing 
-or bug submission.
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-## Developer
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-This bot is completely developed by 
-[Louis GAMBART](https://github.com/Isnubi).
 
+
+<!-- LICENSE -->
 ## License
 
-[MIT](https://choosealicense.com/licenses/mit/)
+Distributed under the MIT License. See `LICENSE.txt` for more information.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+<!-- CONTACT -->
+## Contact
+
+
+Isnubi - [@Louis_Gambart](https://twitter.com/Louis_Gambart) - contact@louis-gambart.fr
+<br>**Discord:** isnubi#6221
+
+**Project Link:** [https://github.com/Isnubi/FeurBot](https://github.com/Isnubi/FeurBot)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[contributors-shield]: https://img.shields.io/github/contributors/Isnubi/FeurBot.svg?style=for-the-badge
+[contributors-url]: https://github.com/Isnubi/FeurBot/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/Isnubi/FeurBot.svg?style=for-the-badge
+[forks-url]: https://github.com/Isnubi/FeurBot/network/members
+[stars-shield]: https://img.shields.io/github/stars/Isnubi/FeurBot.svg?style=for-the-badge
+[stars-url]: https://github.com/Isnubi/FeurBot/stargazers
+[issues-shield]: https://img.shields.io/github/issues/Isnubi/FeurBot.svg?style=for-the-badge
+[issues-url]: https://github.com/Isnubi/FeurBot/issues
+[license-shield]: https://img.shields.io/github/license/Isnubi/FeurBot.svg?style=for-the-badge
+[license-url]: https://github.com/Isnubi/FeurBot/blob/master/LICENSE.md
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[linkedin-url]: https://linkedin.com/in/louis-gambart
+[Python]: https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white
+[Python-url]: https://www.python.org/
+[JSON]: https://img.shields.io/badge/JSON-5E5C5C?style=for-the-badge&logo=json&logoColor=white
+[JSON-url]: https://www.json.org/json-en.html
+[Twitter-shield]: https://img.shields.io/twitter/follow/Louis_Gambart?style=social
+[Twitter-url]: https://twitter.com/Louis_Gambart/
