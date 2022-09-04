@@ -123,6 +123,11 @@ You can install FeurBot on your own server by following these steps.
     giphy_api_key = "YOUR_GIPHY_TOKEN"
     token = "YOUR_DISCORD_TOKEN"
     ```
+4. Run the bot
+    ```sh
+   python3 main.py
+   ```
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -131,7 +136,7 @@ You can install FeurBot on your own server by following these steps.
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+... work in progress ...
 
 _For more examples, please refer to the help menu of the bot._
 
@@ -184,9 +189,11 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Isnubi - [@Louis_Gambart](https://twitter.com/Louis_Gambart) - contact@louis-gambart.fr
 
-Project Link: [https://github.com/Isnubi/FeurBot](https://github.com/Isnubi/FeurBot)
+Isnubi - [@Louis_Gambart](https://twitter.com/Louis_Gambart) - contact@louis-gambart.fr
+<br>**Discord:** isnubi#6221
+
+**Project Link:** [https://github.com/Isnubi/FeurBot](https://github.com/Isnubi/FeurBot)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -211,3 +218,5 @@ Project Link: [https://github.com/Isnubi/FeurBot](https://github.com/Isnubi/Feur
 [Python-url]: https://www.python.org/
 [JSON]: https://img.shields.io/badge/JSON-5E5C5C?style=for-the-badge&logo=json&logoColor=white
 [JSON-url]: https://www.json.org/json-en.html
+[Twitter-shield]: https://img.shields.io/twitter/follow/Louis_Gambart?style=social
+[Twitter-url]: https://twitter.com/Louis_Gambart/
