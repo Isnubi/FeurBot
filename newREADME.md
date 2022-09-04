@@ -96,21 +96,25 @@ You can install FeurBot on your own server by following these steps.
 
 2. Install Python 3.8.5 or higher and pip. You can download it [here](https://www.python.org/downloads/) or by using the following command on Linux:
 
-   * Debian/Ubuntu
+   * Debian/Ubuntu:
      ```sh
      sudo apt install python3 python3-pip -y
      ```
   
-   * Fedora/CentOS/RHEL
+   * Fedora/CentOS/RHEL:
      ```sh
      sudo dnf install python3 python3-pip -y
      ```
 
-3. Install the required python packages using pip
+3. Install the required python packages using pip:
 
     ```sh
     python3 -m pip install --upgrade pip
     python3 -m pip install requirements.txt
+    ```
+   If the requirements.txt file didn't work, you can install the required packages manually using the following command:
+    ```sh
+    python3 -m pip install discord.py psutil asyncio youtube_dl discord.py[voice] aiohttp
     ```
 
 
