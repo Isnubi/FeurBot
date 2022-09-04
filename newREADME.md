@@ -20,10 +20,8 @@
 
 <h3 align="center">FeurBot</h3>
   <p align="center">
-    project_description
-    <br />
     <a href="https://github.com/Isnubi/FeurBot/"><strong>Explore the docs »</strong></a>
-    <br />
+    <br />--------------------
     <br />
     <a href="https://github.com/Isnubi/FeurBot/issues">Report Bug</a>
     ·
@@ -85,32 +83,46 @@ FeurBot is a Discord bot, developed in Python, that can be used to play music, t
 ## Getting Started
 <a name="getting-started"></a>
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+You can install FeurBot on your own server by following these steps.
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
+1. Clone the repository on your computer.
+
+    ```sh
+    git clone https://github.com/Isnubi/FeurBot.git
+    cd FeurBot
+    ```
+
+2. Install Python 3.8.5 or higher and pip. You can download it [here](https://www.python.org/downloads/) or by using the following command on Linux:
+
+   * Debian/Ubuntu
+     ```sh
+     sudo apt install python3 python3-pip -y
+     ```
+  
+   * Fedora/CentOS/RHEL
+     ```sh
+     sudo dnf install python3 python3-pip -y
+     ```
+
+3. Install the required python packages using pip
+
+    ```sh
+    python3 -m pip install --upgrade pip
+    python3 -m pip install requirements.txt
+    ```
+
 
 ### Installation
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-   ```sh
-   git clone https://github.com/Isnubi/FeurBot.git
-   ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
+1. Get a free Giphy API Key at [https://developers.giphy.com/](https://developers.giphy.com/)
+2. Create a Discord bot and get its token at [https://discord.com/developers/applications](https://discord.com/developers/applications)
+3. Enter your bot token and your Giphy API Key in `private/config.py`
+    ```python
+    giphy_api_key = "YOUR_GIPHY_TOKEN"
+    token = "YOUR_DISCORD_TOKEN"
+    ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -121,7 +133,7 @@ This is an example of how to list things you need to use the software and how to
 
 Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+_For more examples, please refer to the help menu of the bot._
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -130,10 +142,11 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-    - [ ] Nested Feature
+- [x] Gif system
+- [ ] Music system
+    - [x] Music player
+    - [x] Music commands
+    - [ ] Music queue
 
 See the [open issues](https://github.com/Isnubi/FeurBot/issues) for a full list of proposed features (and known issues).
 
