@@ -184,7 +184,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@Louis_Gambart](https://twitter.com/Louis_Gambart) - contact@louis-gambart.fr
+Isnubi - [@Louis_Gambart](https://twitter.com/Louis_Gambart) - contact@louis-gambart.fr
 
 Project Link: [https://github.com/Isnubi/FeurBot](https://github.com/Isnubi/FeurBot)
 
