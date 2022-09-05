@@ -143,11 +143,17 @@ You can install FeurBot on your own server by following these steps.
 Once the bot is launching, you can invite it to your server by using the invitation link you can create in your Discord Developer Portal.
 <img src="docs/FeurBot_URL_Generator.png" alt="URL Generator">
 
-The default prefix of the bot is `!`. You can change it by sending the following command in a text channel: 
-```
-!setprefix <prefix>
-```
-You can get the current prefix by **mentioning** the bot.
+* The default prefix of the bot is `!`. You can change it by sending the following command in a text channel: 
+    ```
+    !setprefix <prefix>
+    ```
+* You can get the current prefix by **mentioning** the bot.<br>
+    <br><img src="docs/FeurBot_Prefix.png" alt="Prefix"><br><br>
+* You can get the help menu by sending.
+    ```
+    !help
+    ```
+  You can navigate in it with the reactions.
 
 _... work in progress ..._
 
