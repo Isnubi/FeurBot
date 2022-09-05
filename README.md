@@ -207,7 +207,7 @@ Distributed under the MIT License. See `LICENSE.md` for more information.
 ## Contact
 
 
-Isnubi - [@Louis_Gambart](https://twitter.com/Louis_Gambart) - contact@louis-gambart.fr
+Isnubi - [@Louis_Gambart](https://twitter.com/Louis_Gambart) - [contact@louis-gambart.fr](mailto:contact@louis-gambart.fr)
 <br>**Discord:** isnubi#6221
 
 **Project Link:** [https://github.com/Isnubi/FeurBot](https://github.com/Isnubi/FeurBot)
