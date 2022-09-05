@@ -155,8 +155,6 @@ Once the bot is launching, you can invite it to your server by using the invitat
     ```
   You can navigate in it with the reactions.
 
-_... work in progress ..._
-
 _For more examples, please refer to the help menu of the bot._
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
