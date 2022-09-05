@@ -54,9 +54,9 @@ class PrefixManagement(commands.Cog):
         with open('private/prefixes.json', 'w') as f:
             json.dump(prefixes, f, indent=4)
 
-    @commands.command(name='changeprefix', aliases=['prefix'])
+    @commands.command(name='setprefix', aliases=['prefix'])
     @commands.has_permissions(administrator=True)
-    async def changeprefix(self, ctx, prefix):
+    async def setprefix(self, ctx, prefix):
         """
         Changes the prefix for the guild
         :param ctx: The context of the command
