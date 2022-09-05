@@ -14,7 +14,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/Isnubi/FeurBot/">
-    <img src="docs/FEURBOT.png" alt="Visualization">
+    <img src="docs/FeurBot.png" alt="Visualization">
   </a>
 
 
