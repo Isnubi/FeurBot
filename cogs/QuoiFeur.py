@@ -22,6 +22,7 @@ class QuoiFeur(commands.Cog):
         """
         out = ((re.sub(r'[^\w\s]', '', message.content)).rstrip())
         end_quoi = out[len(out) - 4:len(out)]
+        end_qwa = out[len(out) - 3:len(out)]
         if end_quoi == "quoi" or end_quoi == "Quoi":
             if random.randint(0, 100) < 25:
                 quoi_answer = ['chi!', 'drilatère!', 'ffage!', 'feuse!', 'ffure!', 'ffer!', 'driceps!', 'tuor!', 'druplé!', 'artz!', 'druple!', 'la lampur!', 'terback!']
@@ -30,7 +31,7 @@ class QuoiFeur(commands.Cog):
             else:
                 answer = 'feur!'
             await message.channel.send(answer)
-        if end_quoi == "qwa" or end_quoi == "Qwa":
+        if end_qwa == "qwa" or end_qwa == "Qwa":
             await message.channel.send('ckQwack')
 
 
