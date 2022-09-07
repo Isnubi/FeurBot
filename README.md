@@ -114,7 +114,7 @@ You can install FeurBot on your own server by following these steps.
     ```
    If the requirements.txt file didn't work, you can install the required packages manually using the following command:
     ```sh
-    python3 -m pip install discord.py psutil asyncio youtube_dl discord.py[voice] aiohttp
+    python3 -m pip install discord.py==1.7.3 psutil asyncio youtube_dl discord.py[voice] aiohttp
     ```
 
 
