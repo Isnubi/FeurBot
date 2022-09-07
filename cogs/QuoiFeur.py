@@ -30,6 +30,8 @@ class QuoiFeur(commands.Cog):
             else:
                 answer = 'feur!'
             await message.channel.send(answer)
+        if end_quoi == "qwa" or end_quoi == "Qwa":
+            await message.channel.send('ckQwack')
 
 
 def setup(bot):
