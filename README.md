@@ -110,7 +110,7 @@ You can install FeurBot on your own server by following these steps.
 
     ```sh
     python3 -m pip install --upgrade pip
-    python3 -m pip install requirements.txt
+    python3 -m pip install -r requirements.txt
     ```
    If the requirements.txt file didn't work, you can install the required packages manually using the following command:
     ```sh
