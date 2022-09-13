@@ -27,11 +27,13 @@ class FeurBot(commands.Bot):
             command_prefix='!',
             description='FeurBot is a bot made by isnubi#6221',
             intents=discord.Intents.all(),
-            application_id=1019244895589892167
+            application_id=1019244895589892167,
+            help_command=None
         )
 
         self.initial_extensions = [
-            'cogs_IN-PROGRESS.Ping'
+            'cogs_IN-PROGRESS.Ping',
+            'cogs_IN-PROGRESS.QuoiFeur'
         ]
 
     async def setup_hook(self):
