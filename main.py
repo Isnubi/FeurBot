@@ -30,8 +30,14 @@ class FeurBot(commands.Bot):
             application_id=1019244895589892167
         )
 
+        self.initial_extensions = [
+            'cogs_IN-PROGRESS.Ping'
+        ]
+
     async def setup_hook(self):
-        await self.load_extension(f"cogs_IN-PROGRESS.test")
+        for extension in self.initial_extensions:
+            await self.load_extension(extension)
+
         await bot.tree.sync(guild=discord.Object(id=980975086154682378))
 
     async def on_ready(self):
@@ -89,14 +95,6 @@ async def status_task():
             await asyncio.sleep(5)
         except:
             pass
-
-
-@bot.command(name='ping')
-async def ping(ctx):
-    """
-    Ping command
-    """
-    await ctx.reply(f'Pong! {round(bot.latency * 1000)}ms')
 
 
 bot.run(token)
