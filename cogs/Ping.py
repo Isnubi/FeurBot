@@ -13,8 +13,7 @@ class Ping(commands.Cog):
 
     @app_commands.command(
         name="ping",
-        description="Get the current delay of the bot"
-    )
+        description="Get the current delay of the bot")
     async def ping(self, interaction: discord.Interaction) -> None:
         """
         Get the current delay of the bot.

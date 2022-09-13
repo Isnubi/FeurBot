@@ -1,5 +1,6 @@
-from discord.ext import commands
 import discord
+from discord import app_commands
+from discord.ext import commands
 
 
 class UserInfo(commands.Cog):
@@ -10,28 +11,29 @@ class UserInfo(commands.Cog):
         """
         self.bot = bot
 
-    @commands.command(name='userinfo', aliases=['user', 'ui'])
-    async def userinfo(self, ctx, member: discord.Member = None):
+    @app_commands.command(
+        name="userinfo",
+        description="Get user info")
+    async def userinfo(self, interaction: discord.Interaction, member: discord.User) -> None:
         """
-        Displays information about a user
-        :param ctx: The context of the command
-        :param member: The member to display information about
+        Get user info
         """
-        if member is None:
-            member = ctx.author
+
         date_format = '%Y-%m-%d %H:%M:%S'
         embed = discord.Embed(title=f'{member}', description='Information of this user', color=discord.Colour.blue())
-        embed.set_author(name=ctx.author.name, icon_url=ctx.author.avatar_url)
-        embed.set_thumbnail(url=member.avatar_url)
+        embed.set_thumbnail(url=member.display_avatar.url)
         embed.add_field(name='Joined Server', value=member.joined_at.strftime(date_format), inline=True)
         embed.add_field(name='Account Created', value=member.created_at.strftime(date_format), inline=True)
         if member.status is not None:
+            print(member.status)
             if member.status == discord.Status.online:
                 embed.add_field(name='Status', value='Online', inline=True)
             elif member.status == discord.Status.idle:
                 embed.add_field(name='Status', value='Idle', inline=True)
             elif member.status == discord.Status.dnd:
                 embed.add_field(name='Status', value='Do Not Disturb', inline=True)
+            elif member.status == discord.Status.invisible:
+                embed.add_field(name='Status', value='Invisible', inline=True)
             elif member.status == discord.Status.offline:
                 embed.add_field(name='Status', value='Offline', inline=True)
         embed.add_field(name='Bot', value=member.bot, inline=True)
@@ -44,14 +46,11 @@ class UserInfo(commands.Cog):
             embed.add_field(name='Boosting Since', value=member.premium_since.strftime(date_format), inline=True)
         embed.set_footer(text=f'User ID: {member.id}')
 
-        await ctx.message.delete()
-        await ctx.send(embed=embed)
+        await interaction.response.send_message(embed=embed)
 
 
-def setup(bot):
-    """
-    Initializes the cog
-    :param bot: bot object
-    """
-    bot.add_cog(UserInfo(bot))
-    print('UserInfo is loaded')
+async def setup(bot: commands.Bot):
+    await bot.add_cog(
+        UserInfo(bot),
+        guilds=[discord.Object(id=980975086154682378)]
+    )
