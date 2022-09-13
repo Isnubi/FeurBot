@@ -1,2 +1,2 @@
-token = 'YOUR_BOT_TOKEN'
-giphy_api_key = 'YOUR_GIPHY_API_KEY'
+token = 'MTAxOTI0NDg5NTU4OTg5MjE2Nw.GWVS2L.sMu-rs5ekU_4yHW3244u7a3FupB4K6UaP8HM-Y'
+giphy_api_key = 'jhEHCFaRXm0bgJ0m6IrRLnRWORMNqXJ9'
