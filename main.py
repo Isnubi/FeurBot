@@ -7,27 +7,46 @@ import discord
 import asyncio
 import json
 
-
+""" don't use de get_prefix function while i'm testing the new version of the library
 def get_prefix(bot, message):
-    """
+    
     Get the prefix for the server the message was sent in
     :param bot: bot object
     :param message: message object
-    """
+    
     with open('private/prefixes.json', 'r') as f:
         prefixes = json.load(f)
 
     return prefixes[str(message.guild.id)]
+"""
 
 
-# activate intents and set bot prefix with get_prefix function
-intents = discord.Intents.default()
-intents.presences = True
-intents.members = True
-bot = commands.Bot(command_prefix=(get_prefix), intents=intents)
+class FeurBot(commands.Bot):
+    def __init__(self):
+        super().__init__(
+            command_prefix='!',
+            description='FeurBot is a bot made by isnubi#6221',
+            intents=discord.Intents.all(),
+            application_id=1019244895589892167
+        )
+
+    async def setup_hook(self):
+        await self.load_extension(f"cogs_IN-PROGRESS.test")
+        await bot.tree.sync(guild=discord.Object(id=980975086154682378))
+
+    async def on_ready(self):
+        """
+            Print in the console when the bot is ready
+            Change the bot status
+        """
+        print(f'{self.user} is online and connected to {len(self.guilds)} servers, with {len(set(self.get_all_members()))} users!')
+        self.loop.create_task(status_task())
+
+
+bot = FeurBot()
 
 # remove help command to use the custom one
-bot.remove_command('help')
+#bot.remove_command('help')
 
 
 async def status_task():
@@ -72,14 +91,15 @@ async def status_task():
             pass
 
 
-@bot.event
-async def on_ready():
+@bot.command(name='ping')
+async def ping(ctx):
     """
-    Print in the console when the bot is ready
-    Change the bot status
+    Ping command
     """
-    print(f'{bot.user} is online and connected to {len(bot.guilds)} servers, with {len(set(bot.get_all_members()))} users!')
-    bot.loop.create_task(status_task())
+    await ctx.reply(f'Pong! {round(bot.latency * 1000)}ms')
+
+
+bot.run(token)
 
 """
 # load all the cogs
@@ -109,7 +129,3 @@ bot.load_extension("cogs.TalkAs")
 bot.load_extension("cogs.DeletedMessage")
 bot.load_extension("cogs.GifSystem")
 """
-
-
-# run bot
-bot.run(token)
