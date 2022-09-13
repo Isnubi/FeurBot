@@ -81,7 +81,7 @@ async def on_ready():
     print(f'{bot.user} is online and connected to {len(bot.guilds)} servers, with {len(set(bot.get_all_members()))} users!')
     bot.loop.create_task(status_task())
 
-
+"""
 # load all the cogs
 bot.load_extension("cogs.CPU")
 bot.load_extension("cogs.RAM")
@@ -108,6 +108,7 @@ bot.load_extension("cogs.EconomySystem")
 bot.load_extension("cogs.TalkAs")
 bot.load_extension("cogs.DeletedMessage")
 bot.load_extension("cogs.GifSystem")
+"""
 
 
 # run bot

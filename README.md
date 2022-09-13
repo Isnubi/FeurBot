@@ -66,6 +66,7 @@
 
 FeurBot is a Discord bot, developed in Python, that can be used to play music, to do quizzes, to moderate a server, to display hardware statistics, and more.
 
+It is currently being updated following the update of the discord.py library.
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
