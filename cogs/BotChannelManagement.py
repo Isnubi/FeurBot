@@ -31,6 +31,16 @@ class BotChannelManagement(commands.Cog):
 
         await interaction.response.send_message(f"Channel set to {channel.mention}")
 
+    @set_channel.error
+    async def set_channel_error(self, interaction: discord.Interaction, error: Exception) -> None:
+        """
+        Error handler for set_channel
+        :param interaction: The interaction
+        :param error: The error
+        """
+        if isinstance(error, app_commands.MissingPermissions):
+            await interaction.response.send_message("You don't have permission to use this command", ephemeral=True)
+
     @app_commands.command(
         name="get_channel",
         description="Get the channel for system channel")
@@ -48,6 +58,16 @@ class BotChannelManagement(commands.Cog):
         else:
             channel = await self.bot.fetch_channel(int(data[str(interaction.guild.id)]["channel"]))
             await interaction.response.send_message(f"Channel set to {channel.mention}")
+
+    @get_channel.error
+    async def get_channel_error(self, interaction: discord.Interaction, error: Exception) -> None:
+        """
+        Error handler for get_channel
+        :param interaction: The interaction
+        :param error: The error
+        """
+        if isinstance(error, app_commands.MissingPermissions):
+            await interaction.response.send_message("You don't have permission to use this command", ephemeral=True)
 
     @app_commands.command(
         name="reset_channel",
@@ -70,6 +90,16 @@ class BotChannelManagement(commands.Cog):
             json.dump(data, f, indent=4)
 
         await interaction.response.send_message(f"Channel reset to {interaction.guild.system_channel.mention}")
+
+    @reset_channel.error
+    async def reset_channel_error(self, interaction: discord.Interaction, error: Exception) -> None:
+        """
+        Error handler for reset_channel
+        :param interaction: The interaction
+        :param error: The error
+        """
+        if isinstance(error, appcommands.MissingPermissions):
+            await interaction.response.send_message("You don't have permission to use this command", ephemeral=True)
 
     @commands.Cog.listener()
     async def on_guild_join(self, guild):

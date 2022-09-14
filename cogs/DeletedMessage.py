@@ -56,6 +56,16 @@ class DeletedMessage(commands.Cog):
 
         await interaction.response.send_message(f"Channel set to {channel.mention}")
 
+    @set_logs_channel.error
+    async def set_logs_channel_error(self, interaction: discord.Interaction, error: Exception) -> None:
+        """
+        Error handler for set_logs_channel
+        :param interaction: The interaction
+        :param error: The error
+        """
+        if isinstance(error, app_commands.MissingPermissions):
+            await interaction.response.send_message("You don't have permission to use this command", ephemeral=True)
+
 
 async def setup(bot: commands.Bot):
     await bot.add_cog(
