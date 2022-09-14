@@ -1,18 +1,7 @@
-from discord.ext import commands
 import discord
+from discord import app_commands
+from discord.ext import commands
 import json
-
-
-def get_prefix(bot, message):
-    """
-    Get the prefix for the server the message was sent in
-    :param bot: bot object
-    :param message: message object
-    """
-    with open('private/prefixes.json', 'r') as f:
-        prefixes = json.load(f)
-
-    return prefixes[str(message.guild.id)]
 
 
 class DeletedMessage(commands.Cog):
@@ -29,7 +18,7 @@ class DeletedMessage(commands.Cog):
             return
         if not message.content:
             return
-        if message.content.startswith(get_prefix(self.bot, message)):
+        if message.content.startswith('/'):
             return
 
         with open('private/custom_channel.json', 'r') as f:
@@ -43,27 +32,33 @@ class DeletedMessage(commands.Cog):
             logs_channel = message.guild.get_channel(custom_channel[str(message.guild.id)]['logs_channel'])
             await logs_channel.send(f'**{message.author}** deleted message: ```{message.content}```')
 
-    @commands.command(name='set_logs_channel', aliases=['slc'])
-    @commands.has_permissions(manage_guild=True)
-    async def set_logs_channel(self, ctx, channel: discord.TextChannel):
+    @app_commands.command(
+        name="set_logs_channel",
+        description="Set a channel for deleted messages logs")
+    @app_commands.describe(
+        channel="The channel to set")
+    @app_commands.checks.has_permissions(manage_channels=True)
+    async def set_logs_channel(self, interaction: discord.Interaction, channel: discord.TextChannel) -> None:
         """
         Set the channel for logs
-        :param ctx: context object
+        :param interaction: The interaction
         :param channel: channel object
         """
         with open('private/custom_channel.json', 'r') as f:
             custom_channel = json.load(f)
 
-        custom_channel[str(ctx.guild.id)] = {
+        custom_channel[str(interaction.guild.id)] = {
             'logs_channel': channel.id
         }
 
         with open('private/custom_channel.json', 'w') as f:
             json.dump(custom_channel, f, indent=4)
 
-        await ctx.send(f'Logs channel set to {channel.mention}')
+        await interaction.response.send_message(f"Channel set to {channel.mention}")
 
 
-def setup(bot):
-    bot.add_cog(DeletedMessage(bot))
-    print('DeletedMessage is loaded')
+async def setup(bot: commands.Bot):
+    await bot.add_cog(
+        DeletedMessage(bot),
+        guilds=[discord.Object(id=980975086154682378)]
+    )

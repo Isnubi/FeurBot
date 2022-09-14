@@ -1,5 +1,5 @@
-from discord.ext import commands
 import discord
+from discord.ext import commands
 import json
 
 
@@ -25,8 +25,8 @@ class MemberJoinLeave(commands.Cog):
             description="Your daily reward of 100 coins have been add yo your balance!",
             color=discord.Color.green()
         )
-        embed.set_thumbnail(url=member.avatar_url)
-        embed.set_author(name=self.bot.user.name, icon_url=self.bot.user.avatar_url)
+        embed.set_thumbnail(url=member.display_avatar.url)
+        embed.set_author(name=self.bot.user.name, icon_url=self.bot.user.display_avatar.url)
         await channel.send(embed=embed)
 
     @commands.Cog.listener()
@@ -43,15 +43,12 @@ class MemberJoinLeave(commands.Cog):
             description=f"{member.mention} has left the server!",
             color=discord.Color.red()
         )
-        embed.set_thumbnail(url=member.avatar_url)
-        embed.set_author(name=self.bot.user.name, icon_url=self.bot.user.avatar_url)
+        embed.set_thumbnail(url=member.display_avatar.url)
+        embed.set_author(name=self.bot.user.name, icon_url=self.bot.user.display_avatar.url)
         await channel.send(embed=embed)
 
 
-def setup(bot):
-    """
-    Initializes the cog
-    :param bot: bot object
-    """
-    bot.add_cog(MemberJoinLeave(bot))
-    print('Test is loaded')
+async def setup(bot: commands.Bot):
+    await bot.add_cog(
+        MemberJoinLeave(bot),
+        guilds=[discord.Object(id=980975086154682378)])

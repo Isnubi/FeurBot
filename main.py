@@ -1,9 +1,10 @@
 from private.config import token  # get token
 
 # import discord bot libraries
+import discord
+from discord import app_commands
 from discord.ext import commands
 # import libraries
-import discord
 import asyncio
 import json
 
@@ -31,7 +32,10 @@ class FeurBot(commands.Bot):
             'cogs.ServerInfo',
             'cogs.CommandLog',
             'cogs.Purge',
-            'cogs.Help'
+            'cogs.Help',
+            'cogs.DeletedMessage',
+            'cogs.BotChannelManagement',
+            'cogs.MemberJoinLeave'
         ]
 
     async def setup_hook(self):

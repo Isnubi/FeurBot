@@ -16,7 +16,7 @@ class Purge(commands.Cog):
         description="Purge messages from a channel")
     @app_commands.describe(
         amount="The amount of messages to purge")
-    @commands.has_permissions(administrator=True)
+    @app_commands.checks.has_permissions(administrator=True)
     async def purge(self, interaction: discord.Interaction, amount: int) -> None:
         """
         Purges a specified amount of messages from the channel
