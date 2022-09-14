@@ -17,6 +17,7 @@ class ProfilePicture(commands.Cog):
     async def profilepicture(self, interaction: discord.Interaction, person: discord.User) -> None:
         """
         Command to get the profile picture of a user
+        :param interaction: The interaction to respond to.
         :param person: The user to get the profile picture of
         """
         user = person
@@ -28,6 +29,5 @@ class ProfilePicture(commands.Cog):
 
 async def setup(bot: commands.Bot):
     await bot.add_cog(
-        ProfilePicture(bot),
-        guilds=[discord.Object(id=980975086154682378)]
+        ProfilePicture(bot)
     )

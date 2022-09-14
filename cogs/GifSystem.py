@@ -19,6 +19,7 @@ class GifSystem(commands.Cog):
     async def gif(self, interaction: discord.Interaction, *, search: str = None) -> None:
         """
         Get a random gif from giphy
+        :param interaction: The interaction
         :param search: search query
         """
         session = aiohttp.ClientSession()
@@ -29,7 +30,8 @@ class GifSystem(commands.Cog):
             embed.set_image(url=data['data']['images']['original']['url'])
         else:
             search.replace(' ', '+')
-            q_response = await session.get('https://api.giphy.com/v1/gifs/search?&q=api_key=' + search + '&api_key=' + giphy_api_key)
+            q_response = await session.get(
+                'https://api.giphy.com/v1/gifs/search?&q=api_key=' + search + '&api_key=' + giphy_api_key)
             data = json.loads(await q_response.text())
             gif_choice = random.randint(0, 9)
             embed.set_image(url=data['data'][gif_choice]['images']['original']['url'])

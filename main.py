@@ -26,7 +26,12 @@ class FeurBot(commands.Bot):
             'cogs.CPU',
             'cogs.RAM',
             'cogs.ProfilePicture',
-            'cogs.GifSystem'
+            'cogs.GifSystem',
+            'cogs.Roll',
+            'cogs.ServerInfo',
+            'cogs.CommandLog',
+            'cogs.Purge',
+            'cogs.Help'
         ]
 
     async def setup_hook(self):

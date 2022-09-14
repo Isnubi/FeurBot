@@ -17,6 +17,8 @@ class UserInfo(commands.Cog):
     async def userinfo(self, interaction: discord.Interaction, member: discord.User) -> None:
         """
         Get user info
+        :param interaction: The interaction to respond to.
+        :param member: The member to get info from
         """
 
         date_format = '%Y-%m-%d %H:%M:%S'

@@ -41,6 +41,5 @@ class QuoiFeur(commands.Cog):
 
 async def setup(bot: commands.Bot):
     await bot.add_cog(
-        QuoiFeur(bot),
-        guilds=[discord.Object(id=980975086154682378)]
+        QuoiFeur(bot)
     )

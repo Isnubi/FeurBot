@@ -17,6 +17,7 @@ class Ping(commands.Cog):
     async def ping(self, interaction: discord.Interaction) -> None:
         """
         Get the current delay of the bot.
+        :param interaction: The interaction to respond to.
         """
         await interaction.response.send_message(f"Pong! {round(self.bot.latency * 1000)}ms")
 

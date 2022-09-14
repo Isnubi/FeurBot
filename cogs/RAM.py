@@ -18,6 +18,7 @@ class RAM(commands.Cog):
     async def ram(self, interaction: discord.Interaction) -> None:
         """
         Displays the current RAM usage of the server where the bot is running
+        :param interaction: The interaction to respond to.
         """
         ram_usage = psutil.virtual_memory().percent
         ram_message = 'Memory is used at ' + str(ram_usage) + '%'

@@ -18,6 +18,7 @@ class CPU(commands.Cog):
     async def cpu(self, interaction: discord.Interaction) -> None:
         """
         Displays the CPU usage of the server where the bot is running
+        :param interaction: The interaction to respond to.
         """
         cpu_usage = psutil.cpu_percent(interval=0.5)
         cpu_message = 'CPU is used at ' + str(cpu_usage) + '%'
