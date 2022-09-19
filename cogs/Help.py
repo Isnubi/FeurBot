@@ -130,12 +130,15 @@ class Help(commands.Cog):
         systemchannel_commands.add_field(name="__System channel__",
                                          value="List of all the system channel commands available\nThese commands are "
                                                "limited for user with **manage channel** permission", inline=False)
-        systemchannel_commands.add_field(name=f"**/setchannel** *<channel>*",
+        systemchannel_commands.add_field(name=f"**/set_welcome_channel** *<channel>*",
                                          value="Set the channel where the bot will send the messages", inline=True)
-        systemchannel_commands.add_field(name=f"**/resetchannel**",
-                                         value="Reset the channel where the bot will send the messages", inline=True)
+        systemchannel_commands.add_field(name=f"**/get_welcome_channel**", value="Get the channel where the bot will "
+                                                                                 "send the messages", inline=True)
         systemchannel_commands.add_field(name=f"**/set_logs_channel** *<channel>*",
                                          value="Set the channel where the bot will send the logs of deleted messages",
+                                         inline=True)
+        systemchannel_commands.add_field(name=f"**/get_logs_channel**",
+                                         value="Get the channel where the bot will send the logs of deleted messages",
                                          inline=True)
         systemchannel_commands.set_author(name=interaction.user.name, icon_url=interaction.user.display_avatar.url)
         systemchannel_commands.set_footer(text="Bot made by @isnubi#6221. If you want to contribute, "

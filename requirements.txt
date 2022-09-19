@@ -4,3 +4,4 @@ psutil
 asyncio
 youtube_dl
 aiohttp
+mysql-connector-python

@@ -36,7 +36,8 @@ class FeurBot(commands.Bot):
             'cogs.DeletedMessage',
             'cogs.BotChannelManagement',
             'cogs.MemberJoinLeave',
-            'cogs.UserManagement'
+            'cogs.UserManagement',
+            'cogs.GuildJoinLeave'
         ]
 
     async def setup_hook(self):

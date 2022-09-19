@@ -27,7 +27,8 @@ class QuoiFeur(commands.Cog):
         end_qwa = out[len(out) - 3:len(out)]
         if end_quoi == "quoi" or end_quoi == "Quoi":
             if random.randint(0, 100) < 25:
-                quoi_answer = ['chi!', 'drilatère!', 'ffage!', 'feuse!', 'ffure!', 'ffer!', 'driceps!', 'tuor!', 'druplé!', 'artz!', 'druple!', 'la lampur!', 'terback!']
+                quoi_answer = ['chi!', 'drilatère!', 'ffage!', 'feuse!', 'ffure!', 'ffer!', 'driceps!', 'tuor!',
+                               'druplé!', 'artz!', 'druple!', 'la lampur!', 'terback!']
                 number = random.randint(0, len(quoi_answer) - 1)
                 answer = quoi_answer[number]
             else:
