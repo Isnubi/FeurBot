@@ -76,7 +76,7 @@ FeurBot is a Discord bot, developed in Python, that can be used to play music, t
 ### Built With
 
 * [![Python][Python]][Python-url]
-* [![JSON][JSON]][JSON-url]
+* [![MySQL][MySQL]][MySQL-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -120,15 +120,68 @@ You can install FeurBot on your own server by following these steps.
     python3 -m pip install discord.py==1.7.3 psutil asyncio youtube_dl discord.py[voice] aiohttp
     ```
 
+4. Install MariaDB or MySQL. You can download it [here](https://mariadb.org/download/) or by using the following command on Linux:
+
+   * Debian/Ubuntu:
+     ```sh
+     sudo apt install mariadb-server mariadb-client -y
+     ```
+  
+   * Fedora/CentOS/RHEL:
+     ```sh
+     sudo dnf install mariadb-server mariadb-client -y
+     ```
+
+5. Do the secure installation of MySQL/MariaDB. You can do it by using the following command on Linux:
+
+   * Debian/Ubuntu:
+     ```sh
+     sudo mysql_secure_installation
+     ```
+  
+   * Fedora/CentOS/RHEL:
+     ```sh
+     sudo mysql_secure_installation
+     ```
+     
+6. Create a database for FeurBot. You can do it by using the following command on Linux:
+
+    * Debian/Ubuntu:
+      ```sh
+      sudo mysql -u root -p
+      ```
+      
+    * Fedora/CentOS/RHEL:
+      ```sh
+      sudo mysql -u root -p
+      ```
+      
+    Then, you can create the database by using the following command:
+      ```sh
+      CREATE DATABASE FeurBot;
+      CREATE USER 'FeurBot'@'localhost' IDENTIFIED BY 'password';
+      GRANT ALL PRIVILEGES ON FeurBot.* TO 'FeurBot'@'localhost';
+      FLUSH PRIVILEGES;
+      ```
+   
+    You can now create the tables using the SQL script.
+    ```sh
+    mysql -u FeurBot -p FeurBot < FeurBot.sql
+    ```
 
 ### Installation
 
 1. Get a free Giphy API Key at [https://developers.giphy.com/](https://developers.giphy.com/)
 2. Create a Discord bot and get its token at [https://discord.com/developers/applications](https://discord.com/developers/applications)
-3. Enter your bot token and your Giphy API Key in `private/config.py`
+3. Enter your bot token, your Giphy API Key and your database informations in `private/config.py`
     ```python
-    giphy_api_key = "YOUR_GIPHY_TOKEN"
-    token = "YOUR_DISCORD_TOKEN"
+    token = 'DISCORD_BOT_TOKEN'
+    giphy_api_key = 'GIPHY_API_KEY'
+    
+    mysql_host = 'DATABASE_HOST'
+    mysql_user = 'DATABASE_USER'
+    mysql_password = 'DATABASE_PASSWORD'
+    mysql_database = 'DATABASE_NAME'
     ```
 4. Run the bot
     ```sh
@@ -146,15 +199,10 @@ You can install FeurBot on your own server by following these steps.
 Once the bot is launching, you can invite it to your server by using the invitation link you can create in your Discord Developer Portal.
 <img src="docs/FeurBot_URL_Generator.png" alt="URL Generator">
 
-* The default prefix of the bot is `!`. You can change it by sending the following command in a text channel: 
-    ```
-    !setprefix <prefix>
-    ```
-* You can get the current prefix by **mentioning** the bot.<br>
-    <br><img src="docs/FeurBot_Prefix.png" alt="Prefix"><br><br>
+* The bot is using slash commands so you can use them by typing `/` in a channel.
 * You can get the help menu by sending.
     ```
-    !help
+    /help <page_number>
     ```
   You can navigate in it with the reactions.
 
@@ -167,10 +215,9 @@ _For more examples, please refer to the help menu of the bot._
 <!-- ROADMAP -->
 ## Roadmap
 
-- [x] Gif system
 - [ ] Music system
-    - [x] Music player
-    - [x] Music commands
+    - [ ] Music player
+    - [ ] Music commands
     - [ ] Music queue
 
 See the [open issues](https://github.com/Isnubi/FeurBot/issues) for a full list of proposed features (and known issues).
@@ -236,7 +283,7 @@ Isnubi - [@Louis_Gambart](https://twitter.com/Louis_Gambart) - [contact@louis-ga
 [linkedin-url]: https://linkedin.com/in/louis-gambart
 [Python]: https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white
 [Python-url]: https://www.python.org/
-[JSON]: https://img.shields.io/badge/JSON-5E5C5C?style=for-the-badge&logo=json&logoColor=white
-[JSON-url]: https://www.json.org/json-en.html
+[Mysql]: https://img.shields.io/badge/MySQL-00000F?style=for-the-badge&logo=mysql&logoColor=white
+[Mysql-url]: https://www.mysql.com/
 [Twitter-shield]: https://img.shields.io/twitter/follow/Louis_Gambart?style=social
 [Twitter-url]: https://twitter.com/Louis_Gambart/
