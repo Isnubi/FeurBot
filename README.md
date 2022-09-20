@@ -97,82 +97,32 @@ You can install FeurBot on your own server by following these steps.
     cd FeurBot
     ```
 
-2. Install Python 3.8.5 or higher and pip. You can download it [here](https://www.python.org/downloads/) or by using the following command on Linux:
-
-   * Debian/Ubuntu:
-     ```sh
-     sudo apt install python3 python3-pip -y
-     ```
-  
-   * Fedora/CentOS/RHEL:
-     ```sh
-     sudo dnf install python3 python3-pip -y
-     ```
-
-3. Install the required python packages using pip:
+2. Run the install script as user (not root).
 
     ```sh
-    python3 -m pip install --upgrade pip
-    python3 -m pip install -r requirements.txt
+    sudo chmod +x install.sh
+    sudo ./install.sh
     ```
-   If the requirements.txt file didn't work, you can install the required packages manually using the following command:
-    ```sh
-    python3 -m pip install discord.py==1.7.3 psutil asyncio youtube_dl discord.py[voice] aiohttp
-    ```
-
-4. Install MariaDB or MySQL. You can download it [here](https://mariadb.org/download/) or by using the following command on Linux:
-
-   * Debian/Ubuntu:
-     ```sh
-     sudo apt install mariadb-server mariadb-client -y
-     ```
-  
-   * Fedora/CentOS/RHEL:
-     ```sh
-     sudo dnf install mariadb-server mariadb-client -y
-     ```
-
-5. Do the secure installation of MySQL/MariaDB. You can do it by using the following command on Linux:
-
-   * Debian/Ubuntu:
-     ```sh
-     sudo mysql_secure_installation
-     ```
-  
-   * Fedora/CentOS/RHEL:
-     ```sh
-     sudo mysql_secure_installation
-     ```
-     
-6. Create a database for FeurBot. You can do it by using the following command on Linux:
-
-    * Debian/Ubuntu:
-      ```sh
-      sudo mysql -u root -p
-      ```
-      
-    * Fedora/CentOS/RHEL:
-      ```sh
-      sudo mysql -u root -p
-      ```
-      
-    Then, you can create the database by using the following command:
-      ```sh
-      CREATE DATABASE FeurBot;
-      CREATE USER 'FeurBot'@'localhost' IDENTIFIED BY 'password';
-      GRANT ALL PRIVILEGES ON FeurBot.* TO 'FeurBot'@'localhost';
-      FLUSH PRIVILEGES;
-      ```
-   
-    You can now create the tables using the SQL script.
-    ```sh
-    mysql -u FeurBot -p FeurBot < FeurBot.sql
-    ```
+    
+    If the script didn't work, you can follow [these steps](Manual_Installation.md).
 
 ### Installation
 
 1. Get a free Giphy API Key at [https://developers.giphy.com/](https://developers.giphy.com/)
-2. Create a Discord bot and get its token at [https://discord.com/developers/applications](https://discord.com/developers/applications)
+2. Create a Discord bot at [https://discord.com/developers/applications](https://discord.com/developers/applications)
+   * Create a new application
+   * Go to the "Bot" tab
+   * Click on "Add Bot" and confirm
+   * Active the intents options
+   <img src="docs/FEURBOT_INTENTS.png">
+   * Copy the token
+   * Go to the "OAuth2" tab
+     * Select the "bot" scope
+     * Select the "applications.commands" scope
+     * Select the "Administrator" permission
+     <img src="docs/FeurBot_URL_Generator.png" alt="URL Generator">
+     * Copy the generated URL
+     * Invite the bot to your server
 3. Enter your bot token, your Giphy API Key and your database informations in `private/config.py`
     ```python
     token = 'DISCORD_BOT_TOKEN'
@@ -185,7 +135,7 @@ You can install FeurBot on your own server by following these steps.
     ```
 4. Run the bot
     ```sh
-   python3 main.py
+   python3 FeurBot.py
    ```
 
 
@@ -195,9 +145,6 @@ You can install FeurBot on your own server by following these steps.
 
 <!-- USAGE EXAMPLES -->
 ## Usage
-
-Once the bot is launching, you can invite it to your server by using the invitation link you can create in your Discord Developer Portal.
-<img src="docs/FeurBot_URL_Generator.png" alt="URL Generator">
 
 * The bot is using slash commands so you can use them by typing `/` in a channel.
 * You can get the help menu by sending.

@@ -1,3 +1,11 @@
+create database FeurBot;
+
+create user 'FeurBot'@'localhost' identified by 'FeurBot';
+grant all privileges on FeurBot.* to 'FeurBot'@'localhost';
+flush privileges;
+
+use FeurBot;
+
 create table guilds
 (
     guild_id        varchar(150) not null,
