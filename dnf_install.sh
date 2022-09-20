@@ -14,7 +14,7 @@ echo "================================"
 
 # Install the necessary packages for the bot
 
-LIST="git python3 python3-pip mariadb-server mariadb-client"
+LIST="python3 python3-pip mariadb-server mariadb-client"
 
 for i in $LIST; do
     echo "Installing $i"

@@ -96,15 +96,25 @@ You can install FeurBot on your own server by following these steps.
     git clone https://github.com/Isnubi/FeurBot.git
     cd FeurBot
     ```
+   
+   * If **Git** is not installed, you can type the following command in your terminal to install it.
+       ```sh
+       sudo apt install git
+       ```
 
 2. Run the install script as user (not root).
-
-    ```sh
-    sudo chmod +x install.sh
-    sudo ./install.sh
-    ```
+   * For Debian-based systems (Debian, Ubuntu, Mint, etc.):
+       ```sh
+       sudo chmod +x apt_install.sh
+       sudo ./apt_install.sh
+       ```
+   * For RedHat-based systems (Fedora, CentOS, etc.):
+       ```sh
+       sudo chmod +x dnf_install.sh
+       sudo ./dnf_install.sh
+       ```
     
-    If the script didn't work, you can follow [these steps](Manual_Installation.md).
+   **If the script didn't work, you can follow [these steps](Manual_Installation.md).**
 
 ### Installation
 
