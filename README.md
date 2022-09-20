@@ -61,6 +61,7 @@
 ## About The Project
 
 **The bot is currently being updated for the V2 of discord.py library**<br>
+**It will support the new slash commands and will be more efficient with the use of database instead of JSON**<br>
 **You can check it in [V2_Update](https://github.com/Isnubi/FeurBot/tree/V2_update) branch**
 
 <div align="center">
