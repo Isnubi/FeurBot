@@ -124,13 +124,13 @@ You can install FeurBot on your own server by following these steps.
    * Go to the "Bot" tab
    * Click on "Add Bot" and confirm
    * Active the intents options
-   <img src="docs/FEURBOT_INTENTS.png">
+   <br><img src="docs/FEURBOT_INTENTS.png"><br>
    * Copy the token
    * Go to the "OAuth2" tab
      * Select the "bot" scope
      * Select the "applications.commands" scope
      * Select the "Administrator" permission
-     <img src="docs/FeurBot_URL_Generator.png" alt="URL Generator">
+     <img src="docs/FeurBot_URL_Generator.png" alt="URL Generator"><br>
      * Copy the generated URL
      * Invite the bot to your server
 3. Enter your bot token, your Giphy API Key and your database informations in `private/config.py`
