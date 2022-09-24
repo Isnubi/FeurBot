@@ -14,7 +14,7 @@ class UserInfo(commands.Cog):
     @app_commands.command(
         name="userinfo",
         description="Get user info")
-    async def userinfo(self, interaction: discord.Interaction, member: discord.User) -> None:
+    async def userinfo(self, interaction: discord.Interaction, member: discord.Member) -> None:
         """
         Get user info
         :param interaction: The interaction to respond to.
@@ -27,7 +27,6 @@ class UserInfo(commands.Cog):
         embed.add_field(name='Joined Server', value=member.joined_at.strftime(date_format), inline=True)
         embed.add_field(name='Account Created', value=member.created_at.strftime(date_format), inline=True)
         if member.status is not None:
-            print(member.status)
             if member.status == discord.Status.online:
                 embed.add_field(name='Status', value='Online', inline=True)
             elif member.status == discord.Status.idle:
