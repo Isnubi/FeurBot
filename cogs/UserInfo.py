@@ -26,6 +26,7 @@ class UserInfo(commands.Cog):
         embed.set_thumbnail(url=member.display_avatar.url)
         embed.add_field(name='Joined Server', value=member.joined_at.strftime(date_format), inline=True)
         embed.add_field(name='Account Created', value=member.created_at.strftime(date_format), inline=True)
+        """
         if member.status is not None:
             if member.status == discord.Status.online:
                 embed.add_field(name='Status', value='Online', inline=True)
@@ -37,6 +38,7 @@ class UserInfo(commands.Cog):
                 embed.add_field(name='Status', value='Invisible', inline=True)
             elif member.status == discord.Status.offline:
                 embed.add_field(name='Status', value='Offline', inline=True)
+        """
         embed.add_field(name='Bot', value=member.bot, inline=True)
         if str(member.colour) != '#000000':
             embed.add_field(name='Color', value=member.colour, inline=True)
