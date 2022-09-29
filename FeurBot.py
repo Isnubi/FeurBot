@@ -1,4 +1,5 @@
-from private.config import token  # get token
+# get token
+from private.config import token
 
 # import discord bot libraries
 import discord
@@ -6,7 +7,18 @@ from discord import app_commands
 from discord.ext import commands
 # import libraries
 import asyncio
-import json
+import datetime
+# import mysql connector and database credentials
+import mysql.connector
+from private.config import mysql_host, mysql_user, mysql_password, mysql_database
+
+mydb = mysql.connector.connect(
+    host=mysql_host,
+    user=mysql_user,
+    password=mysql_password,
+    database=mysql_database)
+
+mycursor = mydb.cursor(buffered=True)
 
 
 class FeurBot(commands.Bot):
@@ -14,7 +26,7 @@ class FeurBot(commands.Bot):
         super().__init__(
             command_prefix='!',
             description='FeurBot is a bot made by isnubi#6221',
-            intents=discord.Intents.all(),
+            intents=discord.Intents.All(),
             application_id=1019244895589892167,
             help_command=None
         )
@@ -38,7 +50,8 @@ class FeurBot(commands.Bot):
             'cogs.MemberJoinLeave',
             'cogs.UserManagement',
             'cogs.GuildJoinLeave',
-            'cogs.LevelingSystem'
+            'cogs.LevelingSystem',
+            'cogs.EconomySystem'
         ]
 
     async def setup_hook(self):
