@@ -1,5 +1,6 @@
-from discord.ext import commands
 import discord
+from discord import app_commands
+from discord.ext import commands
 import psutil
 
 
@@ -11,25 +12,21 @@ class RAM(commands.Cog):
         """
         self.bot = bot
 
-    @commands.command(name='ram')
-    async def ram(self, ctx):
+    @app_commands.command(
+        name="ram",
+        description="Get the current RAM usage of the bot")
+    async def ram(self, interaction: discord.Interaction) -> None:
         """
         Displays the current RAM usage of the server where the bot is running
-        :param ctx: The context of the command
+        :param interaction: The interaction to respond to.
         """
         ram_usage = psutil.virtual_memory().percent
         ram_message = 'Memory is used at ' + str(ram_usage) + '%'
-        embed = discord.Embed(title="Memory usage", description=ram_message, color=discord.Colour.blue())
-        embed.set_author(name=ctx.author.name, icon_url=ctx.author.avatar_url)
-
-        await ctx.message.delete()
-        await ctx.send(embed=embed)
+        await interaction.response.send_message(ram_message)
 
 
-def setup(bot):
-    """
-    Initializes the cog
-    :param bot: bot object
-    """
-    bot.add_cog(RAM(bot))
-    print('RAM is loaded')
+async def setup(bot: commands.Bot):
+    await bot.add_cog(
+        RAM(bot),
+        guilds=[discord.Object(id=980975086154682378)]
+    )

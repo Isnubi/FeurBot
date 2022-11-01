@@ -1,3 +1,5 @@
+import discord
+from discord import app_commands
 from discord.ext import commands
 
 
@@ -9,21 +11,25 @@ class Purge(commands.Cog):
         """
         self.bot = bot
 
-    @commands.has_permissions(administrator=True)
-    @commands.command(name="purge")
-    async def purge(self, ctx, purge_amount: int):
+    @app_commands.command(
+        name="purge",
+        description="Purge messages from a channel")
+    @app_commands.describe(
+        amount="The amount of messages to purge")
+    @app_commands.checks.has_permissions(administrator=True)
+    async def purge(self, interaction: discord.Interaction, amount: int) -> None:
         """
         Purges a specified amount of messages from the channel
-        :param ctx: The context of the command
-        :param purge_amount: The amount of messages to purge
+        :param interaction: The interaction to respond to.
+        :param amount: The amount of messages to purge
+        :param amount: The amount of messages to purge
         """
-        await ctx.channel.purge(limit=purge_amount)
+        await interaction.response.defer()
+        await interaction.channel.purge(limit=amount)
 
 
-def setup(bot):
-    """
-    Initializes the cog
-    :param bot: bot object
-    """
-    bot.add_cog(Purge(bot))
-    print('Purge is loaded')
+async def setup(bot: commands.Bot):
+    await bot.add_cog(
+        Purge(bot),
+        guilds=[discord.Object(id=980975086154682378)]
+    )

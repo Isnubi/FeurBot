@@ -1,21 +1,6 @@
 import discord
+from discord import app_commands
 from discord.ext import commands
-import json
-
-
-def prefix_check(guild):
-    """
-    Checks the guild's prefix
-    :param guild: The guild to check
-    """
-    if guild is None:
-        return '!'
-    try:
-        with open('private/prefixes.json', 'r') as f:
-            prefixes = json.load(f)
-            return prefixes[str(guild.id)]
-    except:
-        return '!'
 
 
 class BotInfo(commands.Cog):
@@ -26,31 +11,32 @@ class BotInfo(commands.Cog):
         """
         self.bot = bot
 
-    @commands.command(name='botinfo', aliases=['bot', 'about', 'bi'])
-    async def botinfo(self, ctx):
+    @app_commands.command(
+        name="botinfo",
+        description="Get the bot info")
+    async def botinfo(self, interaction: discord.Interaction) -> None:
         """
-        Displays information about the bot
-        :param ctx: The context of where the command was used
+        Get the bot info.
+        :param interaction: The interaction to respond to.
         """
-        embed = discord.Embed(title=self.bot.user.name, description='Information of this bot', color=discord.Colour.blue())
-        embed.set_thumbnail(url=self.bot.user.avatar_url)
+
+        embed = discord.Embed(title=self.bot.user.name, description='Information of this bot',
+                              color=discord.Colour.blue())
+        embed.set_thumbnail(url=self.bot.user.display_avatar.url)
         embed.set_footer(text=f'This bot is running on {len(self.bot.guilds)} servers!')
         embed.add_field(name='Bot Name', value=self.bot.user.name, inline=True)
-        embed.add_field(name='Bot Version', value='1.3.7', inline=True)
-        embed.add_field(name='Bot Prefix', value=f"{prefix_check(ctx.guild)}", inline=True)
-        embed.add_field(name='Bot Language', value='Python 3.7', inline=True)
+        embed.add_field(name='Bot Version', value='2.0.1', inline=True)
+        # embed.add_field(name='Bot Prefix', value=f"{prefix_check(ctx.guild)}", inline=True)
+        embed.add_field(name='Bot Language', value='Python 3', inline=True)
         embed.add_field(name='Bot Library', value='discord.py', inline=True)
         embed.add_field(name='Bot Developer: isnubi#6221', value='https://github.com/Isnubi/', inline=False)
         embed.add_field(name='Bot GitHub', value='https://github.com/Isnubi/FeurBot', inline=False)
 
-        await ctx.message.delete()
-        await ctx.send(embed=embed)
+        await interaction.response.send_message(embed=embed)
 
 
-def setup(bot):
-    """
-    Initializes the cog
-    :param bot: bot object
-    """
-    bot.add_cog(BotInfo(bot))
-    print('BotInfo is loaded')
+async def setup(bot: commands.Bot):
+    await bot.add_cog(
+        BotInfo(bot),
+        guilds=[discord.Object(id=980975086154682378)]
+    )

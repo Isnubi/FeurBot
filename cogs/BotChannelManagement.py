@@ -1,96 +1,81 @@
-from discord.ext import commands
 import discord
-import json
+from discord import app_commands
+from discord.ext import commands
+import mysql.connector
+from private.config import mysql_host, mysql_user, mysql_password, mysql_database
+
+mydb = mysql.connector.connect(
+    host=mysql_host,
+    user=mysql_user,
+    password=mysql_password,
+    database=mysql_database)
+
+mycursor = mydb.cursor(buffered=True)
 
 
 class BotChannelManagement(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(name='setchannel')
-    @commands.has_permissions(manage_channels=True)
-    async def setchannel(self, ctx, channel: discord.TextChannel):
+    @app_commands.command(
+        name="set_welcome_channel",
+        description="Set a channel for system channel")
+    @app_commands.describe(
+        channel="The channel to set")
+    @app_commands.checks.has_permissions(manage_channels=True)
+    async def set_welcome_channel(self, interaction: discord.Interaction, channel: discord.TextChannel) -> None:
         """
         Sets the channel for the bot to post in
-        :param ctx: The context of the command
+        :param interaction: The interaction
         :param channel: The channel to set the bot to post in
         """
         channel = await self.bot.fetch_channel(channel.id)
-        with open('private/custom_channel.json', 'r') as f:
-            data = json.load(f)
+        sql = "UPDATE guilds SET welcome_channel = %s WHERE guild_id = %s"
+        val = (channel.id, interaction.guild.id)
+        mycursor.execute(sql, val)
+        mydb.commit()
+        await interaction.response.send_message(f"Set the welcome channel to {channel.mention}!")
 
-        data[str(ctx.guild.id)]["channel"] = str(channel.id)
+    @set_welcome_channel.error
+    async def set_welcome_channel_error(self, interaction: discord.Interaction, error: Exception) -> None:
+        """
+        Error handler for set_welcome_channel
+        :param interaction: The interaction
+        :param error: The error
+        """
+        if isinstance(error, app_commands.MissingPermissions):
+            await interaction.response.send_message("You don't have permission to use this command", ephemeral=True)
 
-        with open('private/custom_channel.json', 'w') as f:
-            json.dump(data, f, indent=4)
-
-        await ctx.send(f'Set channel to {channel.mention}')
-
-    @commands.command(name='getchannel')
-    @commands.has_permissions(manage_channels=True)
-    async def getchannel(self, ctx):
+    @app_commands.command(
+        name="get_welcome_channel",
+        description="Get the channel for system channel")
+    @app_commands.checks.has_permissions(manage_channels=True)
+    async def get_welcome_channel(self, interaction: discord.Interaction) -> None:
         """
         Gets the channel the bot is posting in
-        :param ctx: The context of the command
+        :param interaction: The interaction
         """
-        with open('private/custom_channel.json', 'r') as f:
-            data = json.load(f)
+        sql = "SELECT welcome_channel FROM guilds WHERE guild_id = %s"
+        val = (str(interaction.guild.id),)
+        mycursor.execute(sql, val)
+        mydb.commit()
+        channel_id = mycursor.fetchone()[0]
+        channel = await self.bot.fetch_channel(channel_id)
+        await interaction.response.send_message(f"The welcome channel is {channel.mention}!")
 
-        if not str(ctx.guild.id) in data:
-            await ctx.send(f'No channel set for this guild')
-        else:
-            channel = await self.bot.fetch_channel(int(data[str(ctx.guild.id)]["channel"]))
-            await ctx.send(f'The channel is {channel.mention}')
-
-    @commands.command(name='resetchannel')
-    @commands.has_permissions(manage_channels=True)
-    async def resetchannel(self, ctx):
+    @get_welcome_channel.error
+    async def get_welcome_channel_error(self, interaction: discord.Interaction, error: Exception) -> None:
         """
-        Resets the channel for the bot to post in
-        :param ctx: The context of the command
+        Error handler for get_welcome_channel
+        :param interaction: The interaction
+        :param error: The error
         """
-        with open('private/custom_channel.json', 'r') as f:
-            data = json.load(f)
-
-        if not str(ctx.guild.id) in data:
-            data[str(ctx.guild.id)] = {"channel": str(ctx.guild.system_channel.id)}
-        else:
-            data[str(ctx.guild.id)]["channel"] = str(ctx.guild.system_channel.id)
-
-        with open('private/custom_channel.json', 'w') as f:
-            json.dump(data, f, indent=4)
-
-        await ctx.send(f'Reset channel to {ctx.guild.system_channel.mention}')
-
-    @commands.Cog.listener()
-    async def on_guild_join(self, guild):
-        """
-        Sets the channel for the bot to post in on join to the system chanel of the guild
-        :param guild: The guild that the bot joined
-        """
-        with open('private/custom_channel.json', 'r') as f:
-            data = json.load(f)
-
-        data[str(guild.id)] = {"channel": str(guild.system_channel.id)}
-
-        with open('private/custom_channel.json', 'w') as f:
-            json.dump(data, f, indent=4)
-
-    @commands.Cog.listener()
-    async def on_guild_remove(self, guild):
-        """
-        Removes the guild from the custom channel file
-        :param guild: The guild that the bot left
-        """
-        with open('private/custom_channel.json', 'r') as f:
-            data = json.load(f)
-
-        del data[str(guild.id)]
-
-        with open('private/custom_channel.json', 'w') as f:
-            json.dump(data, f, indent=4)
+        if isinstance(error, app_commands.MissingPermissions):
+            await interaction.response.send_message("You don't have permission to use this command", ephemeral=True)
 
 
-def setup(bot):
-    bot.add_cog(BotChannelManagement(bot))
-    print('BotChannelManagement is loaded')
+async def setup(bot: commands.Bot):
+    await bot.add_cog(
+        BotChannelManagement(bot),
+        guilds=[discord.Object(id=980975086154682378)]
+    )

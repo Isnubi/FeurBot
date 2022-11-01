@@ -1,5 +1,6 @@
-from discord.ext import commands
 import discord
+from discord import app_commands
+from discord.ext import commands
 
 
 class UserManagement(commands.Cog):
@@ -10,124 +11,161 @@ class UserManagement(commands.Cog):
         """
         self.bot = bot
 
-    @commands.command(name='mute')
-    @commands.has_guild_permissions(mute_members=True)
-    async def mute(self, ctx, member: discord.Member):
+    @app_commands.command(name="mute", description="Mute a user")
+    @app_commands.describe(
+        user="The user to mute"
+    )
+    @app_commands.checks.has_permissions(manage_roles=True)
+    async def mute(self, interaction: discord.Interaction, user: discord.Member):
         """
-        Command to mute a member
-        :param ctx: The context of the command
-        :param member: Member object
+        Mutes a user
+        :param interaction: The interaction that triggered the command
+        :param user: The user to mute
         """
-        if member.voice is None:
-            await ctx.send("This user is not in a voice channel")
+        if user.voice is None:
+            await interaction.response.send_message("The user is not in a voice channel", ephemeral=True)
             return
-        await member.edit(mute=True)
+        await user.edit(mute=True)
+        await interaction.response.send_message(f"Muted {user.mention}")
 
-        embed = discord.Embed(title="Muted", description=f"{member.mention} has been muted.", color=discord.Color.blue())
-        embed.set_footer(text=f"{ctx.author}", icon_url=ctx.author.avatar_url)
-        embed.set_author(name=f"{ctx.guild.name}", icon_url=ctx.guild.icon_url)
-        await ctx.message.delete()
-        await ctx.send(embed=embed)
+    @mute.error
+    async def mute_error(self, interaction: discord.Interaction, error: Exception):
+        """
+        Error handler for mute
+        :param interaction: The interaction that triggered the command
+        :param error: The error
+        """
+        if isinstance(error, app_commands.MissingPermissions):
+            await interaction.response.send_message("You don't have permission to use this command", ephemeral=True)
 
-    @commands.command(name='unmute')
-    @commands.has_guild_permissions(mute_members=True)
-    async def unmute(self, ctx, member: discord.Member):
+    @app_commands.command(name="unmute", description="Unmute a user")
+    @app_commands.describe(
+        user="The user to unmute")
+    @app_commands.checks.has_permissions(manage_roles=True)
+    async def unmute(self, interaction: discord.Interaction, user: discord.Member):
         """
-        Command to unmute a member
-        :param ctx: The context of the command
-        :param member: Member object
+        Unmutes a user
+        :param interaction: The interaction that triggered the command
+        :param user: The user to unmute
         """
-        if member.voice is None:
-            await ctx.send("This user is not in a voice channel")
+        if user.voice is None:
+            await interaction.response.send_message("The user is not in a voice channel", ephemeral=True)
             return
-        await member.edit(mute=False)
+        await user.edit(mute=False)
+        await interaction.response.send_message(f"Unmuted {user.mention}")
 
-        embed = discord.Embed(title="Unmuted", description=f"{member.mention} has been unmuted.", color=discord.Color.blue())
-        embed.set_footer(text=f"{ctx.author}", icon_url=ctx.author.avatar_url)
-        embed.set_author(name=f"{ctx.guild.name}", icon_url=ctx.guild.icon_url)
-        await ctx.message.delete()
-        await ctx.send(embed=embed)
-
-    @commands.command(name='kick')
-    @commands.has_permissions(kick_members=True)
-    async def kick(self, ctx, member: discord.Member, *, reason=None):
+    @unmute.error
+    async def unmute_error(self, interaction: discord.Interaction, error: Exception):
         """
-        Command to kick a member from the server
-        :param ctx: The context of the command
-        :param member: The member to kick
+        Error handler for unmute
+        :param interaction: The interaction that triggered the command
+        :param error: The error
+        """
+        if isinstance(error, app_commands.MissingPermissions):
+            await interaction.response.send_message("You don't have permission to use this command", ephemeral=True)
+
+    @app_commands.command(name="kick", description="Kick a user")
+    @app_commands.describe(
+        user="The user to kick",
+        reason="The reason for the kick")
+    @app_commands.checks.has_permissions(kick_members=True)
+    async def kick(self, interaction: discord.Interaction, user: discord.Member, reason: str):
+        """
+        Kicks a user
+        :param interaction: The interaction that triggered the command
+        :param user: The user to kick
         :param reason: The reason for the kick
         """
-        embed = discord.Embed(title="Kicked", description=f"{member.mention} has been kicked.", color=0x00ff00)
-        embed.set_footer(text=f"{ctx.author}", icon_url=ctx.author.avatar_url)
-        embed.set_author(name=f"{ctx.guild.name}", icon_url=ctx.guild.icon_url)
-        await member.kick(reason=reason)
-        await member.send(f"You have been kicked from {ctx.guild.name} for {reason}")
-        await ctx.send(embed=embed)
+        await user.kick(reason=reason)
+        await interaction.response.send_message(f"Kicked {user.mention}")
 
-    @commands.command(name='ban')
-    @commands.has_permissions(ban_members=True)
-    async def ban(self, ctx, member: discord.Member, *, reason=None):
+    @kick.error
+    async def kick_error(self, interaction: discord.Interaction, error: Exception):
         """
-        Command to ban a member from the server
-        :param ctx: The context of the command
-        :param member: The member to ban
+        Error handler for kick
+        :param interaction: The interaction that triggered the command
+        :param error: The error
+        """
+        if isinstance(error, app_commands.MissingPermissions):
+            await interaction.response.send_message("You don't have permission to use this command", ephemeral=True)
+
+    @app_commands.command(name="ban", description="Ban a user")
+    @app_commands.describe(
+        user="The user to ban",
+        reason="The reason for the ban")
+    @app_commands.checks.has_permissions(ban_members=True)
+    async def ban(self, interaction: discord.Interaction, user: discord.Member, reason: str):
+        """
+        Bans a user
+        :param interaction: The interaction that triggered the command
+        :param user: The user to ban
         :param reason: The reason for the ban
         """
-        embed = discord.Embed(title="Banned", description=f"{member.mention} has been banned.", color=0x00ff00)
-        embed.set_footer(text=f"{ctx.author}", icon_url=ctx.author.avatar_url)
-        embed.set_author(name=f"{ctx.guild.name}", icon_url=ctx.guild.icon_url)
-        await member.ban(reason=reason)
-        await member.send(f"You have been banned from {ctx.guild.name} for {reason}")
-        await ctx.send(embed=embed)
+        await user.ban(reason=reason)
+        await interaction.response.send_message(f"Banned {user.mention}")
 
-    @commands.command(name='banlist')
-    @commands.has_permissions(ban_members=True)
-    async def banlist(self, ctx):
+    @ban.error
+    async def ban_error(self, interaction: discord.Interaction, error: Exception):
         """
-        Command to list all banned members
-        :param ctx: The context of the command
+        Error handler for ban
+        :param interaction: The interaction that triggered the command
+        :param error: The error
         """
-        embed = discord.Embed(title="List of banned users", description="List of banned users.", color=0x00ff00)
-        banned = await ctx.guild.bans()
-        for user in banned:
-            embed.add_field(name=f"{user.user.name}: {user.user.id}", value=f"Banned for {user.reason}", inline=False)
-        embed.set_footer(text=f"{ctx.author}", icon_url=ctx.author.avatar_url)
-        embed.set_author(name=f"{ctx.guild.name}", icon_url=ctx.guild.icon_url)
-        await ctx.message.delete()
-        await ctx.send(embed=embed)
+        if isinstance(error, app_commands.MissingPermissions):
+            await interaction.response.send_message("You don't have permission to use this command", ephemeral=True)
 
-    @commands.command(name='unban')
-    @commands.has_permissions(ban_members=True)
-    async def unban(self, ctx, *, id):
+    @app_commands.command(name="banlist", description="Get the ban list")
+    @app_commands.checks.has_permissions(ban_members=True)
+    async def banlist(self, interaction: discord.Interaction):
         """
-        Command to unban a member from the server
-        :param ctx: The context of the command
-        :param id: The id of the member to unban
+        Gets the ban list
+        :param interaction: The interaction that triggered the command
         """
-        banned_users = await ctx.guild.bans()
-        for user in banned_users:
-            if str(user.user.id) == id:
-                await ctx.guild.unban(user.user)
-                embed = discord.Embed(title="Unbanned", description=f"{user.user.mention} has been unbanned.", color=0x00ff00)
-                embed.set_footer(text=f"{ctx.author}", icon_url=ctx.author.avatar_url)
-                embed.set_author(name=f"{ctx.guild.name}", icon_url=ctx.guild.icon_url)
-                await ctx.message.delete()
-                await ctx.send(embed=embed)
-                await user.user.send(f"You have been unbanned from {ctx.guild.name}")
+        bans = await interaction.guild.bans()
+        await interaction.response.send_message(f"Ban list: {', '.join([str(ban.user) for ban in bans])}")
+
+    @banlist.error
+    async def banlist_error(self, interaction: discord.Interaction, error: Exception):
+        """
+        Error handler for banlist
+        :param interaction: The interaction that triggered the command
+        :param error: The error
+        """
+        if isinstance(error, app_commands.MissingPermissions):
+            await interaction.response.send_message("You don't have permission to use this command", ephemeral=True)
+
+    @app_commands.command(name="unban", description="Unban a user")
+    @app_commands.describe(user="The user to unban")
+    @app_commands.checks.has_permissions(ban_members=True)
+    async def unban(self, interaction: discord.Interaction, user: discord.User):
+        """
+        Unbans a user
+        :param interaction: The interaction that triggered the command
+        :param user: The user to unban
+        """
+        bans = await interaction.guild.bans()
+        for ban in bans:
+            if ban.user == user:
+                await interaction.guild.unban(ban.user)
+                await interaction.response.send_message(f"Unbanned {user.mention}")
                 return
             else:
-                embed = discord.Embed(title="An error occurred", description="User not found.", color=0xff0000)
-                embed.set_footer(text=f"{ctx.author}", icon_url=ctx.author.avatar_url)
-                embed.set_author(name=f"{ctx.guild.name}", icon_url=ctx.guild.icon_url)
-                await ctx.message.delete()
-                await ctx.send(embed=embed)
+                await interaction.response.send_message(f"{user.mention} is not banned", ephemeral=True)
                 return
+        await interaction.response.send_message(f"{user.mention} is not banned", ephemeral=True)
+
+    @unban.error
+    async def unban_error(self, interaction: discord.Interaction, error: Exception):
+        """
+        Error handler for unban
+        :param interaction: The interaction that triggered the command
+        :param error: The error
+        """
+        if isinstance(error, app_commands.MissingPermissions):
+            await interaction.response.send_message("You don't have permission to use this command", ephemeral=True)
 
 
-def setup(bot):
-    """
-    Initializes the cog
-    :param bot: bot object
-    """
-    bot.add_cog(UserManagement(bot))
-    print('UserManagement is loaded')
+async def setup(bot: commands.Bot):
+    await bot.add_cog(
+        UserManagement(bot),
+        guilds=[discord.Object(id=980975086154682378)])

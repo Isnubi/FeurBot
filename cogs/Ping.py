@@ -1,5 +1,6 @@
-from discord.ext import commands
 import discord
+from discord import app_commands
+from discord.ext import commands
 
 
 class Ping(commands.Cog):
@@ -10,21 +11,19 @@ class Ping(commands.Cog):
         """
         self.bot = bot
 
-    @commands.command(name='ping')
-    async def ping(self, ctx):
+    @app_commands.command(
+        name="ping",
+        description="Get the current delay of the bot")
+    async def ping(self, interaction: discord.Interaction) -> None:
         """
-        Command to check the latency of the bot
-        :param ctx: The context of the command
+        Get the current delay of the bot.
+        :param interaction: The interaction to respond to.
         """
-        embed = discord.Embed(title="Pong!", description='Bot have {0}ms of delay'.format(round(self.bot.latency * 1000)), color=discord.Colour.blue())
-        embed.set_author(name=ctx.author.name, icon_url=ctx.author.avatar_url)
-        await ctx.send(embed=embed)
+        await interaction.response.send_message(f"Pong! {round(self.bot.latency * 1000)}ms")
 
 
-def setup(bot):
-    """
-    Initializes the cog
-    :param bot: bot object
-    """
-    bot.add_cog(Ping(bot))
-    print('Ping is loaded')
+async def setup(bot: commands.Bot):
+    await bot.add_cog(
+        Ping(bot),
+        guilds=[discord.Object(id=980975086154682378)]
+    )

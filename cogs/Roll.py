@@ -1,4 +1,5 @@
 import discord
+from discord import app_commands
 from discord.ext import commands
 import random
 
@@ -10,58 +11,51 @@ class Roll(commands.Cog):
         :param bot: The bot to initialize the cog with
         """
         self.bot = bot
-
-    @commands.command(name='roll')
-    async def roll(self, ctx, *, args):
+        
+    @app_commands.command(
+        name="roll",
+        description="Roll dices")
+    @app_commands.describe(
+        dice="The dice to roll",
+        number="The number of dices to roll")
+    async def roll(self, interaction: discord.Interaction, *, number: int, dice: int) -> None:
         """
-        Rolls dices and returns the result
-        :param ctx: The context of the command
-        :param args: The arguments of the command (dice notation)
+        Roll dices and returns the result
+        :param interaction: The interaction to respond to.
+        :param dice: The dice to roll
+        :param number: The number of dices to roll
         """
-        try:
-            rolls, limit = args.split('d')
-        except ValueError:
-            await ctx.send('Format has to be in [number]d[number]!')
+        if number > 100:
+            await interaction.response.send_message('You can\'t roll more than 100 dice at once!')
             return
-        try:
-            rolls = int(rolls)
-            limit = int(limit)
-        except ValueError:
-            await ctx.send('Format has to be in [number]d[number]!')
+        if dice > 100:
+            await interaction.response.send_message('You can\'t roll more than 100 sides on a dice!')
             return
-        if rolls > 100:
-            await ctx.send('You can\'t roll more than 100 dice at once!')
+        if number < 1:
+            await interaction.response.send_message('You can\'t roll less than 1 dice!')
             return
-        if limit > 100:
-            await ctx.send('You can\'t roll more than 100 sides on a dice!')
-            return
-        if rolls < 1:
-            await ctx.send('You can\'t roll less than 1 dice!')
-            return
-        if limit < 1:
-            await ctx.send('You can\'t roll less than 1 side on a dice!')
+        if dice < 1:
+            await interaction.response.send_message('You can\'t roll less than 1 side on a dice!')
             return
         total = 0
-        dice_rolls = []
-        for i in range(rolls):
-            dice_roll = random.randint(1, limit)
-            dice_rolls.append(dice_roll)
-        for i in dice_rolls:
+        dice_number = []
+        for i in range(number):
+            dice_roll = random.randint(1, dice)
+            dice_number.append(dice_roll)
+        for i in dice_number:
             total += i
 
-        embed = discord.Embed(title='Dices roll', description='You just roll **{0}** with **{1}** sides each'.format(rolls, limit), color=discord.Colour.blue())
-        embed.set_author(name=ctx.author.name, icon_url=ctx.author.avatar_url)
-        embed.add_field(name='Detailed rolls', value=dice_rolls, inline=False)
+        embed = discord.Embed(title='Dices roll', description='You just roll **{0}** with **{1}** sides each'.format(
+            number, dice), color=discord.Colour.blue())
+        embed.set_author(name=interaction.user.name, icon_url=interaction.user.display_avatar.url)
+        embed.add_field(name='Detailed number', value=dice_number, inline=False)
         embed.add_field(name='Total', value=total, inline=False)
 
-        await ctx.message.delete()
-        await ctx.send(embed=embed)
+        await interaction.response.send_message(embed=embed)
 
 
-def setup(bot):
-    """
-    Initializes the cog
-    :param bot: bot object
-    """
-    bot.add_cog(Roll(bot))
-    print('Roll is loaded')
+async def setup(bot: commands.Bot):
+    await bot.add_cog(
+        Roll(bot),
+        guilds=[discord.Object(id=980975086154682378)]
+    )

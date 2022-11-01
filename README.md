@@ -77,7 +77,7 @@ FeurBot is a Discord bot, developed in Python, that can be used to play music, t
 ### Built With
 
 * [![Python][Python]][Python-url]
-* [![JSON][JSON]][JSON-url]
+* [![MySQL][MySQL]][MySQL-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -97,43 +97,51 @@ You can install FeurBot on your own server by following these steps.
     git clone https://github.com/Isnubi/FeurBot.git
     cd FeurBot
     ```
+   
+   * If **Git** is not installed, you can type the following command in your terminal to install it.
+       ```sh
+       sudo apt install git
+       ```
 
-2. Install Python 3.8.5 or higher and pip. You can download it [here](https://www.python.org/downloads/) or by using the following command on Linux:
-
-   * Debian/Ubuntu:
-     ```sh
-     sudo apt install python3 python3-pip -y
-     ```
-  
-   * Fedora/CentOS/RHEL:
-     ```sh
-     sudo dnf install python3 python3-pip -y
-     ```
-
-3. Install the required python packages using pip:
-
-    ```sh
-    python3 -m pip install --upgrade pip
-    python3 -m pip install -r requirements.txt
-    ```
-   If the requirements.txt file didn't work, you can install the required packages manually using the following command:
-    ```sh
-    python3 -m pip install discord.py==1.7.3 psutil asyncio youtube_dl discord.py[voice] aiohttp
-    ```
-
+2. Run the install script as user (not root).
+   * For Debian-based systems (Debian, Ubuntu, Mint, etc.):
+       ```sh
+       sudo chmod +x apt_install.sh
+       sudo ./apt_install.sh
+       ```
+    
+   **If the script didn't work, you can follow [these steps](Manual_Installation.md).**
 
 ### Installation
 
 1. Get a free Giphy API Key at [https://developers.giphy.com/](https://developers.giphy.com/)
-2. Create a Discord bot and get its token at [https://discord.com/developers/applications](https://discord.com/developers/applications)
-3. Enter your bot token and your Giphy API Key in `private/config.py`
+2. Create a Discord bot at [https://discord.com/developers/applications](https://discord.com/developers/applications)
+   * Create a new application
+   * Go to the "Bot" tab
+   * Click on "Add Bot" and confirm
+   * Active the intents options
+   <br><img src="docs/FEURBOT_INTENTS.png"><br>
+   * Copy the token
+   * Go to the "OAuth2" tab
+     * Select the "bot" scope
+     * Select the "applications.commands" scope
+     * Select the "Administrator" permission
+     <img src="docs/FeurBot_URL_Generator.png" alt="URL Generator"><br>
+     * Copy the generated URL
+     * Invite the bot to your server
+3. Enter your bot token, your Giphy API Key and your database informations in `private/config.py`
     ```python
-    giphy_api_key = "YOUR_GIPHY_TOKEN"
-    token = "YOUR_DISCORD_TOKEN"
+    token = 'DISCORD_BOT_TOKEN'
+    giphy_api_key = 'GIPHY_API_KEY'
+    
+    mysql_host = 'DATABASE_HOST'
+    mysql_user = 'DATABASE_USER'
+    mysql_password = 'DATABASE_PASSWORD'
+    mysql_database = 'DATABASE_NAME'
     ```
 4. Run the bot
     ```sh
-   python3 main.py
+   python3 FeurBot.py
    ```
 
 
@@ -144,18 +152,10 @@ You can install FeurBot on your own server by following these steps.
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Once the bot is launching, you can invite it to your server by using the invitation link you can create in your Discord Developer Portal.
-<img src="docs/FeurBot_URL_Generator.png" alt="URL Generator">
-
-* The default prefix of the bot is `!`. You can change it by sending the following command in a text channel: 
-    ```
-    !setprefix <prefix>
-    ```
-* You can get the current prefix by **mentioning** the bot.<br>
-    <br><img src="docs/FeurBot_Prefix.png" alt="Prefix"><br><br>
+* The bot is using slash commands so you can use them by typing `/` in a channel.
 * You can get the help menu by sending.
     ```
-    !help
+    /help <page_number>
     ```
   You can navigate in it with the reactions.
 
@@ -168,10 +168,9 @@ _For more examples, please refer to the help menu of the bot._
 <!-- ROADMAP -->
 ## Roadmap
 
-- [x] Gif system
 - [ ] Music system
-    - [x] Music player
-    - [x] Music commands
+    - [ ] Music player
+    - [ ] Music commands
     - [ ] Music queue
 
 See the [open issues](https://github.com/Isnubi/FeurBot/issues) for a full list of proposed features (and known issues).
@@ -237,7 +236,7 @@ Isnubi - [@Louis_Gambart](https://twitter.com/Louis_Gambart) - [contact@louis-ga
 [linkedin-url]: https://linkedin.com/in/louis-gambart
 [Python]: https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white
 [Python-url]: https://www.python.org/
-[JSON]: https://img.shields.io/badge/JSON-5E5C5C?style=for-the-badge&logo=json&logoColor=white
-[JSON-url]: https://www.json.org/json-en.html
+[Mysql]: https://img.shields.io/badge/MySQL-00000F?style=for-the-badge&logo=mysql&logoColor=white
+[Mysql-url]: https://www.mysql.com/
 [Twitter-shield]: https://img.shields.io/twitter/follow/Louis_Gambart?style=social
 [Twitter-url]: https://twitter.com/Louis_Gambart/

@@ -1,239 +1,163 @@
-from discord.ext import commands
-import datetime
 import discord
-import json
+from discord import app_commands
+from discord.ext import commands
+import asyncio
+import datetime
+import mysql.connector
+from private.config import mysql_host, mysql_user, mysql_password, mysql_database
+
+mydb = mysql.connector.connect(
+    host=mysql_host,
+    user=mysql_user,
+    password=mysql_password,
+    database=mysql_database)
+
+mycursor = mydb.cursor(buffered=True)
 
 
-def prefix_check(guild):
+def seconds_until_task(hours, minutes):
+    given_time = datetime.time(hours, minutes)
+    now = datetime.datetime.now()
+    future_exec = datetime.datetime.combine(now, given_time)
+    if (future_exec - now).days < 0:
+        future_exec = datetime.datetime.combine(now + datetime.timedelta(days=1), given_time)
+    return (future_exec - now).total_seconds()
+
+
+async def daily_reset():
     """
-    Checks the guild's prefix
-    :param guild: The guild to check
+    Reset the daily coin status in the database every day
     """
-    if guild is None:
-        return '!'
-    try:
-        with open('private/prefixes.json', 'r') as f:
-            prefixes = json.load(f)
-            return prefixes[str(guild.id)]
-    except:
-        return '!'
+    while True:
+        await asyncio.sleep(seconds_until_task(0, 0))
+        try:
+            sql = "UPDATE users SET `user_is-daily` = 0"
+            mycursor.execute(sql)
+            mydb.commit()
+        except Exception as e:
+            print(e)
+            pass
+        print(f"Daily reset {datetime.datetime.now()}")
+        await asyncio.sleep(60)
 
 
 class EconomySystem(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        self.bot.loop.create_task(daily_reset())
 
-    @commands.Cog.listener()
-    async def on_guild_join(self, guild):
+    @app_commands.command(
+        name="balance",
+        description="Get your balance")
+    @app_commands.describe(
+        user="The user to get the balance of")
+    async def balance(self, interaction: discord.Interaction, user: discord.User = None) -> None:
         """
-        Adds the guild to the economy.json file
-        :param guild: Guild to add
-        """
-        with open("private/economy.json", "r") as f:
-            data = json.load(f)
-        data[str(guild.id)] = []
-        with open("private/economy.json", "w") as f:
-            json.dump(data, f, indent=4)
-
-    @commands.Cog.listener()
-    async def on_guild_remove(self, guild):
-        """
-        Removes the guild from the economy.json file
-        :param guild: Guild to remove
-        """
-        with open("private/economy.json", "r") as f:
-            data = json.load(f)
-        data.pop(str(guild.id))
-        with open("private/economy.json", "w") as f:
-            json.dump(data, f, indent=4)
-
-    @commands.Cog.listener()
-    async def on_member_join(self, member):
-        """
-        Adds the member to the economy.json file
-        :param member: Member to add
-        """
-        with open("private/economy.json", "r") as f:
-            data = json.load(f)
-        if str(member.guild.id) not in data:
-            data[str(member.guild.id)] = []
-        if str(member.id) not in data[str(member.guild.id)]:
-            current_time = datetime.datetime.now().strftime('%d-%m-%Y %H:%M:%S')
-            data[str(member.guild.id)][str(member.id)] = {
-                "balance": 100,
-                "daily_time": current_time,
-            }
-            with open("private/economy.json", "w") as f:
-                json.dump(data, f, indent=4)
-
-    @commands.Cog.listener()
-    async def on_member_leave(self, member):
-        """
-        Removes the member from the economy.json file
-        :param member: Member to remove
-        """
-        with open("private/economy.json", "r") as f:
-            data = json.load(f)
-        if str(member.guild.id) not in data:
-            data[str(member.guild.id)] = []
-        if str(member.id) in data[str(member.guild.id)]:
-            data[str(member.guild.id)].pop(str(member.id))
-        with open("private/economy.json", "w") as f:
-            json.dump(data, f, indent=4)
-
-    @commands.command(name="balance", aliases=["bal", "money", "balances"])
-    async def balance(self, ctx, user: discord.Member = None):
-        """
-        Shows the user's balance
-        :param ctx: Context
-        :param user: User to check
+        Gets the balance of a user
+        :param interaction: The interaction
+        :param user: The user to get the balance of
         """
         if user is None:
-            user = ctx.author
-
-        with open("private/economy.json", "r") as f:
-            data = json.load(f)
-
-        embed = discord.Embed(title="Balance", description='How many coins do you have?', color=discord.Color.blue())
-        embed.set_author(name=f"{user.name}'s balance", icon_url=user.avatar_url)
-        embed.set_footer(text=f"Requested by {ctx.author.name}", icon_url=ctx.author.avatar_url)
-
-        if str(user.id) in data[str(ctx.guild.id)]:
-            embed.add_field(name="Balance", value=f"{data[str(ctx.guild.id)][str(user.id)]['balance']} coins")
+            user = interaction.user
+        sql = "SELECT user_money FROM users WHERE user_id = %s and guild_id = %s"
+        val = (user.id, interaction.guild.id)
+        mycursor.execute(sql, val)
+        result = mycursor.fetchone()
+        if result is None:
+            await interaction.response.send_message(f"{user.mention} has 0 coins!")
         else:
-            embed.add_field(name="Error", value=f"You are not registered.\nUse `{ctx.prefix}register` to register.")
+            await interaction.response.send_message(f"{user.mention} has {result[0]} coins!")
 
-        await ctx.message.delete()
-        await ctx.send(embed=embed)
-
-    @commands.command(name="bank")
-    async def bank(self, ctx):
+    @app_commands.command(
+        name="bank",
+        description="Get the most rich users")
+    async def bank(self, interaction: discord.Interaction) -> None:
         """
-        Command to check the bank of the server
-        Leaderboard of money
-        :param ctx: The context of the command
+        Gets the most rich users
+        :param interaction: The interaction
         """
-        with open("private/economy.json", "r") as f:
-            economy = json.load(f)
-
-        embed = discord.Embed(title="Bank", description='Leaderboard of the bank', color=discord.Color.blue())
-        embed.set_author(name=ctx.guild.name, icon_url=ctx.guild.icon_url)
-        embed.set_footer(text=f"{ctx.author}", icon_url=ctx.author.avatar_url)
-        embed.set_thumbnail(url=ctx.guild.icon_url)
-
-        users = []
-        for user in economy[str(ctx.guild.id)]:
-            users.append((user, economy[str(ctx.guild.id)][user]["balance"]))
-        users = sorted(users, key=lambda x: x[1], reverse=True)
-
-        for i in range(0, len(users), 20):
-            for user in users[i:i + 20]:
-                embed.add_field(name=f"{self.bot.get_user(int(user[0])).name}",
-                                value=f"Balance: {user[1]}", inline=False)
-            await ctx.send(embed=embed)
-            embed.clear_fields()
-
-        await ctx.message.delete()
-
-    @commands.command(name="register", aliases=["reg", "regist", "registers"])
-    async def register(self, ctx):
-        """
-        Registers the user in the economy.json file if he doesn't have one
-        :param ctx: Context of the command
-        """
-        with open("private/economy.json", "r") as f:
-            data = json.load(f)
-
-        embed = discord.Embed(title="Register", description='You\'re not registered yet?', color=discord.Color.blue())
-        embed.set_author(name=ctx.guild.name, icon_url=ctx.guild.icon_url)
-        embed.set_footer(text=f"{ctx.author}", icon_url=ctx.author.avatar_url)
-
-        if str(ctx.author.id) in data[str(ctx.guild.id)]:
-            embed.add_field(name="Error", value="You are already registered.")
+        sql = "SELECT user_id, user_money FROM users WHERE guild_id = %s ORDER BY user_money DESC LIMIT 10"
+        val = (interaction.guild.id,)
+        mycursor.execute(sql, val)
+        result = mycursor.fetchall()
+        if result is None:
+            await interaction.response.send_message("There is no user in the bank!")
         else:
-            current_time = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
-            next_daily = datetime.datetime.strptime(current_time, "%d-%m-%Y %H:%M:%S") + datetime.timedelta(days=1)
-            data[str(ctx.guild.id)][str(ctx.author.id)] = {
-                "balance": 100,
-                "daily_time": current_time
-            }
-            with open("private/economy.json", "w") as f:
-                json.dump(data, f, indent=4)
-            embed.add_field(name="Success", value=f"You have been registered.\nYour daily reward of 100 coins has been added to your balance.\nYou can claim your daily reward every 24 hours.\nCome back **{next_daily}** to claim your daily reward.")
+            embed = discord.Embed(
+                title="Bank",
+                description="The 10 most rich users",
+                color=discord.Color.blue(),
+                timestamp=datetime.datetime.utcnow()
+            )
+            for row in result:
+                user = await self.bot.fetch_user(row[0])
+                embed.add_field(
+                    name=f"{user.name}#{user.discriminator}",
+                    value=f"{row[1]} coins",
+                    inline=False
+                )
+            await interaction.response.send_message(embed=embed)
 
-        await ctx.message.delete()
-        await ctx.send(embed=embed)
-
-    @commands.command(name="pay", aliases=["give", "transfer"])
-    async def pay(self, ctx, user: discord.Member, amount: int):
+    @app_commands.command(
+        name="pay",
+        description="Pay a user")
+    @app_commands.describe(
+        user="The user to pay",
+        amount="The amount to pay")
+    async def pay(self, interaction: discord.Interaction, user: discord.User, amount: int) -> None:
         """
-        Transfers money from one user to another
-        :param ctx: Context of the command
-        :param user: User to transfer money to
-        :param amount: Amount of money to transfer
+        Pay a user
+        :param interaction: The interaction
+        :param user: The user to pay
+        :param amount: The amount to pay
         """
-        with open("private/economy.json", "r") as f:
-            data = json.load(f)
-
-        embed = discord.Embed(title="Pay", description='Pay someone!', color=discord.Color.blue())
-        embed.set_author(name=ctx.guild.name, icon_url=ctx.guild.icon_url)
-        embed.set_footer(text=f"{ctx.author}", icon_url=ctx.author.avatar_url)
-
-        if str(ctx.author.id) in data[str(ctx.guild.id)]:
-            if str(user.id) in data[str(ctx.guild.id)]:
-                if amount <= data[str(ctx.guild.id)][str(ctx.author.id)]['balance']:
-                    data[str(ctx.guild.id)][str(ctx.author.id)]['balance'] -= amount
-                    data[str(ctx.guild.id)][str(user.id)]['balance'] += amount
-                    with open("private/economy.json", "w") as f:
-                        json.dump(data, f, indent=4)
-                    embed.add_field(name="Success", value=f"You have successfully transferred {amount} to {user.name}.")
-                else:
-                    embed.add_field(name="Error", value=f"You don't have enough money to transfer {amount}.")
+        if user == interaction.user:
+            await interaction.response.send_message("You can't pay yourself!")
+        else:
+            sql = "SELECT user_money FROM users WHERE user_id = %s and guild_id = %s"
+            val = (interaction.user.id, interaction.guild.id)
+            mycursor.execute(sql, val)
+            result = mycursor.fetchone()
+            if result is None:
+                await interaction.response.send_message("You don't have any coins!")
+            elif result[0] < amount:
+                await interaction.response.send_message("You don't have enough coins!")
             else:
-                embed.add_field(name="Error", value=f"{user.name} is not registered.")
-        else:
-            embed.add_field(name="Error", value=f"You are not registered.\nUse `{ctx.prefix}register` to register.")
+                sql = "UPDATE users SET user_money = user_money - %s WHERE user_id = %s and guild_id = %s"
+                val = (amount, interaction.user.id, interaction.guild.id)
+                mycursor.execute(sql, val)
+                mydb.commit()
+                sql = "UPDATE users SET user_money = user_money + %s WHERE user_id = %s and guild_id = %s"
+                val = (amount, user.id, interaction.guild.id)
+                mycursor.execute(sql, val)
+                mydb.commit()
+                await interaction.response.send_message(f"You paid {user.mention} {amount} coins!")
 
-        await ctx.message.delete()
-        await ctx.send(embed=embed)
-
-    @commands.command(name="daily", aliases=["dailycoins"])
-    async def daily(self, ctx):
+    @app_commands.command(
+        name="daily",
+        description="Get your daily coins")
+    async def daily(self, interaction: discord.Interaction) -> None:
         """
-        Gives the user daily coins
-        :param ctx: Context of the command
+        Gets the daily coins
+        :param interaction: The interaction
         """
-        with open("private/economy.json", "r") as f:
-            data = json.load(f)
-
-        embed = discord.Embed(title="Daily", description='Get your daily coins!', color=discord.Color.blue())
-        embed.set_author(name=ctx.guild.name, icon_url=ctx.guild.icon_url)
-        embed.set_footer(text=f"{ctx.author}", icon_url=ctx.author.avatar_url)
-
-        if str(ctx.author.id) in data[str(ctx.guild.id)]:
-            current_time = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
-            last_daily = data[str(ctx.guild.id)][str(ctx.author.id)]['daily_time']
-
-            o_current_time = datetime.datetime.strptime(current_time, "%d-%m-%Y %H:%M:%S")
-            refactor_current_time = o_current_time.replace(hour=0, minute=0, second=0, microsecond=0)
-            last_daily = datetime.datetime.strptime(last_daily, "%d-%m-%Y %H:%M:%S")
-            refactor_last_daily = last_daily.replace(hour=0, minute=0, second=0, microsecond=0)
-            delta = refactor_current_time - refactor_last_daily
-            if delta.days > 0:
-                data[str(ctx.guild.id)][str(ctx.author.id)]['daily_time'] = current_time
-                data[str(ctx.guild.id)][str(ctx.author.id)]['balance'] += 100
-                with open("private/economy.json", "w") as f:
-                    json.dump(data, f, indent=4)
-                embed.add_field(name="Success", value=f"You have received 100 coins for being a daily user.\nYou can claim your daily reward every 24 hours.\nCome back tommorow to claim your daily reward.")
-            else:
-                embed.add_field(name="Error", value=f"You have already received your daily coins today.\nYou can claim your daily reward every 24 hours.\nCome back tommorow to claim your daily reward.")
+        sql = "SELECT `user_is-daily` FROM users WHERE user_id = %s and guild_id = %s"
+        val = (interaction.user.id, interaction.guild.id)
+        mycursor.execute(sql, val)
+        result = mycursor.fetchone()
+        if result is None or result[0] == 0:
+            sql = "UPDATE users SET user_money = user_money + 100, " \
+                  "`user_is-daily` = 1 WHERE user_id = %s and guild_id = %s"
+            val = (interaction.user.id, interaction.guild.id)
+            mycursor.execute(sql, val)
+            mydb.commit()
+            await interaction.response.send_message("You got your 100 daily coins!")
         else:
-            embed.add_field(name="Error", value=f"You are not registered.\nUse `{ctx.prefix}register` to register.")
-
-        await ctx.message.delete()
-        await ctx.send(embed=embed)
+            await interaction.response.send_message("You already got your daily coins!")
 
 
-def setup(bot):
-    bot.add_cog(EconomySystem(bot))
-    print("EconomySystem is loaded")
+async def setup(bot: commands.Bot):
+    await bot.add_cog(
+        EconomySystem(bot),
+        guilds=[discord.Object(id=980975086154682378)]
+    )

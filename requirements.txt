@@ -1,6 +1,7 @@
-discord.py==1.7.3
+discord.py
 discord.py[voice]
 psutil
 asyncio
 youtube_dl
 aiohttp
+mysql-connector-python

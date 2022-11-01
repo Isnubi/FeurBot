@@ -1,5 +1,6 @@
-from discord.ext import commands
 import discord
+from discord import app_commands
+from discord.ext import commands
 import psutil
 
 
@@ -11,26 +12,21 @@ class CPU(commands.Cog):
         """
         self.bot = bot
 
-    @commands.command(name='cpu')
-    async def cpu(self, ctx):
+    @app_commands.command(
+        name="cpu",
+        description="Get the current CPU usage of the bot")
+    async def cpu(self, interaction: discord.Interaction) -> None:
         """
         Displays the CPU usage of the server where the bot is running
-        :param ctx: The context of the command
+        :param interaction: The interaction to respond to.
         """
         cpu_usage = psutil.cpu_percent(interval=0.5)
         cpu_message = 'CPU is used at ' + str(cpu_usage) + '%'
-        embed = discord.Embed(title="CPU usage", description=cpu_message, color=discord.Colour.blue())
-        embed.set_author(name=ctx.author.name, icon_url=ctx.author.avatar_url)
-
-        await ctx.message.delete()
-        await ctx.send(embed=embed)
+        await interaction.response.send_message(cpu_message)
 
 
-def setup(bot):
-    """
-    Initializes the cog
-    :param bot: bot object
-    """
-    bot.add_cog(CPU(bot))
-    print('CPU is loaded')
-
+async def setup(bot: commands.Bot):
+    await bot.add_cog(
+        CPU(bot),
+        guilds=[discord.Object(id=980975086154682378)]
+    )
