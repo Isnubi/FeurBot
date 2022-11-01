@@ -60,9 +60,6 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-**The bot is currently being updated for the V2 of discord.py library**<br>
-**You can check it in [V2_Update](https://github.com/Isnubi/FeurBot/tree/V2_update) branch**
-
 <div align="center">
     <img src="docs/FeurBot_Discord.png" alt="Logo">
 </div>
