@@ -108,11 +108,6 @@ You can install FeurBot on your own server by following these steps.
        sudo chmod +x apt_install.sh
        sudo ./apt_install.sh
        ```
-   * For RedHat-based systems (Fedora, CentOS, etc.):
-       ```sh
-       sudo chmod +x dnf_install.sh
-       sudo ./dnf_install.sh
-       ```
     
    **If the script didn't work, you can follow [these steps](Manual_Installation.md).**
 

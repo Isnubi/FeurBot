@@ -41,11 +41,6 @@ If the install.sh script doesn't work for you, you can follow these steps to ins
      ```sh
      sudo apt install python3 python3-pip -y
      ```
-  
-   * Fedora/CentOS/RHEL:
-     ```sh
-     sudo dnf install python3 python3-pip -y
-     ```
 
 2. Install the required python packages using pip:
 
@@ -65,22 +60,12 @@ If the install.sh script doesn't work for you, you can follow these steps to ins
      ```sh
      sudo apt install mariadb-server mariadb-client -y
      ```
-  
-   * Fedora/CentOS/RHEL:
-     ```sh
-     sudo dnf install mariadb-server mariadb-client -y
      
 4. Create a database for FeurBot. You can do it by using the following command on Linux:
 
     * Debian/Ubuntu:
       ```sh
       sudo mysql -u root -p
-      ```
-      
-    * Fedora/CentOS/RHEL:
-      ```sh
-      sudo mysql -u root -p
-      ```
       
     Then, you can create the database by using the following command:
       ```sh
